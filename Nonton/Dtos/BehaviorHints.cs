@@ -9,4 +9,7 @@ public class BehaviorHints
 
     [JsonPropertyName("hasScheduledVideos")]
     public bool HasScheduledVideos { get; set; }
+
+    [JsonPropertyName("bingeGroup")]
+    public string? BingeGroup { get; set; }
 }
