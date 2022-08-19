@@ -13,5 +13,11 @@ namespace Nonton.Api
 
         [Get("/stream/movie/{id}.json")]
         Task<StreamResponse> GetStream(string id);
+
+        [Get("/catalog/{type}/{id}.json")]
+        Task<Discover> GetCatalog(string type, string id);
+
+        [Get("/catalog/{type}/{id}/genre={genre}.json")]
+        Task<Discover> GetCatalogByGenre(string type, string id, string genre);
     }
 }

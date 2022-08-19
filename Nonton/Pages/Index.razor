@@ -1,4 +1,7 @@
 ﻿@page "/"
+@using Nonton.Services
+
+@inject ICatalogService CatalogService
 
 <PageTitle>Discover</PageTitle>
 
@@ -13,12 +16,11 @@
 </MudGrid>
 
 @code {
-    public IStremioApi StremioApi => RestService.For<IStremioApi>("https://v3-cinemeta.strem.io");
     public Discover? DiscoverResult { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        DiscoverResult = await StremioApi.GetTopMovies();
+        DiscoverResult = await CatalogService.GetMovieCatalogDefault();
         StateHasChanged();
     }
 }

@@ -1,0 +1,16 @@
+﻿@switch (State)
+{
+    default:
+    case LoadingContainerState.Empty:
+        @Empty
+        break;
+    case LoadingContainerState.Loading:
+        @Loading
+        break;
+    case LoadingContainerState.Loaded:
+        @Loaded
+        break;
+    case LoadingContainerState.Error:
+        @Error
+        break;
+}
