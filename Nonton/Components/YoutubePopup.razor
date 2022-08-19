@@ -1,0 +1,17 @@
+﻿<MudDialog>
+    <DialogContent>
+        @if (!string.IsNullOrWhiteSpace(YoutubeId))
+        {
+            <iframe style="height: 70vh; width: 100%" src="@($"https://www.youtube.com/embed/{YoutubeId}?autoplay=1")" title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        }
+    </DialogContent>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public string? YoutubeId { get; set; }
+}
