@@ -1,4 +1,5 @@
 ﻿using Nonton.Api;
+using Nonton.Commons;
 using Nonton.Dtos;
 using Nonton.Dtos.Manifest;
 using Refit;
@@ -14,13 +15,13 @@ public class CatalogService : ICatalogService
 
     private async Task<Addon?> LoadAddon()
     {
-        var addons = await _addonService.LoadAddons();
+        var addons = await _addonService.LoadAllAddons();
         return addons?.FirstOrDefault();
     }
 
-    public async Task<Discover?> GetMovieCatalogDefault()
+    public async Task<Discover?> GetMovies()
     {
-        var addon = await LoadAddon();
+        var addon = await _addonService.LoadDefaultCatalogAddons();
         if (addon == null) return null;
 
         var defaultId = addon?.Manifest?.Catalogs?.FirstOrDefault(x => (x.ExtraRequired != null && !x.ExtraRequired.Any()) || x.ExtraRequired is null)?.Id;
@@ -28,19 +29,21 @@ public class CatalogService : ICatalogService
         if (string.IsNullOrWhiteSpace(defaultId)) return null;
 
         var stremioApi = RestService.For<IStremioApi>(addon!.BaseUri);
-        return await stremioApi.GetCatalog("movie", defaultId);
+        return await stremioApi.GetCatalogByCatalogId(AddonConstants.TypeMovie, defaultId);
     }
 
-    public async Task<Discover?> GetCatalog(string type, string id)
+    public async Task<Discover> GetMoviesByCatalog(Addon addon, string catalogId)
     {
-        var addon = await LoadAddon();
-        if (addon == null) return null;
-
-        var stremioApi = RestService.For<IStremioApi>(addon.BaseUri);
-        return await stremioApi.GetCatalog(type, id);
+        var api = RestService.For<IStremioApi>(addon.BaseUri);
+        return await api.GetCatalogByCatalogId(AddonConstants.TypeMovie, catalogId);
     }
 
-    public Task<Discover> GetCatalogByGenre(string type, string id, string genre)
+    public Task<Discover> GetMoviesByCatalog(string catalogId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Discover> GetMoviesByCatalogGenre(string catalogId, string genre)
     {
         throw new NotImplementedException();
     }

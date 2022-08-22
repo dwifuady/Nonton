@@ -1,26 +1,8 @@
 ﻿@page "/"
-@using Nonton.Services
 
-@inject ICatalogService CatalogService
+<PageTitle>Discover - Movies</PageTitle>
 
-<PageTitle>Discover</PageTitle>
-
-<MudGrid Spacing="1" Justify="Justify.FlexStart">
-    @if (DiscoverResult?.Metas is not null)
-    {
-        foreach (var meta in DiscoverResult.Metas)
-        {
-            <ContentItem Meta="meta"></ContentItem>
-        }
-    }
-</MudGrid>
-
-@code {
-    public Discover? DiscoverResult { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        DiscoverResult = await CatalogService.GetMovieCatalogDefault();
-        StateHasChanged();
-    }
+@if (DiscoverResult?.Metas is not null)
+{
+    <ContentSlider CatalogName="@DiscoverResult.CatalogName" Metas="DiscoverResult.Metas"></ContentSlider>
 }

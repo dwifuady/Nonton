@@ -1,35 +1,31 @@
-﻿using System.Net.Http.Json;
-using Nonton.Dtos.Manifest;
+﻿using Nonton.Dtos.Manifest;
+using Nonton.Commons;
 
 namespace Nonton.Services;
 public class AddonService : IAddonService
 {
-    private readonly HttpClient _httpClient;
-    public AddonService(HttpClient httpClient)
+    public async Task<IEnumerable<Addon>?> LoadAllAddons()
     {
-        _httpClient = httpClient;
+        return await LoadDefaultAddons();
     }
 
-    public async Task<IEnumerable<Addon>?> LoadAddons()
+    public async Task<IEnumerable<Addon>?> LoadAllCatalogAddons()
     {
-        return await LoadAddonsDummy();
+        return await Task.FromResult(DefaultAddons.AllDefaultAddons()!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesCatalog)));
     }
 
-    public async Task<IEnumerable<Addon>?> LoadAddonsDummy()
+    public async Task<IEnumerable<Addon>?> LoadAllMetaAddons()
     {
-        var manifestCinemeta = await _httpClient.GetFromJsonAsync<Manifest>("sample-data/Cinemeta.json");
+        return await Task.FromResult(DefaultAddons.AllDefaultAddons()!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesMeta)));
+    }
 
-        if (manifestCinemeta is null) return null;
+    public async Task<Addon?> LoadDefaultCatalogAddons()
+    {
+        return await Task.FromResult(DefaultAddons.AllDefaultAddons()!.FirstOrDefault(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesCatalog)));
+    }
 
-        var addonCinemeta = new Addon
-        {
-            Manifest = manifestCinemeta,
-            TransportUrl = "https://v3-cinemeta.strem.io/manifest.json"
-        };
-        
-        return new List<Addon>
-        {
-            addonCinemeta
-        };
+    public async Task<IEnumerable<Addon>?> LoadDefaultAddons()
+    {
+        return await Task.FromResult(DefaultAddons.AllDefaultAddons());
     }
 }

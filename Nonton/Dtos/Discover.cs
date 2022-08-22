@@ -19,4 +19,6 @@ public class Discover
 
     [JsonPropertyName("staleError")]
     public int StaleError { get; set; }
+
+    [JsonIgnore] public string CatalogName { get; set; } = null!;
 }

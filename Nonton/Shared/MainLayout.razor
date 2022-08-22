@@ -8,8 +8,16 @@
     </MudAppBar>
     <MudDrawer @bind-Open="@open" ClipMode="clipMode" Breakpoint="@breakpoint" PreserveOpenState="@preserveOpenState" Elevation="1" Variant="@DrawerVariant.Mini" Style="background: rgba(39,39,47,0.5); backdrop-filter: blur(20px);">
         <MudNavMenu>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Movie" Href="/">Movies</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Tv">Series</MudNavLink>
+            <div class="d-flex flex-column justify-space-between" style="height: 100vh;">
+                <div>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Movie" Href="/">Movies</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Tv" Href="/series">Series</MudNavLink>
+                </div>
+                <div>
+                    <MudDivider DividerType="DividerType.FullWidth" Light="true"></MudDivider>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Extension" Href="/addons">Addons</MudNavLink>
+                </div>
+            </div>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent Class="pt-16 px-1">
