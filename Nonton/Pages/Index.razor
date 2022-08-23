@@ -2,7 +2,13 @@
 
 <PageTitle>Discover - Movies</PageTitle>
 
-@if (DiscoverResult?.Metas is not null)
+@if (Discovers.Any())
 {
-    <ContentSlider CatalogName="@DiscoverResult.CatalogName" Metas="DiscoverResult.Metas"></ContentSlider>
+    @foreach (var discover in Discovers)
+    {
+        @if (discover?.Metas is not null)
+        {
+            <ContentSlider CatalogName="@discover.CatalogName" Metas="discover.Metas"></ContentSlider>
+        }
+    }
 }

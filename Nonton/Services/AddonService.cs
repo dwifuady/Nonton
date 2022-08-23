@@ -1,22 +1,48 @@
-﻿using Nonton.Dtos.Manifest;
+﻿using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using Nonton.Dtos.Manifest;
 using Nonton.Commons;
+using Nonton.Data;
+using SqliteWasmHelper;
 
 namespace Nonton.Services;
 public class AddonService : IAddonService
 {
+    private readonly ISqliteWasmDbContextFactory<NontonDbContext> _dbFactory;
+    public AddonService(ISqliteWasmDbContextFactory<NontonDbContext> dbFactory)
+    {
+        _dbFactory = dbFactory;
+    }
     public async Task<IEnumerable<Addon>?> LoadAllAddons()
     {
-        return await LoadDefaultAddons();
+        var defaultAddons = await LoadDefaultAddons();
+
+        await using var context = await _dbFactory.CreateDbContextAsync();
+        var installedAddons = await context.NontonExtensions.ToListAsync();
+
+        var addons = defaultAddons!.ToList();
+        foreach (var addon in installedAddons)
+        {
+            addons.Add(new Addon
+            {
+                TransportUrl = addon.TransportUrl,
+                Manifest = JsonSerializer.Deserialize<Manifest>(addon.Manifest)
+            });
+        }
+
+        return addons;
     }
 
     public async Task<IEnumerable<Addon>?> LoadAllCatalogAddons()
     {
-        return await Task.FromResult(DefaultAddons.AllDefaultAddons()!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesCatalog)));
+        var allAddons = await LoadAllAddons();
+        return await Task.FromResult(allAddons!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesCatalog)));
     }
 
     public async Task<IEnumerable<Addon>?> LoadAllMetaAddons()
     {
-        return await Task.FromResult(DefaultAddons.AllDefaultAddons()!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesMeta)));
+        var allAddons = await LoadAllAddons();
+        return await Task.FromResult(allAddons!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesMeta)));
     }
 
     public async Task<Addon?> LoadDefaultCatalogAddons()
