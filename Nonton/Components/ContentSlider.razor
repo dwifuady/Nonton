@@ -23,7 +23,7 @@
                     foreach (var meta in metas)
                     {
                         <div class="item">
-                            <button class="d-flex flex-column" @onclick="() => ViewDetail(meta.ImdbId)">
+                            <button class="d-flex flex-column" @onclick="() => ViewDetail(meta.ImdbId!)">
                                 <MudImage Src="@meta.Poster" Width="145" Height="250" Elevation="25" Class="rounded-lg ma-4 cursor-pointer" ObjectFit="ObjectFit.Cover"></MudImage>
                                 <span>@meta.Name</span>
                             </button>
