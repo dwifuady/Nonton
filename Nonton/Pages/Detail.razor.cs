@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Nonton.Api;
 using Nonton.Components;
 using Nonton.Dtos;
 using Nonton.Services;
-using Refit;
 
 namespace Nonton.Pages
 {
@@ -15,10 +13,10 @@ namespace Nonton.Pages
 
         [Inject] public IDialogService DialogService { get; set; } = null!;
         [Inject] public IMetaService MetaService { get; set; } = null!;
+        [Inject] public IStreamService StreamService { get; set; } = null!;
 
-        public static IStremioApi StreamApi => RestService.For<IStremioApi>("https://watchhub.strem.io");
         public Meta? ContentMeta { get; set; }
-        public StreamResponse? StreamResponse { get; set; }
+        public IEnumerable<StreamResponse>? StreamResponses { get; set; }
 
         private bool _openDrawer = false;
 
@@ -47,8 +45,9 @@ namespace Nonton.Pages
 
             try
             {
-                StreamResponse = await StreamApi.GetMovieStream(ContentMeta.ImdbId);
-                if (StreamResponse?.Streams is not null && StreamResponse.Streams.Any())
+                StreamResponses = await StreamService.GetStream(ContentMeta.ImdbId);
+                
+                if (StreamResponses is not null && StreamResponses.Any())
                 {
                     LoadingState = LoadingContainerState.Loaded;
                 }

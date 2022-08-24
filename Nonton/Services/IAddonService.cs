@@ -6,5 +6,6 @@ public interface IAddonService
     Task<IEnumerable<Addon>?> LoadAllAddons();
     Task<IEnumerable<Addon>?> LoadAllCatalogAddons();
     Task<IEnumerable<Addon>?> LoadAllMetaAddons();
+    Task<IEnumerable<Addon>?> LoadAllStreamAddons();
     Task<Addon?> LoadDefaultCatalogAddons();
 }

@@ -62,29 +62,35 @@
             </Loading>
             <Loaded>
                 @{
-                    if (StreamResponse?.Streams != null && StreamResponse.Streams.Any())
+                    if (StreamResponses is not null && StreamResponses.Any())
                     {
-                        var groupedStreamSource = StreamResponse.Streams.GroupBy(x => x.Name);
-                        var streamSources = groupedStreamSource as IGrouping<string?, Stream>[] ?? groupedStreamSource.ToArray();
-                        <MudExpansionPanels MultiExpansion="false">
-                            @foreach (var streamSource in streamSources)
-                            {
-                                var sources = StreamResponse.Streams.Where(s => s.Name == streamSource.Key);
-                                <MudExpansionPanel Text="@streamSource.Key">
-                                    @foreach (var stream in sources)
-                                    {
-                                        <MudButton ButtonType="ButtonType.Button" Color="Color.Dark" Variant="Variant.Filled" Size="Size.Large" Style="padding-top: 15px; padding-bottom: 15px; width: 100%; margin-top: 5px; margin-bottom: 5px;" Href="@stream.ExternalUrl" Target="blank">
-                                            @stream.Name (@stream.Title)
-                                        </MudButton>
-                                    }
-                                </MudExpansionPanel>
-                            }
-                        </MudExpansionPanels>
-                        @foreach (var stream in StreamResponse!.Streams!.Where(s => !streamSources.Select(x => x.Key).Contains(s.Name)))
+                        foreach (var streamResponse in StreamResponses)
                         {
-                            <MudButton ButtonType="ButtonType.Button" Color="Color.Dark" Variant="Variant.Filled" Size="Size.Large" Style="padding-top: 15px; padding-bottom: 15px;" Href="@stream.ExternalUrl" Target="blank">
-                                @stream.Name (@stream.Title)
-                            </MudButton>
+                            if (streamResponse?.Streams != null && streamResponse.Streams.Any())
+                            {
+                                var groupedStreamSource = streamResponse.Streams.GroupBy(x => x.Name);
+                                var streamSources = groupedStreamSource as IGrouping<string?, Stream>[] ?? groupedStreamSource.ToArray();
+                                <MudExpansionPanels MultiExpansion="false">
+                                    @foreach (var streamSource in streamSources)
+                                    {
+                                        var sources = streamResponse.Streams.Where(s => s.Name == streamSource.Key);
+                                        <MudExpansionPanel Text="@streamSource.Key">
+                                            @foreach (var stream in sources)
+                                            {
+                                                <MudButton ButtonType="ButtonType.Button" Color="Color.Dark" Variant="Variant.Filled" Size="Size.Large" Style="padding-top: 15px; padding-bottom: 15px; width: 100%; margin-top: 5px; margin-bottom: 5px;" Href="@stream.ExternalUrl" Target="blank">
+                                                    @stream.Name (@stream.Title)
+                                                </MudButton>
+                                            }
+                                        </MudExpansionPanel>
+                                    }
+                                </MudExpansionPanels>
+                                @foreach (var stream in streamResponse!.Streams!.Where(s => !streamSources.Select(x => x.Key).Contains(s.Name)))
+                                {
+                                    <MudButton ButtonType="ButtonType.Button" Color="Color.Dark" Variant="Variant.Filled" Size="Size.Large" Style="padding-top: 15px; padding-bottom: 15px;" Href="@stream.ExternalUrl" Target="blank">
+                                        @stream.Name (@stream.Title)
+                                    </MudButton>
+                                }
+                            }
                         }
                     }
                 }

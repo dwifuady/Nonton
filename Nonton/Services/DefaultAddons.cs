@@ -9,7 +9,8 @@ namespace Nonton.Services
         public static IEnumerable<(string TransportUrl, string AddonManifest)> DefaultAddonsDictionary =>
             new List<(string TransportUrl, string AddonManifest)>
             {
-                  new("https://v3-cinemeta.strem.io/manifest.json", DefaultAddonsManifest.Cinemeta)
+                  new("https://v3-cinemeta.strem.io/manifest.json", DefaultAddonsManifest.Cinemeta),
+                  new("https://watchhub.strem.io/manifest.json", DefaultAddonsManifest.WatchHub)
             };
 
         public static IEnumerable<Addon>? AllDefaultAddons()

@@ -14,6 +14,7 @@ builder.Services.AddMudServices();
 builder.Services.AddScoped<IAddonService, AddonService>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddScoped<IMetaService, MetaService>();
+builder.Services.AddScoped<IStreamService, StreamService>();
 builder.Services.AddSqliteWasmDbContextFactory<NontonDbContext>(
     opts => opts.UseSqlite("Data Source=nonton.sqlite3"));
 
