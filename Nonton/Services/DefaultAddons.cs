@@ -27,7 +27,8 @@ namespace Nonton.Services
                 defaultAddons.Add(new Addon
                 {
                     TransportUrl = transportUrl,
-                    Manifest = manifest
+                    Manifest = manifest,
+                    IsDefaultAddon = true
                 });
             }
 

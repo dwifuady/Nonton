@@ -25,8 +25,8 @@ public class AddonService : IAddonService
         {
             addons.Add(new Addon
             {
-                TransportUrl = addon.TransportUrl,
-                Manifest = JsonSerializer.Deserialize<Manifest>(addon.Manifest)
+                Manifest = JsonSerializer.Deserialize<Manifest>(addon.Manifest),
+                TransportUrl = addon.TransportUrl
             });
         }
 
@@ -36,24 +36,119 @@ public class AddonService : IAddonService
     public async Task<IEnumerable<Addon>?> LoadAllCatalogAddons()
     {
         var allAddons = await LoadAllAddons();
-        return await Task.FromResult(allAddons!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesCatalog)));
+        var addons = new List<Addon>();
+        if (allAddons == null) return await Task.FromResult(addons);
+
+        foreach (var addon in allAddons)
+        {
+            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(AddonConstants.ResourcesCatalog))
+            {
+                addons.Add(addon);
+            }
+
+            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesCatalog))
+            {
+                addons.Add(addon);
+            }
+        }
+
+        return await Task.FromResult(addons);
     }
 
     public async Task<IEnumerable<Addon>?> LoadAllMetaAddons()
     {
         var allAddons = await LoadAllAddons();
-        return await Task.FromResult(allAddons!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesMeta)));
+        var addons = new List<Addon>();
+        if (allAddons == null) return await Task.FromResult(addons);
+
+        foreach (var addon in allAddons)
+        {
+            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(AddonConstants.ResourcesMeta))
+            {
+                addons.Add(addon);
+            }
+
+            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesMeta))
+            {
+                addons.Add(addon);
+            }
+        }
+
+        return await Task.FromResult(addons);
     }
 
     public async Task<IEnumerable<Addon>?> LoadAllStreamAddons()
     {
         var allAddons = await LoadAllAddons();
-        return await Task.FromResult(allAddons!.Where(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesStream)));
+        var addons = new List<Addon>();
+        if (allAddons == null) return await Task.FromResult(addons);
+
+        foreach (var addon in allAddons)
+        {
+            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(AddonConstants.ResourcesStream))
+            {
+                addons.Add(addon);
+            }
+
+            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesStream))
+            {
+                addons.Add(addon);
+            }
+        }
+
+        return await Task.FromResult(addons);
     }
 
     public async Task<Addon?> LoadDefaultCatalogAddons()
     {
-        return await Task.FromResult(DefaultAddons.AllDefaultAddons()!.FirstOrDefault(a => a.Manifest?.Resources != null && a.Manifest.Resources.Contains(AddonConstants.ResourcesCatalog)));
+        var allAddons = DefaultAddons.AllDefaultAddons();
+
+        if (allAddons == null) return null;
+
+        foreach (var addon in allAddons)
+        {
+            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(AddonConstants.ResourcesCatalog))
+            {
+                return addon;
+            }
+
+            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesCatalog))
+            {
+                return addon;
+            }
+        }
+
+        return await Task.FromResult(new Addon());
+    }
+
+    public async Task SaveAddon(string url, string manifestString)
+    {
+        await using var context = await _dbFactory.CreateDbContextAsync();
+        var manifest = JsonSerializer.Deserialize<Manifest>(manifestString);
+        
+        if (manifest == null || string.IsNullOrWhiteSpace(manifest.Id)) return;
+
+        var extension = new NontonExtension
+        {
+            Manifest = manifestString,
+            TransportUrl = url,
+            Enabled = true,
+            Id = manifest.Id
+        };
+        
+        context.NontonExtensions.Add(extension);
+
+        await context.SaveChangesAsync();
+
+    }
+
+    public async Task DeleteAddon(string id)
+    {
+        await using var context = await _dbFactory.CreateDbContextAsync();
+        var addon = await context.NontonExtensions.SingleOrDefaultAsync(x => x.Id == id);
+        if (addon == null) return;
+        context.NontonExtensions.Remove(addon);
+        await context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Addon>?> LoadDefaultAddons()

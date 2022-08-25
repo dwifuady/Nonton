@@ -17,12 +17,14 @@ namespace Nonton.Pages
 
         public Meta? ContentMeta { get; set; }
         public IEnumerable<StreamResponse>? StreamResponses { get; set; }
+        public bool IsPlaying { get; set; }
+        public string? ContentUrl { get; set; }
 
         private bool _openDrawer = false;
 
         private readonly DialogOptions _trailerDialogOptions = new() { MaxWidth = MaxWidth.Medium, FullWidth = true, NoHeader = false, FullScreen = false, CloseOnEscapeKey = true, CloseButton = true };
         
-        public LoadingContainerState LoadingState { get; set; }
+        public LoadingContainerState LoadingStateStreamSource { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -37,11 +39,11 @@ namespace Nonton.Pages
             _openDrawer = true;
             if (string.IsNullOrWhiteSpace(ContentMeta?.ImdbId))
             {
-                LoadingState = LoadingContainerState.Error;
+                LoadingStateStreamSource = LoadingContainerState.Error;
                 return;
             }
 
-            LoadingState = LoadingContainerState.Loading;
+            LoadingStateStreamSource = LoadingContainerState.Loading;
 
             try
             {
@@ -49,17 +51,17 @@ namespace Nonton.Pages
                 
                 if (StreamResponses is not null && StreamResponses.Any())
                 {
-                    LoadingState = LoadingContainerState.Loaded;
+                    LoadingStateStreamSource = LoadingContainerState.Loaded;
                 }
                 else
                 {
-                    LoadingState = LoadingContainerState.Empty;
+                    LoadingStateStreamSource = LoadingContainerState.Empty;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                LoadingState = LoadingContainerState.Error;
+                LoadingStateStreamSource = LoadingContainerState.Error;
             }
         }
 
@@ -71,6 +73,14 @@ namespace Nonton.Pages
         };
 
             DialogService.Show<YoutubePopup>($"{ContentMeta?.Name} ({ContentMeta?.Year}) | Trailer", dialogParameters, _trailerDialogOptions);
+        }
+
+        private void PlayContent(string url)
+        {
+            IsPlaying = true;
+            _openDrawer = false;
+            ContentUrl = url;
+            StateHasChanged();
         }
     }
 }
