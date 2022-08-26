@@ -9,7 +9,7 @@ RUN apt-get install -y python3
 RUN dotnet build Nonton/Nonton.csproj -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish Nonton/Nonton.csproj -p:BlazorEnableCompression=false -c Release -o /app/publish --nologo
+RUN dotnet publish Nonton/Nonton.csproj -c Release -o /app/publish --nologo
 
 FROM nginx:alpine AS final
 WORKDIR /usr/share/nginx/html
