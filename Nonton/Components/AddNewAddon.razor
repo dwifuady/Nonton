@@ -8,10 +8,10 @@
     </DialogActions>
 </MudDialog>
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
 
     public string? Url { get; set; }
 
-    void Submit() => MudDialog.Close(DialogResult.Ok(Url));
-    void Cancel() => MudDialog.Cancel();
+    void Submit() => MudDialog?.Close(DialogResult.Ok(Url));
+    void Cancel() => MudDialog?.Cancel();
 }
