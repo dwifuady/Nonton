@@ -57,7 +57,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-+jmWSvbc5UjYmiKlqbCchGI5SsDTUqLRNuN6xeCInE0=",
+      "hash": "sha256-650YDB5G98sYS7m\/vllwBROd0lPuXuJ7ZI6WSZlBjAI=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -165,7 +165,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-zK+o1whkFuA\/V\/\/Nci1cBWPS4OMWhYz8C0WsxSB8BdM=",
+      "hash": "sha256-sMh67980NL9BqiONgJp4j1h1Or96F6ApMEP9cVE6xnU=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -293,7 +293,7 @@
       "url": "_framework\/System.ObjectModel.dll"
     },
     {
-      "hash": "sha256-ZxDDJBjlkYXNO++QWqxYrElOI91p7YkiHLT3UH5uEL0=",
+      "hash": "sha256-eRWjUizh98nIJ7CR+b95m\/B8jvdhpFK7YMvKy3oBY9I=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -313,7 +313,7 @@
       "url": "_framework\/System.Runtime.CompilerServices.Unsafe.dll"
     },
     {
-      "hash": "sha256-ccfoS44GtRcilic180S5v3hxXR7FJnberaotTbD0b6w=",
+      "hash": "sha256-zMa7NXSPkQVmS+d4ohGH8ycrk+WftonJ72Pqz6i2B5c=",
       "url": "_framework\/System.Runtime.dll"
     },
     {
@@ -377,7 +377,7 @@
       "url": "_framework\/dotnet.6.0.8.98z2438nxa.js"
     },
     {
-      "hash": "sha256-bPpeBX0tlVCfqb3Bg+tiAZPeZhMnqZyxlHM+mKeW5\/g=",
+      "hash": "sha256-Ks2V+DWimKTPB5w36opXikdkeuSbp\/0TWHMLD3pBr3E=",
       "url": "_framework\/dotnet.wasm"
     },
     {
@@ -397,5 +397,5 @@
       "url": "_content\/SqliteWasmHelper\/browserCache.js"
     }
   ],
-  "version": "vFpfpBih"
+  "version": "4P+sYxCN"
 };
