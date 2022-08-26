@@ -57,7 +57,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-A9L5oKXr1M7NplyDhvvAZ4zmIh3ywk+0sYuolM2r+fA=",
+      "hash": "sha256-9HmfDQW+4c+1+c9AS00\/vBHl1en2uS7YdCOl\/\/ZbXUU=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -165,7 +165,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-CQjmRANgUmqKyKWk7Ms63+xos3B\/BjL9hqOQNO4ZtCM=",
+      "hash": "sha256-Nu\/WPMpEMcnlNVpDdrffavZnjl0OIq5DwNmcZYaK2DI=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -397,5 +397,5 @@
       "url": "_content\/SqliteWasmHelper\/browserCache.js"
     }
   ],
-  "version": "py54kHRg"
+  "version": "e7MPFs6D"
 };
