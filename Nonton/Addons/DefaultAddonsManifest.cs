@@ -159,5 +159,18 @@
     ]
 }
 ";
+
+        public static string WatchHub =>
+            @"{
+    ""id"": ""org.stremio.watchhub"",
+    ""logo"": ""https://www.strem.io/images/watchhub-logo.png"",
+    ""version"": ""1.15.0"",
+    ""name"": ""WatchHub"",
+    ""description"": ""Find where to stream your favorite movies and shows amongst Netflix, iTunes, Hulu, Amazon, HBO GO and many others. Supports many countries."",
+    ""resources"": [""stream""],
+    ""types"": [""movie"", ""series""],
+    ""catalogs"": [],
+    ""idPrefixes"": [""tt""]}
+";
     }
 }

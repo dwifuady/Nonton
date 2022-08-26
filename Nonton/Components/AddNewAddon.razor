@@ -1,0 +1,17 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudInput T="string" @bind-Text="Url" FullWidth="true" Placeholder="Enter addon manifest url" Style="Width:500px"></MudInput>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Add</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    public string? Url { get; set; }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(Url));
+    void Cancel() => MudDialog.Cancel();
+}

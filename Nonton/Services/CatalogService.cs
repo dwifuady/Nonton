@@ -13,12 +13,6 @@ public class CatalogService : ICatalogService
         _addonService = addonService;
     }
 
-    private async Task<Addon?> LoadAddon()
-    {
-        var addons = await _addonService.LoadAllAddons();
-        return addons?.FirstOrDefault();
-    }
-
     public async Task<Discover?> GetMovies()
     {
         var addon = await _addonService.LoadDefaultCatalogAddons();

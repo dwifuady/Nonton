@@ -11,6 +11,8 @@ namespace Nonton.Dtos.Manifest
         public string? TransportUrl { get; set; }
 
         [JsonIgnore] 
-        public string BaseUri => string.IsNullOrWhiteSpace(TransportUrl) ? string.Empty : new Uri(TransportUrl).GetLeftPart(UriPartial.Authority);
+        public string BaseUri => string.IsNullOrWhiteSpace(TransportUrl) ? string.Empty : TransportUrl.Replace("/manifest.json", "");
+
+        [JsonIgnore] public bool IsDefaultAddon { get; set; }
     }
 }
