@@ -57,7 +57,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-6Iy3\/0G6vZpeGmcI1PyNybNRUsHdK2nn\/UZta5snRbQ=",
+      "hash": "sha256-jRTXH+Iks2IggrpbZQ0KfVLwKbmSvqC3Kdw5ierIQiE=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -165,7 +165,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-Ho5GxyXHjjNambxWW7hg8Co4G\/6OiByfRkCpgQXMkG4=",
+      "hash": "sha256-E0txPFJ4OWXwNkfU4RXQMhoHgThPpfxI0MCCPTVrJnU=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -397,5 +397,5 @@
       "url": "_content\/SqliteWasmHelper\/browserCache.js"
     }
   ],
-  "version": "P\/c+BlT5"
+  "version": "BSBagLLt"
 };
