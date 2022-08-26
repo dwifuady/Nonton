@@ -8,7 +8,8 @@
     {
         @if (discover?.Metas is not null)
         {
-            <ContentSlider CatalogName="@discover.CatalogName" Metas="discover.Metas"></ContentSlider>
+            @*<ContentSlider CatalogName="@discover.CatalogName" Metas="discover.Metas"></ContentSlider>*@
+            <ContentCards CatalogName="@discover.CatalogName" Metas="@discover.Metas"></ContentCards>
         }
     }
 }
