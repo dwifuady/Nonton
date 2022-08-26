@@ -1,0 +1,70 @@
+/* /Components/ContentSlider.razor.rz.scp.css */
+.wrapper-item[b-weao56uvui] {
+    display: grid;
+    grid-template-columns: repeat(10, 100%);
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+.wrapper-item section[b-weao56uvui] {
+    width: 100%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    margin: 20px 0;
+}
+
+.wrapper-item section .item[b-weao56uvui] {
+    position: relative;
+    padding: 0 2px;
+    transition: 250ms all;
+}
+
+.wrapper-item section .item:hover[b-weao56uvui] {
+    margin: 0 40px;
+    transform: scale(1.1);
+}
+
+.wrapper-item section .item .heading[b-weao56uvui] {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+}
+
+.wrapper-item section .item .duration[b-weao56uvui] {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    color: #fff;
+}
+
+.wrapper-item section .arrow__btn[b-weao56uvui] {
+    position: absolute;
+    color: #fff;
+    text-decoration: none;
+    font-size: 6em;
+    background: black;
+    width: 80px;
+    padding: 20px;
+    text-align: center;
+    z-index: 1;
+}
+
+    .wrapper-item section .left-arrow[b-weao56uvui] {
+        top: 25%;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, black 170%);
+        border-radius: 20px;
+        height: 35%;
+    }
+
+    .wrapper-item section .right-arrow[b-weao56uvui] {
+        top: 25%;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, black 170%);
+        border-radius: 20px;
+        height: 35%;
+    }

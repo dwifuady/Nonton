@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Nonton</title>
+    <base href="/Nonton/" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="Nonton.styles.css" rel="stylesheet" />
+    <link href="https://vjs.zencdn.net/7.20.2/video-js.css" rel="stylesheet" />
+    <link href="manifest.json" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+</head>
+
+<body style="background-color: #32333d;">
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.2/video.min.js"></script>
+    <script>
+        window.initVideo = (url) => {
+            videojs.Vhs.GOAL_BUFFER_LENGTH = 100;
+            videojs.Vhs.MAX_GOAL_BUFFER_LENGTH = 150;
+            let player = videojs(document.getElementById('video-content'));
+            player.src(url);
+
+            player.ready(function () {
+                var promise = player.play();
+
+                if (promise !== undefined) {
+                    promise.then(function () {
+                        // Autoplay started!
+                    }).catch(function (error) {
+                        // Autoplay was prevented.
+                    });
+                }
+            });
+        };
+        window.focus = (id) => {
+            document.getElementById(id).focus();
+        }
+    </script>
+    <script>navigator.serviceWorker.register('service-worker.js');</script>
+</body>
+
+</html>
