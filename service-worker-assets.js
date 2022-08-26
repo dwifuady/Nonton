@@ -13,6 +13,10 @@
       "url": "css\/app.css"
     },
     {
+      "hash": "sha256-10aXol7Onqv85rtqJQkZlzfW6xUpX0kH79yOSrF0JS8=",
+      "url": "decode.min.js"
+    },
+    {
       "hash": "sha256-O2NdzRW4hz7DoMdkOwEFNGbCCJoUTtBInSXnTE9EX9M=",
       "url": "favicon.ico"
     },
@@ -25,7 +29,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-z5ZNfIj\/Rd7ya2HsPAZdPXG5nVBV4XpIs47XMswDkQg=",
+      "hash": "sha256-OYZQggeFlYFYQhK00dwkpSkenZt9K61ioqaU2zvChd4=",
       "url": "index.html"
     },
     {
@@ -35,10 +39,6 @@
     {
       "hash": "sha256-xbodEx8SfFjQwcIT9kTWPiIKFbpZEXVvF1mQEx0KlPU=",
       "url": "_framework\/blazor.webassembly.js"
-    },
-    {
-      "hash": "sha256-2NJf++ql6UnbRRdYWEir6MxH58bYGWDEqofII\/z+Xmo=",
-      "url": "_framework\/dotnet.timezones.blat"
     },
     {
       "hash": "sha256-WPyI4hWDPnOw62Nr27FkzGjdbucZnQD+Ph+GOPhAedw=",
@@ -57,7 +57,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-jRTXH+Iks2IggrpbZQ0KfVLwKbmSvqC3Kdw5ierIQiE=",
+      "hash": "sha256-n4JcKFrWTOytXUuyR5KhJrqTUQCi35P3AQWe\/cZ6agU=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -397,5 +397,5 @@
       "url": "_content\/SqliteWasmHelper\/browserCache.js"
     }
   ],
-  "version": "BSBagLLt"
+  "version": "ejox9gdV"
 };
