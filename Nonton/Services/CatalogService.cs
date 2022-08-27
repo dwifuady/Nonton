@@ -7,38 +7,28 @@ using Refit;
 namespace Nonton.Services;
 public class CatalogService : ICatalogService
 {
-    private readonly IAddonService _addonService;
-    public CatalogService(IAddonService addonService)
+    public async Task<IEnumerable<Catalog>?> GetAddonsDefaultCatalogs(Addon addon)
     {
-        _addonService = addonService;
+        if (addon.Manifest?.Catalogs != null && addon.Manifest.Catalogs.Any())
+        {
+            return await Task.FromResult(
+                    addon.Manifest.Catalogs
+                        .Where(x =>
+                            x.Type is AddonConstants.TypeMovie or AddonConstants.TypeSeries &&
+                            ((x.ExtraRequired != null && !x.ExtraRequired.Any()) || x.ExtraRequired is null))
+            );
+        }
+
+        return null;
     }
 
-    public async Task<Discover?> GetMovies()
-    {
-        var addon = await _addonService.LoadDefaultCatalogAddons();
-        if (addon == null) return null;
-
-        var defaultId = addon?.Manifest?.Catalogs?.FirstOrDefault(x => (x.ExtraRequired != null && !x.ExtraRequired.Any()) || x.ExtraRequired is null)?.Id;
-
-        if (string.IsNullOrWhiteSpace(defaultId)) return null;
-
-        var stremioApi = RestService.For<IStremioApi>(addon!.BaseUri);
-        return await stremioApi.GetCatalogByCatalogId(AddonConstants.TypeMovie, defaultId);
-    }
-
-    public async Task<Discover> GetMoviesByCatalog(Addon addon, string catalogId)
+    public async Task<Discover> GetDiscoverItem(Addon addon, string type, string catalogId, string genre = "")
     {
         var api = RestService.For<IStremioApi>(addon.BaseUri);
-        return await api.GetCatalogByCatalogId(AddonConstants.TypeMovie, catalogId);
-    }
 
-    public Task<Discover> GetMoviesByCatalog(string catalogId)
-    {
-        throw new NotImplementedException();
-    }
+        if (string.IsNullOrWhiteSpace(genre))
+            return await api.GetCatalogByCatalogId(type, catalogId);
 
-    public Task<Discover> GetMoviesByCatalogGenre(string catalogId, string genre)
-    {
-        throw new NotImplementedException();
+        return await api.GetCatalogByGenre(type, catalogId, genre);
     }
 }

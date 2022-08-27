@@ -1,4 +1,6 @@
-﻿namespace Nonton.Commons
+﻿using System.Globalization;
+
+namespace Nonton.Commons
 {
     public static class AddonConstants
     {
@@ -10,5 +12,7 @@
         public const string TypeMovie = "movie";
         public const string TypeSeries = "series";
 
+        public static string ToTitleCase(this string s) =>
+            CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
     }
 }
