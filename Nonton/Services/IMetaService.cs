@@ -4,6 +4,6 @@ namespace Nonton.Services
 {
     public interface IMetaService
     {
-        Task<Detail> GetMovieMeta(string id);
+        Task<Detail> GetMeta(string type, string id);
     }
 }

@@ -8,8 +8,8 @@ namespace Nonton.Pages
 {
     public partial class Detail
     {
-        [Parameter]
-        public string Id { get; set; } = null!;
+        [Parameter] public string Id { get; set; } = null!;
+        [Parameter] public string Type { get; set; } = null!;
 
         [Inject] public IDialogService DialogService { get; set; } = null!;
         [Inject] public IMetaService MetaService { get; set; } = null!;
@@ -22,7 +22,7 @@ namespace Nonton.Pages
         
         protected override async Task OnParametersSetAsync()
         {
-            var detail = await MetaService.GetMovieMeta(Id);
+            var detail = await MetaService.GetMeta(Type, Id);
             ContentMeta = detail.Meta;
 
             StateHasChanged();

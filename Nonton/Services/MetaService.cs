@@ -12,7 +12,8 @@ namespace Nonton.Services
         {
             _addonService = addonService;
         }
-        public async Task<Detail> GetMovieMeta(string id)
+
+        public async Task<Detail> GetMeta(string type, string id)
         {
             var metaAddons = await _addonService.LoadAllMetaAddons();
 
@@ -23,7 +24,7 @@ namespace Nonton.Services
             {
                 var api = RestService.For<IStremioApi>(metaAddon.BaseUri);
 
-                detail = await api.GetMovieMeta(id);
+                detail = await api.GetMeta(type, id);
 
                 if (detail is { Meta: { } }) break;
             }

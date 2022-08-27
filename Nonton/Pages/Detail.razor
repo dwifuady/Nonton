@@ -1,4 +1,4 @@
-﻿@page "/detail/{id}"
+﻿@page "/detail/{type}/{id}"
 
 
 <PageTitle>@(ContentMeta is null ? "Nonton" : $"{ContentMeta?.Name} ({@ContentMeta?.Year})")</PageTitle>
@@ -25,7 +25,10 @@
                     {
                         <MudChip Color="Color.Dark" Icon="@IconConstants.ImdbIcon">@ContentMeta.ImdbRating</MudChip>
                     }
-                    <MudChip Color="Color.Dark" Icon="@Icons.Filled.Watch">@ContentMeta.Runtime</MudChip>
+                    @if (!string.IsNullOrWhiteSpace(ContentMeta.Runtime))
+                    {
+                        <MudChip Color="Color.Dark" Icon="@Icons.Filled.Watch">@ContentMeta.Runtime</MudChip>
+                    }
                 </div>
                 <MudPaper Height="auto" Width="650px" Style="padding: 20px 20px 20px 20px; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
                     <MudText Typo="Typo.subtitle1">@ContentMeta.Description</MudText>
@@ -42,7 +45,10 @@
                     }
                 </MudPaper>
                 <div class="d-flex flex-row" style="gap: 10px;">
-                    <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" @onclick="PlayTrailer">Trailer</MudButton>
+                    @if (!string.IsNullOrWhiteSpace(ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId))
+                    {
+                        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" @onclick="PlayTrailer">Trailer</MudButton>
+                    }
                     <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" StartIcon="@Icons.Filled.PlayArrow" @onclick="() => Watch(ContentMeta.ImdbId!)">Watch</MudButton>
                 </div>
             </div>

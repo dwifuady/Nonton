@@ -5,8 +5,8 @@ namespace Nonton.Api
 {
     public interface IStremioApi
     {
-        [Get("/meta/movie/{id}.json")]
-        Task<Detail> GetMovieMeta(string id);
+        [Get("/meta/{type}/{id}.json")]
+        Task<Detail> GetMeta(string type, string id);
 
         [Get("/stream/movie/{id}.json")]
         Task<StreamResponse> GetMovieStream(string id);
