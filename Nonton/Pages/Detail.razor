@@ -7,188 +7,47 @@
 {
     <div style="background-image: url('@ContentMeta.Background'); margin: -70px -28px -85px -85px; box-shadow: inset 0 250px 250px black; height: 98vh; background-repeat: no-repeat; background-position: center; background-size: cover;">
         <div style="padding: 70px 25px 85px 85px">
-            @if (IsPlaying)
-            {
-                <MudGrid>
-                    <MudItem xs="12" sm="12" md="7" Style="height: 550px">
-                        <Player Url="@ContentUrl"></Player>
-                    </MudItem>
-                    <MudItem md="5">
-                        <div class="d-flex flex-column" style="align-items: center; gap: 15px">
-                            <MudImage Src="@ContentMeta.Logo" ObjectFit="ObjectFit.Contain" Width="400"></MudImage>
-                            @if (ContentMeta.Genres is not null)
-                            {
-                                <div class="d-flex flex-row">
-                                    @foreach (var genre in ContentMeta.Genres)
-                                    {
-                                        <MudChip Color="Color.Dark">@genre</MudChip>
-                                    }
-                                </div>
-                            }
-                            <div class="d-flex flex-row">
-                                <MudChip Color="Color.Dark" Icon="@Icons.Filled.CalendarToday">@ContentMeta.Year</MudChip>
-                                @if (!string.IsNullOrWhiteSpace(ContentMeta.ImdbRating))
-                                {
-                                    <MudChip Color="Color.Dark" Icon="@IconConstants.ImdbIcon">@ContentMeta.ImdbRating</MudChip>
-                                }
-                                <MudChip Color="Color.Dark" Icon="@Icons.Filled.Watch">@ContentMeta.Runtime</MudChip>
-                            </div>
-                            <MudPaper Height="auto" Width="650px" Style="padding: 20px 20px 20px 20px; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
-                                <MudText Typo="Typo.subtitle1">@ContentMeta.Description</MudText>
-                                <br/>
-                                <MudDivider DividerType="DividerType.FullWidth" Light="true"></MudDivider>
-                                <br/>
-                                @if (ContentMeta?.Director is not null && ContentMeta.Director.Any())
-                                {
-                                    <MudText Typo="Typo.subtitle1">Director : @string.Join(", ", ContentMeta.Director)</MudText>
-                                }
-                                @if (ContentMeta?.Cast is not null && ContentMeta.Cast.Any())
-                                {
-                                    <MudText Typo="Typo.subtitle1">Cast : @string.Join(", ", ContentMeta.Cast)</MudText>
-                                }
-                            </MudPaper>
-                        </div>
-                    </MudItem>
-                </MudGrid>
-                
-            }
-            else
-            {   
-                <div class="d-flex flex-column" style="align-items: center; gap: 15px">
-                    <MudImage Src="@ContentMeta.Logo" ObjectFit="ObjectFit.Contain" Width="400"></MudImage>
-                    <MudText Typo="Typo.h4" Style="display: none;">@ContentMeta?.Name</MudText>
-                    @if (ContentMeta.Genres is not null)
-                    {
-                        <div class="d-flex flex-row">
-                            @foreach (var genre in ContentMeta.Genres)
-                            {
-                                <MudChip Color="Color.Dark">@genre</MudChip>
-                            }
-                        </div>
-                    }
+            <div class="d-flex flex-column" style="align-items: center; gap: 15px">
+                <MudImage Src="@ContentMeta.Logo" ObjectFit="ObjectFit.Contain" Width="400"></MudImage>
+                <MudText Typo="Typo.h4" Style="display: none;">@ContentMeta?.Name</MudText>
+                @if (ContentMeta.Genres is not null)
+                {
                     <div class="d-flex flex-row">
-                        <MudChip Color="Color.Dark" Icon="@Icons.Filled.CalendarToday">@ContentMeta.Year</MudChip>
-                        @if (!string.IsNullOrWhiteSpace(ContentMeta.ImdbRating))
+                        @foreach (var genre in ContentMeta.Genres)
                         {
-                            <MudChip Color="Color.Dark" Icon="@IconConstants.ImdbIcon">@ContentMeta.ImdbRating</MudChip>
+                            <MudChip Color="Color.Dark">@genre</MudChip>
                         }
-                        <MudChip Color="Color.Dark" Icon="@Icons.Filled.Watch">@ContentMeta.Runtime</MudChip>
                     </div>
-                    <MudPaper Height="auto" Width="650px" Style="padding: 20px 20px 20px 20px; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
-                        <MudText Typo="Typo.subtitle1">@ContentMeta.Description</MudText>
-                        <br/>
-                        <MudDivider DividerType="DividerType.FullWidth" Light="true"></MudDivider>
-                        <br/>
-                        @if (ContentMeta?.Director is not null && ContentMeta.Director.Any())
-                        {
-                            <MudText Typo="Typo.subtitle1">Director : @string.Join(", ", ContentMeta.Director)</MudText>
-                        }
-                        @if (ContentMeta?.Cast is not null && ContentMeta.Cast.Any())
-                        {
-                            <MudText Typo="Typo.subtitle1">Cast : @string.Join(", ", ContentMeta.Cast)</MudText>
-                        }
-                    </MudPaper>
-                    <div class="d-flex flex-row" style="gap: 10px;">
-                        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" @onclick="PlayTrailer">Trailer</MudButton>
-                        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" StartIcon="@Icons.Filled.PlayArrow" @onclick="SelectSource">Watch</MudButton>
-                    </div>
+                }
+                <div class="d-flex flex-row">
+                    <MudChip Color="Color.Dark" Icon="@Icons.Filled.CalendarToday">@ContentMeta.Year</MudChip>
+                    @if (!string.IsNullOrWhiteSpace(ContentMeta.ImdbRating))
+                    {
+                        <MudChip Color="Color.Dark" Icon="@IconConstants.ImdbIcon">@ContentMeta.ImdbRating</MudChip>
+                    }
+                    <MudChip Color="Color.Dark" Icon="@Icons.Filled.Watch">@ContentMeta.Runtime</MudChip>
                 </div>
-            }
+                <MudPaper Height="auto" Width="650px" Style="padding: 20px 20px 20px 20px; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
+                    <MudText Typo="Typo.subtitle1">@ContentMeta.Description</MudText>
+                    <br />
+                    <MudDivider DividerType="DividerType.FullWidth" Light="true"></MudDivider>
+                    <br />
+                    @if (ContentMeta?.Director is not null && ContentMeta.Director.Any())
+                    {
+                        <MudText Typo="Typo.subtitle1">Director : @string.Join(", ", ContentMeta.Director)</MudText>
+                    }
+                    @if (ContentMeta?.Cast is not null && ContentMeta.Cast.Any())
+                    {
+                        <MudText Typo="Typo.subtitle1">Cast : @string.Join(", ", ContentMeta.Cast)</MudText>
+                    }
+                </MudPaper>
+                <div class="d-flex flex-row" style="gap: 10px;">
+                    <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" @onclick="PlayTrailer">Trailer</MudButton>
+                    <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" StartIcon="@Icons.Filled.PlayArrow" @onclick="() => Watch(ContentMeta.ImdbId!)">Watch</MudButton>
+                </div>
+            </div>
         </div>
     </div>
-
-    <MudDrawer @bind-Open="@_openDrawer" Width="30%" Height="100%" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">Select Source</MudText>
-        </MudDrawerHeader>
-        <LoadingContainer State="LoadingStateStreamSource">
-            <Loading>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Style="height: 50px;" Class="my-2 mx-4"></MudSkeleton>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Style="height: 50px;" Class="my-2 mx-4"></MudSkeleton>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Style="height: 50px;" Class="my-2 mx-4"></MudSkeleton>
-            </Loading>
-            <Loaded>
-                @{
-                    if (StreamResponses is not null && StreamResponses.Any())
-                    {
-                        foreach (var streamResponse in StreamResponses)
-                        {
-                            if (streamResponse?.Streams != null && streamResponse.Streams.Any())
-                            {
-                                var groupedStreamSource = streamResponse.Streams.GroupBy(x => x.Name);
-                                var streamSources = groupedStreamSource as IGrouping<string?, Stream>[] ?? groupedStreamSource.ToArray();
-                                <MudExpansionPanels>
-                                    @foreach (var streamSource in streamSources)
-                                    {
-                                        var sources = streamResponse.Streams.Where(s => s.Name == streamSource.Key);
-                                        <MudExpansionPanel Text="@streamSource.Key">
-                                            @foreach (var stream in sources)
-                                            {
-                                                @if (!string.IsNullOrWhiteSpace(stream.ExternalUrl))
-                                                {
-                                                    <MudButton ButtonType="ButtonType.Button" Color="Color.Dark" Variant="Variant.Filled" Size="Size.Large" Style="padding-top: 15px; padding-bottom: 15px; width: 100%; margin-top: 5px; margin-bottom: 5px;" Href="@stream.ExternalUrl" Target="blank">
-                                                        @stream.Name (@stream.Title)
-                                                    </MudButton>
-                                                }
-                                                else if (!string.IsNullOrWhiteSpace(stream.Url))
-                                                {
-                                                    <MudButton 
-                                                        ButtonType="ButtonType.Button" 
-                                                        Color="Color.Dark" 
-                                                        Variant="Variant.Filled" 
-                                                        Size="Size.Large" 
-                                                        Style="padding-top: 15px; padding-bottom: 15px;" 
-                                                        OnClick="() => PlayContent(stream.Url)"
-                                                        Target="blank">
-                                                        @stream.Name (@stream.Title)
-                                                    </MudButton>
-                                                }
-                                            }
-                                        </MudExpansionPanel>
-                                    }
-                                </MudExpansionPanels>
-                                @foreach (var stream in streamResponse!.Streams!.Where(s => !streamSources.Select(x => x.Key).Contains(s.Name)))
-                                {
-                                    @if (!string.IsNullOrWhiteSpace(stream.ExternalUrl))
-                                    {
-                                        <MudButton 
-                                            ButtonType="ButtonType.Button" 
-                                            Color="Color.Dark" 
-                                            Variant="Variant.Filled" 
-                                            Size="Size.Large" 
-                                            Style="padding-top: 15px; padding-bottom: 15px;" 
-                                            Href="@stream.ExternalUrl" 
-                                            Target="blank">
-                                            @stream.Name (@stream.Title)
-                                        </MudButton>
-                                    }
-                                    else if (!string.IsNullOrWhiteSpace(stream.Url))
-                                    {
-                                        <MudButton 
-                                            ButtonType="ButtonType.Button" 
-                                            Color="Color.Dark" 
-                                            Variant="Variant.Filled" 
-                                            Size="Size.Large" 
-                                            Style="padding-top: 15px; padding-bottom: 15px;" 
-                                            OnClick="() => PlayContent(stream.Url)"
-                                            Target="blank">
-                                            @stream.Name (@stream.Title)
-                                        </MudButton>
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            </Loaded>
-            <Empty>
-                <MudText Typo="Typo.h5" Style="padding-left:25px;">No streams were found</MudText>
-            </Empty>
-            <Error>
-                <MudText Typo="Typo.h5" Style="padding-left:25px;">Problems when trying to get stream source</MudText>
-            </Error>
-        </LoadingContainer>
-    </MudDrawer>
 }
 
 

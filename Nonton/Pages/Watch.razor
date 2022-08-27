@@ -1,0 +1,6 @@
+﻿@page "/watch/{id}"
+
+@if (!string.IsNullOrWhiteSpace(ContentUrl))
+{
+    <Player Url="@ContentUrl"></Player>
+}
