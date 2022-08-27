@@ -62,7 +62,7 @@ public class Meta
     public string? Logo { get; set; }
 
     [JsonPropertyName("popularity")]
-    public double Popularity { get; set; }
+    public double? Popularity { get; set; }
 
     [JsonPropertyName("id")] 
     public string Id { get; set; } = null!;

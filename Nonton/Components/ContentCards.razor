@@ -1,30 +1,68 @@
 ﻿@inject NavigationManager NavigationManager
+@inject ICatalogService CatalogService
 @inject IJSRuntime JsRuntime
 
-<MudText Typo="Typo.body1">@CatalogName</MudText>
-
-<section class="no-scrollbar content-cards-container" id="content-container-@CatalogName">
-    @foreach (var meta in Metas)
-    {
-        <div class="w-[150px] flex-none rounded snap-center snap-always" @onclick="() => ViewDetail(meta.ImdbId!)">
-            <div class="d-flex flex-column" style="place-items: center;">
-                <MudImage Src="@meta.Poster" Width="145" Height="250" Elevation="25" Class="rounded-lg ma-4 cursor-pointer" ObjectFit="ObjectFit.Cover"></MudImage>
-                <span style="text-align: center">@meta.Name (@meta.Year)</span>
-            </div>
+<LoadingContainer State="LoadingContainerState">
+    <Loading>
+        <div class="d-flex flex-column">
+            <MudSkeleton SkeletonType="SkeletonType.Text" Height="50px" Width="150px"></MudSkeleton>
+            <section class="no-scrollbar content-cards-container">
+                @for (var i = 0; i < 10; i++)
+                {
+                    <div class="d-flex flex-column">
+                        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="240px" Width="150px" Class="w-[150px] flex-none rounded snap-center snap-always"></MudSkeleton>
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Height="50px" Width="150px"></MudSkeleton>
+                    </div>
+                }
+            </section>
         </div>
-    }
-</section>
+    </Loading>
+    <Loaded>
+        @if (Metas is not null)
+        {
+            <MudText Typo="Typo.body1">@Catalog.Type?.ToTitleCase() - @Catalog?.Name</MudText>
+
+            <section class="no-scrollbar content-cards-container" id="content-container-@Catalog.Type-@Catalog?.Name">
+                @foreach (var meta in Metas)
+                {
+                    <div class="w-[150px] flex-none rounded snap-center snap-always" @onclick="() => ViewDetail(meta.ImdbId!)">
+                        <div class="d-flex flex-column" style="place-items: center;">
+                            <MudImage Src="@meta.Poster" Width="145" Height="250" Elevation="25" Class="rounded-lg ma-4 cursor-pointer" ObjectFit="ObjectFit.Cover"></MudImage>
+                            <span style="text-align: center">@meta.Name</span>
+                        </div>
+                    </div>
+                }
+            </section>
+        }
+    </Loaded>
+</LoadingContainer>
 
 @code {
-    [Parameter]
-    public string? CatalogName { get; set; }
 
     [Parameter]
-    public IEnumerable<Meta> Metas { get; set; } = null!;
+    public Catalog Catalog { get; set; } = null!;
+
+    [Parameter]
+    public Addon Addon { get; set; } = null!;
+
+    public IEnumerable<Meta>? Metas { get; set; }
+
+    public LoadingContainerState LoadingContainerState { get; set; } = LoadingContainerState.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        LoadingContainerState = LoadingContainerState.Loading;
+        var discoverItem = await CatalogService.GetDiscoverItem(Addon, Catalog.Type!, Catalog.Id!);
+        Metas = discoverItem.Metas;
+        LoadingContainerState = LoadingContainerState.Loaded;
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JsRuntime.InvokeVoidAsync("forceHorizontalScroll", $"content-container-{CatalogName}");
+        if (!string.IsNullOrWhiteSpace(Catalog.Name))
+        {
+            await JsRuntime.InvokeVoidAsync("forceHorizontalScroll", $"content-container-{Catalog.Type}-{Catalog.Name}");
+        }
     }
 
     public async Task ViewDetail(string id)

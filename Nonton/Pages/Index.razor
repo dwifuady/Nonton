@@ -1,15 +1,18 @@
 ﻿@page "/"
 
-<PageTitle>Discover - Movies</PageTitle>
+<PageTitle>Discover</PageTitle>
 
-@if (Discovers.Any())
+@if (Addons is not null && Addons.Any())
 {
-    @foreach (var discover in Discovers)
+    foreach (var addon in Addons)
     {
-        @if (discover?.Metas is not null)
+        var defaultCatalogs = addon.GetDefaultCatalogs()?.ToList();
+        if (defaultCatalogs is not null && defaultCatalogs.Any())
         {
-            @*<ContentSlider CatalogName="@discover.CatalogName" Metas="discover.Metas"></ContentSlider>*@
-            <ContentCards CatalogName="@discover.CatalogName" Metas="@discover.Metas"></ContentCards>
+            foreach (var catalog in defaultCatalogs)
+            {
+                <ContentCards Addon="addon" Catalog="catalog"></ContentCards>
+            }
         }
     }
 }
