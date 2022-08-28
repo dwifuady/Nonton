@@ -5,11 +5,11 @@ namespace Nonton.Api
 {
     public interface IStremioApi
     {
-        [Get("/meta/movie/{id}.json")]
-        Task<Detail> GetMovieMeta(string id);
+        [Get("/meta/{type}/{id}.json")]
+        Task<Detail> GetMeta(string type, string id);
 
-        [Get("/stream/movie/{id}.json")]
-        Task<StreamResponse> GetMovieStream(string id);
+        [Get("/stream/{type}/{id}.json")]
+        Task<StreamResponse> GetStream(string type, string id);
 
         [Get("/catalog/{type}/{id}.json")]
         Task<Discover> GetCatalogByCatalogId(string type, string id);

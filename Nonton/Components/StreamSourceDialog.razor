@@ -54,6 +54,20 @@
                                                             @stream.Name (@stream.Title)
                                                         </MudButton>
                                                     }
+                                                    else if (!string.IsNullOrWhiteSpace(stream.InfoHash))
+                                                    {
+                                                        <MudButton ButtonType="ButtonType.Button"
+                                                           Color="Color.Dark"
+                                                           Variant="Variant.Filled"
+                                                           Size="Size.Large"
+                                                           Style="padding-top: 15px; padding-bottom: 15px;"
+                                                           OnClick="() => PlayContent(stream.Url)"
+                                                           Target="blank"
+                                                           Disabled="true"
+                                                           >
+                                                            @stream.Name (@stream.Title)
+                                                        </MudButton>
+                                                    }
                                                 }
                                             </div>
                                         </MudExpansionPanel>

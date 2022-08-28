@@ -67,6 +67,6 @@
 
     public async Task ViewDetail(string id)
     {
-        await Task.Run(() => NavigationManager.NavigateTo($"detail/{id}"));
+        await Task.Run(() => NavigationManager.NavigateTo($"detail/{Catalog.Type}/{id}"));
     }
 }

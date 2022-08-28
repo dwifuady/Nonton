@@ -8,6 +8,7 @@ namespace Nonton.Pages
     public partial class Watch
     {
         [Parameter] public string? Id { get; set; }
+        [Parameter] public string Type { get; set; } = null!;
 
         [Inject] public IMetaService MetaService { get; set; } = null!;
         [Inject] public IStreamService StreamService { get; set; } = null!;
@@ -26,6 +27,7 @@ namespace Nonton.Pages
         {
             var dialogParameters = new DialogParameters
             {
+                { "type", Type},
                 { "Id", Id }
             };
 

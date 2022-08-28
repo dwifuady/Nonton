@@ -2,7 +2,6 @@
 using MudBlazor;
 using Nonton.Dtos;
 using Nonton.Services;
-using System;
 
 namespace Nonton.Components
 {
@@ -11,8 +10,8 @@ namespace Nonton.Components
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; } = null!;
 
-        [Parameter]
-        public string? Id { get; set; }
+        [Parameter] public string? Type { get; set; }
+        [Parameter] public string? Id { get; set; }
 
         [Inject] public IStreamService StreamService { get; set; } = null!;
         [Inject] public NavigationManager NavigationManager { get; set; } = null!;
@@ -57,7 +56,7 @@ namespace Nonton.Components
 
         private void Close()
         {
-            NavigationManager.NavigateTo($"detail/{Id}");
+            NavigationManager.NavigateTo($"detail/{Type}/{Id}");
         }
     }
 }
