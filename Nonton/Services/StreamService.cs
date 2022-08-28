@@ -1,4 +1,5 @@
 ﻿using Nonton.Api;
+using Nonton.Commons;
 using Nonton.Dtos;
 using Refit;
 
@@ -21,10 +22,16 @@ namespace Nonton.Services
 
             if (streamAddons == null) return streamResponses;
 
+            var streamType = AddonConstants.TypeMovie;
+            if (id.Contains(":"))
+            {
+                streamType = AddonConstants.TypeSeries;
+            }
+
             foreach (var streamAddon in streamAddons)
             {
                 var api = RestService.For<IStremioApi>(streamAddon.BaseUri);
-                var streamResponse = await api.GetMovieStream(id);
+                var streamResponse = await api.GetStream(streamType, id);
                 if (streamResponse.Streams != null && streamResponse.Streams.Any())
                 {
                     streamResponses.Add(streamResponse);

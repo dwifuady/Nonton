@@ -49,8 +49,53 @@
                     {
                         <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" @onclick="PlayTrailer">Trailer</MudButton>
                     }
-                    <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" StartIcon="@Icons.Filled.PlayArrow" @onclick="() => Watch(ContentMeta.ImdbId!)">Watch</MudButton>
+                    @if (Type == AddonConstants.TypeMovie)
+                    {
+                        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" StartIcon="@Icons.Filled.PlayArrow" @onclick="() => Watch(ContentMeta.ImdbId!)">Watch</MudButton>
+                    }
                 </div>
+                @if (Seasons.Any())
+                {
+                    <div style="width: 650px; display: flex; flex-direction: column; justify-content: center; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px); padding: 5px 20px 20px 20px; border-radius: 10px;">
+                        <MudSelect T="string" Label="Seasons" AnchorOrigin="Origin.TopCenter" @bind-Value="SelectedSeason">
+                            @{
+                                foreach (var season in Seasons)
+                                {
+                                    <MudSelectItem Value="@(season != 0 ? $"{season}" : "Special")" />
+                                }
+                            }
+                        </MudSelect>
+
+                        @if (!string.IsNullOrWhiteSpace(SelectedSeason))
+                        {
+                            <div style="max-height: 200px; overflow-y: auto">
+                                @{
+                                    var episodes = ContentMeta?.Videos?.Where(e => e.Season.HasValue && e.Season == (SelectedSeason.Equals("Special") ? 0 : int.Parse(SelectedSeason))).ToList();
+                                    if (episodes != null && episodes.Any())
+                                    {
+                                        <MudExpansionPanels MultiExpansion="false">
+                                            @foreach (var episode in episodes)
+                                            {
+                                                <MudExpansionPanel Text="@($"{episode.Number} - {episode.Name}")">
+                                                    <div class="d-flex flex-column">
+                                                        <MudText Typo="Typo.subtitle2">@episode.Description</MudText>
+                                                        <MudButton Variant="Variant.Filled"
+                                                                   ButtonType="ButtonType.Button"
+                                                                   Color="Color.Dark"
+                                                                   StartIcon="@Icons.Filled.PlayArrow"
+                                                                   @onclick="() => Watch(ContentMeta!.ImdbId!, SelectedSeason, episode.Number.ToString()!)">
+                                                            Watch
+                                                        </MudButton>
+                                                    </div>
+                                                </MudExpansionPanel>
+                                            }
+                                        </MudExpansionPanels>
+                                    }
+                                }
+                            </div>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>

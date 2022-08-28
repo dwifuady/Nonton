@@ -84,4 +84,7 @@ public class Meta
 
     [JsonPropertyName("runtime")]
     public string? Runtime { get; set; }
+
+    [JsonPropertyName("videos")]
+    public List<Video>? Videos { get; set; }
 }
