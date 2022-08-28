@@ -18,9 +18,16 @@
         </div>
     </Loading>
     <Loaded>
-        @if (Metas is not null)
+        @if (Metas is not null && Metas.Any())
         {
-            <MudText Typo="Typo.body1">@Catalog.Type?.ToTitleCase() - @Catalog?.Name</MudText>
+            @if (SearchMode)
+            {
+                <MudText Typo="Typo.body1">@Addon.Manifest!.Name - @Catalog.Type?.ToTitleCase()</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.body1">@Catalog.Type?.ToTitleCase() - @Catalog?.Name</MudText>
+            }
 
             <section class="no-scrollbar content-cards-container" id="content-container-@Catalog.Type-@Catalog?.Name">
                 @foreach (var meta in Metas)
@@ -45,6 +52,12 @@
     [Parameter]
     public Addon Addon { get; set; } = null!;
 
+    [Parameter]
+    public bool SearchMode { get; set; }
+
+    [Parameter]
+    public string? SearchQuery { get; set; }
+
     public IEnumerable<Meta>? Metas { get; set; }
 
     public LoadingContainerState LoadingContainerState { get; set; } = LoadingContainerState.Empty;
@@ -52,9 +65,22 @@
     protected override async Task OnParametersSetAsync()
     {
         LoadingContainerState = LoadingContainerState.Loading;
-        var discoverItem = await CatalogService.GetDiscoverItem(Addon, Catalog.Type!, Catalog.Id!);
-        Metas = discoverItem.Metas;
+        await LoadItems();
         LoadingContainerState = LoadingContainerState.Loaded;
+    }
+
+    private async Task LoadItems()
+    {
+        if (SearchMode && !string.IsNullOrWhiteSpace(SearchQuery))
+        {
+            var discoverItem = await CatalogService.Search(Addon, Catalog.Type!, Catalog.Id!, SearchQuery);
+            Metas = discoverItem.Metas;
+        }
+        else
+        {
+            var discoverItem = await CatalogService.GetDiscoverItem(Addon, Catalog.Type!, Catalog.Id!);
+            Metas = discoverItem.Metas;
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

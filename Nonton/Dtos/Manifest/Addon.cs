@@ -31,5 +31,18 @@ namespace Nonton.Dtos.Manifest
 
             return null;
         }
+
+        public static IEnumerable<Catalog>? GetSearchableCatalogs(this Addon addon)
+        {
+            if (addon.Manifest?.Catalogs != null && addon.Manifest.Catalogs.Any())
+            {
+                return addon.Manifest.Catalogs
+                    .Where(x =>
+                        x.Type is AddonConstants.TypeMovie or AddonConstants.TypeSeries &&
+                        ((x.ExtraSupported != null && x.ExtraSupported.Any() && x.ExtraSupported.Contains(AddonConstants.ExtraSearch)) ));
+            }
+
+            return null;
+        }
     }
 }
