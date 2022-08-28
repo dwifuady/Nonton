@@ -16,5 +16,8 @@ namespace Nonton.Api
 
         [Get("/catalog/{type}/{id}/genre={genre}.json")]
         Task<Discover> GetCatalogByGenre(string type, string id, string genre);
+
+        [Get("/catalog/{type}/{id}/search={query}.json")]
+        Task<Discover> SearchFromCatalog(string type, string id, string query);
     }
 }

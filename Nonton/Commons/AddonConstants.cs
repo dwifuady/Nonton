@@ -12,6 +12,10 @@ namespace Nonton.Commons
         public const string TypeMovie = "movie";
         public const string TypeSeries = "series";
 
+        public const string ExtraGenre = "genre";
+        public const string ExtraSkip = "skip";
+        public const string ExtraSearch = "search";
+
         public static string ToTitleCase(this string s) =>
             CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
     }
