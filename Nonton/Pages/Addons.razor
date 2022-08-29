@@ -4,53 +4,59 @@
 
 <div class="d-flex justify-space-between mx-4">
     <MudText Typo="Typo.h5">Addons</MudText>
-    <MudButton ButtonType="ButtonType.Button" Size="Size.Large" Color="Color.Primary" Variant="Variant.Filled" @onclick="() => BrowseAddons()">Browse Addons</MudButton>
+    <div style="display: grid; place-items: center; grid-template-columns: auto auto; gap: 1rem; cursor: pointer" >
+        <MudButton StartIcon="@Icons.Filled.Search" ButtonType="ButtonType.Button" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Filled" @onclick="BrowseAddons">Browse Addons</MudButton>
+        <MudIcon @onclick="InstallFromUrl" Icon="@Icons.Material.Outlined.Add" Color="Color.Default" Size="Size.Medium"></MudIcon>
+    </div>
 </div>
 
 @if (AllAddons is not null)
 {
-    var defaultAddon = AllAddons.Where(x => x.IsDefaultAddon);
-    var installedAddon = AllAddons.Where(x => !x.IsDefaultAddon);
-    
-    <MudText Typo="Typo.body1" Class="ma-4">Default Addons</MudText>
-    foreach (var addon in defaultAddon)
-    {
-        <AddonCard
-            Addon="addon"
-            Installable="false"
-            Removable="false"
-            ShowDisableToggle="false">
-        </AddonCard>
-    }
+    <div style="padding-bottom: 20px">
+        @{
+            var defaultAddon = AllAddons.Where(x => x.IsDefaultAddon);
+            var installedAddon = AllAddons.Where(x => !x.IsDefaultAddon);
+            
+            <MudText Typo="Typo.body1" Class="ma-4">Default Addons</MudText>
+            foreach (var addon in defaultAddon)
+            {
+                <AddonCard
+                    Addon="addon"
+                    Installable="false"
+                    Removable="false"
+                    ShowDisableToggle="false">
+                </AddonCard>
+            }
 
-    <MudText Typo="Typo.body1" Class="ma-4 mt-6">Installed Addons</MudText>
-    foreach (var addon in installedAddon)
-    {
-        <AddonCard
-            Addon="addon"
-            Installable="false"
-            Removable="true"
-            ShowDisableToggle="false"
-            OnRemoved="() => DeleteAddon(addon.Manifest!.Id!)"
-            >
-        </AddonCard>
-    }
+            <MudText Typo="Typo.body1" Class="ma-4 mt-6">Installed Addons</MudText>
+            foreach (var addon in installedAddon)
+            {
+                <AddonCard
+                    Addon="addon"
+                    Installable="false"
+                    Removable="true"
+                    ShowDisableToggle="false"
+                    OnRemoved="() => DeleteAddon(addon.Manifest!.Id!)"
+                    >
+                </AddonCard>
+            }
+        }
+    </div>
 }
 
 <MudDrawer @bind-Open="@_openAddonBrowser" Anchor="Anchor.Bottom" Elevation="1" Variant="@DrawerVariant.Temporary" Height="80%" Style="background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
     <MudDrawerHeader>
-        <MudTooltip Text="Type and enter to search">
-            <MudTextField
-                T="string"
-                Placeholder="Search"
-                @bind-Value="SearchString"
-                Style="Width: 97vw;"
-                Immediate="false"
-                Clearable="true"
-                Adornment="Adornment.End"
-                AdornmentIcon="@Icons.Filled.Search">
-            </MudTextField>
-        </MudTooltip>
+        <MudTextField
+            @ref="SearchBox"
+            T="string"
+            Placeholder="Search"
+            @bind-Value="SearchString"
+            Immediate="false"
+            Clearable="true"
+            AutoFocus="true"
+            Adornment="Adornment.End"
+            AdornmentIcon="@Icons.Filled.Search">
+        </MudTextField>
     </MudDrawerHeader>
     @if (FilteredAddonsCollection != null && FilteredAddonsCollection.Any())
     {
@@ -62,7 +68,7 @@
                     Installable="(AllAddons != null && !AllAddons.Any(a => a.Manifest!.Id!.Equals(addon.Manifest!.Id)) || AllAddons is null)"
                     Removable="(AllAddons != null && AllAddons.Any(a => a.Manifest!.Id!.Equals(addon.Manifest!.Id)) || AllAddons is null)"
                     ShowDisableToggle="false"
-                    OnInstalled="() => Install(addon.TransportUrl!)"
+                    OnInstalled="() => Install(addon)"
                     OnRemoved="() => DeleteAddon(addon.Manifest!.Id!)"
                 >
                 </AddonCard>

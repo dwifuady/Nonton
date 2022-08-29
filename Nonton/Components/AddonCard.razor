@@ -15,7 +15,15 @@
                 <MudText Typo="Typo.h6">@Addon?.Manifest?.Name</MudText>
                 @if (Installable)
                 {
-                    <MudIconButton Icon="@Icons.Filled.InstallDesktop" @onclick="_ => InstallAddon()"></MudIconButton>
+                    if (Addon?.Manifest?.BehaviorHints?.ConfigurationRequired != null &&
+                        Addon.Manifest.BehaviorHints.ConfigurationRequired.Value)
+                    {
+                        <MudIconButton Icon="@Icons.Filled.Settings" Href="@Addon.BaseUri" Target="_blank"></MudIconButton>
+                    }
+                    else
+                    {
+                        <MudIconButton Icon="@Icons.Filled.InstallDesktop" @onclick="_ => InstallAddon()"></MudIconButton>
+                    }
                 }
                 @if (Removable)
                 {

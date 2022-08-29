@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
+using Nonton.Components;
 using Nonton.Dtos.Manifest;
 using Nonton.Services;
 
@@ -11,6 +12,7 @@ namespace Nonton.Pages
         [Inject] public IAddonService AddonService { get; set; } = null!;
         [Inject] public IDialogService DialogService { get; set; } = null!;
         [Inject] public HttpClient HttpClient { get; set; } = null!;
+        [Inject] public ISnackbar Snackbar { get; set; } = null!;
         
         public IEnumerable<Addon>? AllAddons { get; set; }
         public IEnumerable<Addon>? AddonsCollection { get; set; }
@@ -27,6 +29,7 @@ namespace Nonton.Pages
             }
         }
         public string? SearchString { get; set; }
+        public MudTextField<string>? SearchBox { get; set; }
 
         private bool _openAddonBrowser = false;
         
@@ -45,27 +48,58 @@ namespace Nonton.Pages
         {
             _openAddonBrowser = true;
             AddonsCollection ??= await AddonService.GetAddonCollection();
+
+            if (SearchBox != null) await SearchBox.FocusAsync();
         }
 
-        private void SearchOrInstall()
+        private async Task InstallFromUrl()
         {
-            if (!string.IsNullOrWhiteSpace(SearchString) && SearchString.EndsWith("/manifest.json"))
+            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.Large };
+            var dialog = DialogService.Show<AddNewAddon>("New addon", options);
+
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
             {
-                Install(SearchString);
+                var url = result.Data.ToString();
+                if (!string.IsNullOrWhiteSpace(url))
+                {
+                    var manifestString = await DownloadAddonManifest(url);
+                    await SaveAddon(url, manifestString);
+                    Snackbar.Add("Addon installed", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add("Invalid addon manifest", Severity.Warning);
+                }
             }
         }
 
         private async Task Install(string url)
-        {;
+        {
             if (!string.IsNullOrWhiteSpace(url))
             {
                 var manifestString = await DownloadAddonManifest(url);
-                Console.WriteLine("Saving Addon");
                 await SaveAddon(url, manifestString);
+                Snackbar.Add("Addon installed", Severity.Success);
             }
             else
             {
-                Console.WriteLine("Url is empty");
+                Snackbar.Add("Invalid addon manifest", Severity.Warning);
+            }
+        }
+
+        private async Task Install(Addon addon)
+        {
+            var confirmBox = await DialogService.ShowMessageBox(
+                "Install",
+                $"Install addon {addon!.Manifest!.Name}?",
+                yesText: "Install",
+                cancelText: "Cancel");
+
+            if (confirmBox.HasValue && confirmBox.Value)
+            {
+                await Install(addon.TransportUrl!);
             }
         }
 
@@ -93,17 +127,18 @@ namespace Nonton.Pages
         {
             var addon = AllAddons!.SingleOrDefault(x => x.Manifest!.Id!.Equals(id));
             
-            var result = await DialogService.ShowMessageBox(
+            var confirmBox = await DialogService.ShowMessageBox(
                 "Warning",
                 $"Delete addon {addon!.Manifest!.Name}?",
                 yesText: "Delete",
                 cancelText: "Cancel");
 
-            if (result.HasValue && result.Value)
+            if (confirmBox.HasValue && confirmBox.Value)
             {
                 await AddonService.DeleteAddon(id);
             }
-            
+
+            Snackbar.Add("Addon Removed");
             await LoadAddons();
         }
     }
