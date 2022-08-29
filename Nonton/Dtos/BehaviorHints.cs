@@ -12,4 +12,13 @@ public class BehaviorHints
 
     [JsonPropertyName("bingeGroup")]
     public string? BingeGroup { get; set; }
+
+    [JsonPropertyName("adult")]
+    public bool Adult { get; set; }
+
+    [JsonPropertyName("configurable")]
+    public bool? Configurable { get; set; }
+
+    [JsonPropertyName("configurationRequired")]
+    public bool? ConfigurationRequired { get; set; }
 }

@@ -4,7 +4,7 @@
 
 <div class="d-flex justify-space-between mx-4">
     <MudText Typo="Typo.h5">Addons</MudText>
-    <MudButton ButtonType="ButtonType.Button" Size="Size.Large" Color="Color.Primary" Variant="Variant.Filled" @onclick="OpenAddNewAddonDialog">Add</MudButton>
+    <MudButton ButtonType="ButtonType.Button" Size="Size.Large" Color="Color.Primary" Variant="Variant.Filled" @onclick="() => BrowseAddons()">Browse Addons</MudButton>
 </div>
 
 @if (AllAddons is not null)
@@ -15,53 +15,58 @@
     <MudText Typo="Typo.body1" Class="ma-4">Default Addons</MudText>
     foreach (var addon in defaultAddon)
     {
-        <MudPaper Class="ma-4" Style="padding: 20px 20px 20px 20px; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
-            <div class="d-flex gap-8">
-                <div class="d-flex" style="place-items: center">
-                    @if (!string.IsNullOrWhiteSpace(addon?.Manifest?.Logo))
-                    {
-                        <MudImage Src="@addon?.Manifest?.Logo" Width="100" Height="80" ObjectFit="ObjectFit.Contain"></MudImage>
-                    }
-                    else
-                    {
-                        <MudIcon Icon="@Icons.Filled.Extension" Size="Size.Large" Style="Width:100px; height: 80px"></MudIcon>
-                    }
-                </div>
-                <div style="width: 100%">
-                    <div class="d-flex justify-space-between" style="width: 100%">
-                        <MudText Typo="Typo.h6">@addon?.Manifest?.Name</MudText>
-                    </div>
-                    
-                    <MudText Typo="Typo.body1">@addon?.Manifest?.Description</MudText>
-                </div>
-            </div>
-        </MudPaper>
+        <AddonCard
+            Addon="addon"
+            Installable="false"
+            Removable="false"
+            ShowDisableToggle="false">
+        </AddonCard>
     }
 
     <MudText Typo="Typo.body1" Class="ma-4 mt-6">Installed Addons</MudText>
     foreach (var addon in installedAddon)
     {
-        <MudPaper Class="ma-4" Style="padding: 20px 20px 20px 20px; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
-            <div class="d-flex gap-8">
-                <div class="d-flex" style="place-items: center">
-                    @if (!string.IsNullOrWhiteSpace(addon?.Manifest?.Logo))
-                    {
-                        <MudImage Src="@addon?.Manifest?.Logo" Width="100" Height="80" ObjectFit="ObjectFit.Contain"></MudImage>
-                    }
-                    else
-                    {
-                        <MudIcon Icon="@Icons.Filled.Extension" Size="Size.Large" Style="Width:100px; height: 80px"></MudIcon>
-                    }
-                </div>
-                <div style="width: 100%">
-                    <div class="d-flex justify-space-between" style="width: 100%">
-                        <MudText Typo="Typo.h6">@addon?.Manifest?.Name</MudText>
-                        <MudIconButton Icon="@Icons.Filled.Close" @onclick="() => DeleteAddon(addon!.Manifest!.Id!)"></MudIconButton>
-                    </div>
-
-                    <MudText Typo="Typo.body1">@addon?.Manifest?.Description</MudText>
-                </div>
-            </div>
-        </MudPaper>
+        <AddonCard
+            Addon="addon"
+            Installable="false"
+            Removable="true"
+            ShowDisableToggle="false"
+            OnRemoved="() => DeleteAddon(addon.Manifest!.Id!)"
+            >
+        </AddonCard>
     }
 }
+
+<MudDrawer @bind-Open="@_openAddonBrowser" Anchor="Anchor.Bottom" Elevation="1" Variant="@DrawerVariant.Temporary" Height="80%" Style="background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
+    <MudDrawerHeader>
+        <MudTooltip Text="Type and enter to search">
+            <MudTextField
+                T="string"
+                Placeholder="Search"
+                @bind-Value="SearchString"
+                Style="Width: 97vw;"
+                Immediate="false"
+                Clearable="true"
+                Adornment="Adornment.End"
+                AdornmentIcon="@Icons.Filled.Search">
+            </MudTextField>
+        </MudTooltip>
+    </MudDrawerHeader>
+    @if (FilteredAddonsCollection != null && FilteredAddonsCollection.Any())
+    {
+        <div>
+            @foreach (var addon in FilteredAddonsCollection)
+            {
+                <AddonCard
+                    Addon="addon"
+                    Installable="(AllAddons != null && !AllAddons.Any(a => a.Manifest!.Id!.Equals(addon.Manifest!.Id)) || AllAddons is null)"
+                    Removable="(AllAddons != null && AllAddons.Any(a => a.Manifest!.Id!.Equals(addon.Manifest!.Id)) || AllAddons is null)"
+                    ShowDisableToggle="false"
+                    OnInstalled="() => Install(addon.TransportUrl!)"
+                    OnRemoved="() => DeleteAddon(addon.Manifest!.Id!)"
+                >
+                </AddonCard>
+            }
+        </div>
+    }
+</MudDrawer>

@@ -1,4 +1,5 @@
 ﻿using Nonton.Dtos;
+using Nonton.Dtos.Manifest;
 using Refit;
 
 namespace Nonton.Api
@@ -19,5 +20,8 @@ namespace Nonton.Api
 
         [Get("/catalog/{type}/{id}/search={query}.json")]
         Task<Discover> SearchFromCatalog(string type, string id, string query);
+
+        [Get("/addonscollection.json")]
+        Task<List<Addon>>? GetAddonCollection();
     }
 }

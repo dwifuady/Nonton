@@ -10,4 +10,5 @@ public interface IAddonService
     Task<Addon?> LoadDefaultCatalogAddons();
     Task SaveAddon(string url, string manifestString);
     Task DeleteAddon(string id);
+    Task<IEnumerable<Addon>?> GetAddonCollection();
 }

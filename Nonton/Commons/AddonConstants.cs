@@ -16,6 +16,8 @@ namespace Nonton.Commons
         public const string ExtraSkip = "skip";
         public const string ExtraSearch = "search";
 
+        public const string StremioApiUrl = "https://api.strem.io";
+
         public static string ToTitleCase(this string s) =>
             CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
     }

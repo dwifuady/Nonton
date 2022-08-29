@@ -1,9 +1,11 @@
 ﻿using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Nonton.Api;
 using Nonton.Dtos.Manifest;
 using Nonton.Commons;
 using Nonton.Data;
 using SqliteWasmHelper;
+using Refit;
 
 namespace Nonton.Services;
 public class AddonService : IAddonService
@@ -149,6 +151,12 @@ public class AddonService : IAddonService
         if (addon == null) return;
         context.NontonExtensions.Remove(addon);
         await context.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Addon>?> GetAddonCollection()
+    {
+        var api = RestService.For<IStremioApi>(AddonConstants.StremioApiUrl);
+        return await api.GetAddonCollection()!;
     }
 
     public async Task<IEnumerable<Addon>?> LoadDefaultAddons()

@@ -1,0 +1,68 @@
+﻿<MudPaper Class="ma-4" Style="padding: 20px 20px 20px 20px; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
+    <div class="d-flex gap-8">
+        <div class="d-flex" style="place-items: center">
+            @if (!string.IsNullOrWhiteSpace(Addon?.Manifest?.Logo))
+            {
+                <MudImage Src="@Addon?.Manifest?.Logo" Width="100" Height="80" ObjectFit="ObjectFit.Contain"></MudImage>
+            }
+            else
+            {
+                <MudIcon Icon="@Icons.Filled.Extension" Size="Size.Large" Style="Width:100px; height: 80px"></MudIcon>
+            }
+        </div>
+        <div style="width: 100%">
+            <div class="d-flex justify-space-between" style="width: 100%">
+                <MudText Typo="Typo.h6">@Addon?.Manifest?.Name</MudText>
+                @if (Installable)
+                {
+                    <MudIconButton Icon="@Icons.Filled.InstallDesktop" @onclick="_ => InstallAddon()"></MudIconButton>
+                }
+                @if (Removable)
+                {
+                    <MudIconButton Icon="@Icons.Filled.Close" @onclick="_ => RemoveAddon()"></MudIconButton>
+                }
+            </div>
+
+            <MudText Typo="Typo.body1">@Addon?.Manifest?.Description</MudText>
+        </div>
+    </div>
+</MudPaper>
+
+@code
+{
+    [Parameter]
+    public Addon Addon { get; set; } = null!;
+
+    [Parameter]
+    public bool Removable { get; set; }
+
+    [Parameter]
+    public bool Installable { get; set; }
+
+    [Parameter]
+    public bool ShowDisableToggle { get; set; }
+
+    [Parameter]
+    public EventCallback OnRemoved { get; set; }
+
+    [Parameter]
+    public EventCallback OnInstalled { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnEnabled { get; set; }
+
+    public void RemoveAddon()
+    {
+        OnRemoved.InvokeAsync();
+    }
+
+    public void InstallAddon()
+    {
+        OnInstalled.InvokeAsync();
+    }
+
+    public void ToggleAddonStatus(bool isEnabled)
+    {
+        OnEnabled.InvokeAsync(isEnabled);
+    }
+}
