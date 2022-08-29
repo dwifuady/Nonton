@@ -43,6 +43,24 @@ public class Manifest
     [JsonPropertyName("resources")]
     public object? ResourcesObject { get; set; }
 
+    [JsonPropertyName("icon")]
+    public string? Icon { get; set; }
+
+    [JsonPropertyName("contactEmail")]
+    public string? ContactEmail { get; set; }
+    
+    [JsonPropertyName("isFree")]
+    public bool? IsFree { get; set; }
+
+    [JsonPropertyName("idProperty")]
+    public List<string>? IdProperty { get; set; }
+
+    [JsonPropertyName("favicon")]
+    public string? Favicon { get; set; }
+
+    [JsonPropertyName("configurable")]
+    public bool? Configurable { get; set; }
+
     [JsonIgnore]
     public List<string>? ResourcesString
     {

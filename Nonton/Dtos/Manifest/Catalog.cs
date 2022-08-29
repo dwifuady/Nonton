@@ -11,7 +11,7 @@ public class Catalog
     public string? Id { get; set; }
 
     [JsonPropertyName("genres")]
-    public List<string>? Genres { get; set; }
+    public List<object>? Genres { get; set; }
 
     [JsonPropertyName("extra")]
     public List<Extra>? Extra { get; set; }
@@ -24,4 +24,7 @@ public class Catalog
 
     [JsonPropertyName("extraRequired")]
     public List<string>? ExtraRequired { get; set; }
+
+    [JsonPropertyName("pageSize")]
+    public int? PageSize { get; set; }
 }

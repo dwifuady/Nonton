@@ -9,7 +9,7 @@ public class Extra
     public string? Name { get; set; }
 
     [JsonPropertyName("options")]
-    public List<string>? Options { get; set; }
+    public List<object>? Options { get; set; }
 
     [JsonPropertyName("isRequired")]
     public bool? IsRequired { get; set; }

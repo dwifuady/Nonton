@@ -32,7 +32,7 @@ public class Meta
     public string? ImdbRating { get; set; }
 
     [JsonPropertyName("released")]
-    public DateTime Released { get; set; }
+    public DateTime? Released { get; set; }
 
     [JsonPropertyName("slug")]
     public string? Slug { get; set; }

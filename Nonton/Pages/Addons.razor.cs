@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using Nonton.Components;
 using Nonton.Dtos.Manifest;
@@ -11,8 +12,26 @@ namespace Nonton.Pages
         [Inject] public IAddonService AddonService { get; set; } = null!;
         [Inject] public IDialogService DialogService { get; set; } = null!;
         [Inject] public HttpClient HttpClient { get; set; } = null!;
+        [Inject] public ISnackbar Snackbar { get; set; } = null!;
         
         public IEnumerable<Addon>? AllAddons { get; set; }
+        public IEnumerable<Addon>? AddonsCollection { get; set; }
+        public IEnumerable<Addon>? FilteredAddonsCollection 
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(SearchString)
+                    ? AddonsCollection
+                    : AddonsCollection?.Where(a => a.Manifest!.Name!.ToLower().Contains(SearchString.ToLower()) || (a.Manifest is
+                    {
+                        Description: { }
+                    } && a.Manifest.Description.ToLower().Contains(SearchString)));
+            }
+        }
+        public string? SearchString { get; set; }
+        public MudTextField<string>? SearchBox { get; set; }
+
+        private bool _openAddonBrowser = false;
         
         protected override async Task OnInitializedAsync()
         {
@@ -25,9 +44,17 @@ namespace Nonton.Pages
             StateHasChanged();
         }
 
-        private async Task OpenAddNewAddonDialog()
+        private async Task BrowseAddons()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.Large};
+            _openAddonBrowser = true;
+            AddonsCollection ??= await AddonService.GetAddonCollection();
+
+            if (SearchBox != null) await SearchBox.FocusAsync();
+        }
+
+        private async Task InstallFromUrl()
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.Large };
             var dialog = DialogService.Show<AddNewAddon>("New addon", options);
 
             var result = await dialog.Result;
@@ -38,13 +65,41 @@ namespace Nonton.Pages
                 if (!string.IsNullOrWhiteSpace(url))
                 {
                     var manifestString = await DownloadAddonManifest(url);
-                    Console.WriteLine("Saving Addon");
                     await SaveAddon(url, manifestString);
+                    Snackbar.Add("Addon installed", Severity.Success);
                 }
                 else
                 {
-                    Console.WriteLine("Url is empty");
+                    Snackbar.Add("Invalid addon manifest", Severity.Warning);
                 }
+            }
+        }
+
+        private async Task Install(string url)
+        {
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                var manifestString = await DownloadAddonManifest(url);
+                await SaveAddon(url, manifestString);
+                Snackbar.Add("Addon installed", Severity.Success);
+            }
+            else
+            {
+                Snackbar.Add("Invalid addon manifest", Severity.Warning);
+            }
+        }
+
+        private async Task Install(Addon addon)
+        {
+            var confirmBox = await DialogService.ShowMessageBox(
+                "Install",
+                $"Install addon {addon!.Manifest!.Name}?",
+                yesText: "Install",
+                cancelText: "Cancel");
+
+            if (confirmBox.HasValue && confirmBox.Value)
+            {
+                await Install(addon.TransportUrl!);
             }
         }
 
@@ -71,19 +126,19 @@ namespace Nonton.Pages
         private async Task DeleteAddon(string id)
         {
             var addon = AllAddons!.SingleOrDefault(x => x.Manifest!.Id!.Equals(id));
-
-            bool? result = await DialogService.ShowMessageBox(
+            
+            var confirmBox = await DialogService.ShowMessageBox(
                 "Warning",
                 $"Delete addon {addon!.Manifest!.Name}?",
                 yesText: "Delete",
                 cancelText: "Cancel");
 
-            if (result.HasValue && result.Value)
+            if (confirmBox.HasValue && confirmBox.Value)
             {
                 await AddonService.DeleteAddon(id);
             }
 
-
+            Snackbar.Add("Addon Removed");
             await LoadAddons();
         }
     }
