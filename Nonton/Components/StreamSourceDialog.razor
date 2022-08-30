@@ -1,118 +1,15 @@
-﻿<MudDialog DefaultFocus="DefaultFocus.Element">
-    <DialogContent>
-        <div style="display: flex; flex-direction: row; justify-content: space-between">
-            <MudText Typo="Typo.body1" Align="Align.Center" Style="padding-top: 10px">Select source</MudText>
-            <MudIconButton Icon="@Icons.Filled.Close" OnClick="Close"></MudIconButton>
-        </div>
-        <LoadingContainer State="LoadingStateStreamSource">
-            <Loading>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Style="height: 50px;" Class="my-2 mx-4"></MudSkeleton>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Style="height: 50px;" Class="my-2 mx-4"></MudSkeleton>
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Style="height: 50px;" Class="my-2 mx-4"></MudSkeleton>
-            </Loading>
-            <Loaded>
-                <div style="max-height: 50vh; overflow-y: scroll">
-                    @{
-                        if (StreamResponses is not null && StreamResponses.Any())
-                        {
-                            foreach (var streamResponse in StreamResponses)
-                            {
-                                if (streamResponse?.Streams != null && streamResponse.Streams.Any())
-                                {
-                                    var groupedStreamSource = streamResponse.Streams.GroupBy(x => x.Name);
-                                    var streamSources = groupedStreamSource as IGrouping<string?, Stream>[] ?? groupedStreamSource.ToArray();
-                                    <MudExpansionPanels MultiExpansion="true">
-                                        @foreach (var streamSource in streamSources)
-                                        {
-                                            var sources = streamResponse.Streams.Where(s => s.Name == streamSource.Key);
-                                            <MudExpansionPanel Text="@streamSource.Key">
-                                                <div class="d-flex flex-column gap-2">
-                                                    @foreach (var stream in sources)
-                                                    {
-                                                        @if (!string.IsNullOrWhiteSpace(stream.ExternalUrl))
-                                                        {
-                                                            <MudButton
-                                                                ButtonType="ButtonType.Button"
-                                                                Color="Color.Dark"
-                                                                Variant="Variant.Filled"
-                                                                Size="Size.Large"
-                                                                Style="padding-top: 15px; padding-bottom: 15px;"
-                                                                Href="@stream.ExternalUrl"
-                                                                Target="blank">
-                                                                @stream.Name (@stream.Title)
-                                                            </MudButton>
-                                                        }
-                                                        else if (!string.IsNullOrWhiteSpace(stream.Url))
-                                                        {
-                                                            <MudButton
-                                                                ButtonType="ButtonType.Button"
-                                                                Color="Color.Dark"
-                                                                Variant="Variant.Filled"
-                                                                Size="Size.Large"
-                                                                Style="padding-top: 15px; padding-bottom: 15px;"
-                                                                OnClick="() => PlayContent(stream.Url)"
-                                                                Target="blank">
-                                                                @stream.Name (@stream.Title)
-                                                            </MudButton>
-                                                        }
-                                                        else if (!string.IsNullOrWhiteSpace(stream.InfoHash))
-                                                        {
-                                                            <MudButton ButtonType="ButtonType.Button"
-                                                                       Color="Color.Dark"
-                                                                       Variant="Variant.Filled"
-                                                                       Size="Size.Large"
-                                                                       Style="padding-top: 15px; padding-bottom: 15px;"
-                                                                       Target="blank"
-                                                                       Disabled="true">
-                                                                @stream.Name (@stream.Title)
-                                                            </MudButton>
-                                                        }
-                                                    }
-                                                </div>
-                                            </MudExpansionPanel>
-                                        }
-                                    </MudExpansionPanels>
-                                    <div class="d-flex flex-column gap-2">
-                                        @foreach (var stream in streamResponse!.Streams!.Where(s => !streamSources.Select(x => x.Key).Contains(s.Name)))
-                                        {
-                                            @if (!string.IsNullOrWhiteSpace(stream.ExternalUrl))
-                                            {
-                                                <MudButton ButtonType="ButtonType.Button"
-                                                           Color="Color.Dark"
-                                                           Variant="Variant.Filled"
-                                                           Size="Size.Large"
-                                                           Style="padding-top: 15px; padding-bottom: 15px;"
-                                                           Href="@stream.ExternalUrl"
-                                                           Target="blank">
-                                                    @stream.Name (@stream.Title)
-                                                </MudButton>
-                                            }
-                                            else if (!string.IsNullOrWhiteSpace(stream.Url))
-                                            {
-                                                <MudButton ButtonType="ButtonType.Button"
-                                                           Color="Color.Dark"
-                                                           Variant="Variant.Filled"
-                                                           Size="Size.Large"
-                                                           Style="padding-top: 15px; padding-bottom: 15px;"
-                                                           OnClick="() => PlayContent(stream.Url)"
-                                                           Target="blank">
-                                                    @stream.Name (@stream.Title)
-                                                </MudButton>
-                                            }
-                                        }
-                                    </div>
-                                }
-                            }
-                        }
-                    }
-                </div>
-            </Loaded>
-            <Empty>
-                <MudText Typo="Typo.h5" Style="padding-left: 25px;">No streams were found</MudText>
-            </Empty>
-            <Error>
-                <MudText Typo="Typo.h5" Style="padding-left: 25px;">Problems when trying to get stream source</MudText>
-            </Error>
-        </LoadingContainer>
-    </DialogContent>
-</MudDialog>
+﻿<div style="padding: 10px 10px 10px 10px;">
+    <div style="display: flex; flex-direction: row; justify-content: space-between">
+        <MudText Typo="Typo.body1" Align="Align.Center" Style="padding-top: 10px; padding-left: 10px;">Select source</MudText>
+        <MudIconButton Icon="@Icons.Filled.Close" OnClick="Close"></MudIconButton>
+    </div>
+    <div style="max-height: 50vh; overflow-y: scroll">
+        @if (Addons is not null)
+        {
+            foreach (var addon in Addons)
+            {
+                <StreamSourceItem Addon="@addon" Id="@Id" OnItemSelected="PlayContent"></StreamSourceItem>
+            }
+        }
+    </div>
+</div>

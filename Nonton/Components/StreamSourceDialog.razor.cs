@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Nonton.Dtos;
+using Nonton.Dtos.Manifest;
 using Nonton.Services;
 
 namespace Nonton.Components
@@ -13,41 +13,20 @@ namespace Nonton.Components
         [Parameter] public string? Type { get; set; }
         [Parameter] public string? Id { get; set; }
 
-        [Inject] public IStreamService StreamService { get; set; } = null!;
         [Inject] public NavigationManager NavigationManager { get; set; } = null!;
+        [Inject] public IAddonService AddonService { get; set; } = null!;
 
-        public LoadingContainerState LoadingStateStreamSource { get; set; }
-        public IEnumerable<StreamResponse>? StreamResponses { get; set; }
-
+        public IEnumerable<Addon>? Addons { get; set; }
+        
         protected override async Task OnParametersSetAsync()
         {
-            if (string.IsNullOrWhiteSpace(Id))
-            {
-                LoadingStateStreamSource = LoadingContainerState.Error;
-                return;
-            }
-
-            LoadingStateStreamSource = LoadingContainerState.Loading;
-
-            try
-            {
-                StreamResponses = await StreamService.GetStream(Id);
-
-                if (StreamResponses is not null && StreamResponses.Any())
-                {
-                    LoadingStateStreamSource = LoadingContainerState.Loaded;
-                }
-                else
-                {
-                    LoadingStateStreamSource = LoadingContainerState.Empty;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                LoadingStateStreamSource = LoadingContainerState.Error;
-            }
+            Addons ??= await AddonService.LoadAllStreamAddons();
         }
+
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    Addons = await AddonService.LoadAllStreamAddons();
+        //}
 
         private void PlayContent(string url)
         {
