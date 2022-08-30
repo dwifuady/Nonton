@@ -51,7 +51,7 @@
                     }
                     @if (Type == AddonConstants.TypeMovie)
                     {
-                        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" StartIcon="@Icons.Filled.PlayArrow" @onclick="() => Watch(ContentMeta.ImdbId!)">Watch</MudButton>
+                        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" StartIcon="@Icons.Filled.PlayArrow" @onclick="() => Watch(ContentMeta!.ImdbId!)">Watch</MudButton>
                     }
                 </div>
                 @if (Seasons.Any())
