@@ -16,7 +16,7 @@ namespace Nonton.Pages
 
         public string? ContentUrl { get; set; }
 
-        private readonly DialogOptions _sourceSelectDialogOptions = new() { MaxWidth = MaxWidth.Large, FullWidth = true, NoHeader = true, FullScreen = false, CloseOnEscapeKey = false, CloseButton = false, DisableBackdropClick = true};
+        private readonly DialogOptions _sourceSelectDialogOptions = new() { MaxWidth = MaxWidth.Large, FullWidth = true, NoHeader = true, FullScreen = false, CloseOnEscapeKey = false, CloseButton = false, DisableBackdropClick = true };
 
         protected override async Task OnParametersSetAsync()
         {

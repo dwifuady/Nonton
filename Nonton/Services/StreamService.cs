@@ -1,12 +1,17 @@
-﻿using Nonton.Api;
+﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
+using Nonton.Api;
 using Nonton.Commons;
 using Nonton.Dtos;
+using Nonton.Dtos.Manifest;
 using Refit;
 
 namespace Nonton.Services
 {
     public class StreamService : IStreamService
     {
+        [Inject] public ISnackbar Snackbar { get; set; } = null!;
+
         private readonly IAddonService _addonService;
 
         public StreamService(IAddonService addonService)
@@ -39,6 +44,18 @@ namespace Nonton.Services
             }
 
             return streamResponses;
+        }
+
+        public async Task<StreamResponse?> GetStream(Addon addon, string id)
+        {
+            var streamType = AddonConstants.TypeMovie;
+            if (id.Contains(":"))
+            {
+                streamType = AddonConstants.TypeSeries;
+            }
+
+            var api = RestService.For<IStremioApi>(addon.BaseUri);
+            return await api.GetStream(streamType, id);
         }
     }
 }
