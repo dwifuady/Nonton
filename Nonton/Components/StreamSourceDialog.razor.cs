@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Nonton.Dtos.Manifest;
-using Nonton.Services;
+using Nonton.Features.Addons;
+using Nonton.Features.Addons.Dtos.Manifest;
 
 namespace Nonton.Components
 {
@@ -16,7 +16,7 @@ namespace Nonton.Components
         [Inject] public NavigationManager NavigationManager { get; set; } = null!;
         [Inject] public IAddonService AddonService { get; set; } = null!;
 
-        public IEnumerable<Addon>? Addons { get; set; }
+        public IEnumerable<AddonDto>? Addons { get; set; }
         
         protected override async Task OnParametersSetAsync()
         {

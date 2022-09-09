@@ -11,6 +11,7 @@ namespace Nonton.Commons
 
         public const string TypeMovie = "movie";
         public const string TypeSeries = "series";
+        public const string TypeDefault = "";
 
         public const string ExtraGenre = "genre";
         public const string ExtraSkip = "skip";

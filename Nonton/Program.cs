@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using Nonton;
-using Nonton.Services;
-using Nonton.Data;
 using SqliteWasmHelper;
 using MudBlazor;
+using Nonton.Features.Addons;
+using Nonton.Features.Catalogs;
+using Nonton.Features.Meta;
+using Nonton.Features.Database;
+using Nonton.Features.Stream;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -23,9 +26,11 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 });
 builder.Services.AddScoped<IAddonService, AddonService>();
-builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<ICatalogApi, CatalogApi>();
 builder.Services.AddScoped<IMetaService, MetaService>();
 builder.Services.AddScoped<IStreamService, StreamService>();
+builder.Services.AddScoped<IAddonService, AddonService>();
+builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddSqliteWasmDbContextFactory<NontonDbContext>(
     opts => opts.UseSqlite("Data Source=nonton.sqlite3"));
 
