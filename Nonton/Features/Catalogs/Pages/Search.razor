@@ -1,0 +1,9 @@
+﻿@page "/search"
+
+@if (Catalogs is not null && Catalogs.Any())
+{
+    foreach (var catalog in Catalogs)
+    {
+        <ContentItem Catalog="@catalog" SearchMode="true" SearchQuery="@Keywords"></ContentItem>
+    }
+}

@@ -1,0 +1,109 @@
+﻿@using Nonton.Features.Catalogs
+@using Nonton.Features.Catalogs.Models
+@using Nonton.Features.Addons.Dtos
+
+@inject NavigationManager NavigationManager
+@inject ICatalogApi CatalogService
+@inject IJSRuntime JsRuntime
+
+<LoadingContainer State="LoadingContainerState">
+    <Loading>
+        <div class="d-flex flex-column">
+            <MudSkeleton SkeletonType="SkeletonType.Text" Height="50px" Width="150px"></MudSkeleton>
+            <section class="no-scrollbar content-cards-container">
+                @for (var i = 0; i < 10; i++)
+                {
+                    <div class="d-flex flex-column">
+                        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="240px" Width="150px" Class="w-[150px] flex-none rounded snap-center snap-always"></MudSkeleton>
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Height="50px" Width="150px"></MudSkeleton>
+                    </div>
+                }
+            </section>
+        </div>
+    </Loading>
+    <Loaded>
+        @if (Metas is not null && Metas.Any())
+        {
+            @if (SearchMode)
+            {
+                <MudText Typo="Typo.body1">@Catalog.AddonName - @Catalog.CatalogType.ToTitleCase()</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.body1">@Catalog.CatalogType.ToTitleCase() - @Catalog.CatalogName</MudText>
+            }
+
+            <section class="no-scrollbar content-cards-container" id="content-container-@Catalog.CatalogType-@Catalog.CatalogId">
+                @foreach (var meta in Metas)
+                {
+                    <div class="w-[150px] flex-none rounded snap-center snap-always" @onclick="() => ViewDetail(meta.ImdbId!)">
+                        <div class="d-flex flex-column" style="place-items: center;">
+                            <MudImage Src="@meta.Poster" Width="145" Height="250" Elevation="25" Class="rounded-lg ma-4 cursor-pointer" ObjectFit="ObjectFit.Cover"></MudImage>
+                            <span style="text-align: center">@meta.Name</span>
+                        </div>
+                    </div>
+                }
+            </section>
+        }
+    </Loaded>
+    <Error>
+
+    </Error>
+</LoadingContainer>
+
+@code {
+
+    [Parameter]
+    public Catalog Catalog { get; set; } = null!;
+    
+    [Parameter]
+    public bool SearchMode { get; set; }
+
+    [Parameter]
+    public string? SearchQuery { get; set; }
+
+    public IEnumerable<Meta>? Metas { get; set; }
+
+    public LoadingContainerState LoadingContainerState { get; set; } = LoadingContainerState.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        LoadingContainerState = LoadingContainerState.Loading;
+        await LoadItems();
+        LoadingContainerState = LoadingContainerState.Loaded;
+    }
+
+    private async Task LoadItems()
+    {
+        try
+        {
+            if (SearchMode && !string.IsNullOrWhiteSpace(SearchQuery))
+            {
+                var discoverItem = await CatalogService.Search(Catalog.AddonBaseUri, Catalog.CatalogType, Catalog.CatalogId, SearchQuery);
+                Metas = discoverItem.Metas;
+            }
+            else
+            {
+                var discoverItem = await CatalogService.GetDiscoverItem(Catalog.AddonBaseUri, Catalog.CatalogType, Catalog.CatalogId);
+                Metas = discoverItem.Metas;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!string.IsNullOrWhiteSpace(Catalog.CatalogName))
+        {
+            await JsRuntime.InvokeVoidAsync("forceHorizontalScroll", $"content-container-{Catalog.CatalogType}-{Catalog.CatalogId}");
+        }
+    }
+
+    public async Task ViewDetail(string id)
+    {
+        await Task.Run(() => NavigationManager.NavigateTo($"detail/{Catalog.CatalogType}/{id}"));
+    }
+}
