@@ -1,70 +1,69 @@
-/* /Components/ContentSlider.razor.rz.scp.css */
-.wrapper-item[b-weao56uvui] {
-    display: grid;
-    grid-template-columns: repeat(10, 100%);
-    overflow: hidden;
-    scroll-behavior: smooth;
+/* /Components/ContentItem.razor.rz.scp.css */
+.content-cards-container[b-lblmlpcrp8] {
+    display: flex;
+    scroll-snap-type: x mandatory;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 1.25rem;
 }
 
-.wrapper-item section[b-weao56uvui] {
-    width: 100%;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(9, auto);
-    margin: 20px 0;
+.w-\[150px\][b-lblmlpcrp8] {
+    width: 150px;
 }
 
-.wrapper-item section .item[b-weao56uvui] {
-    position: relative;
-    padding: 0 2px;
-    transition: 250ms all;
+.flex-none[b-lblmlpcrp8] {
+    flex: none;
 }
 
-.wrapper-item section .item:hover[b-weao56uvui] {
-    margin: 0 40px;
-    transform: scale(1.1);
+.snap-center[b-lblmlpcrp8] {
+    scroll-snap-align: center;
 }
 
-.wrapper-item section .item .heading[b-weao56uvui] {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: #fff;
+.snap-always[b-lblmlpcrp8] {
+    scroll-snap-stop: always;
 }
 
-.wrapper-item section .item .duration[b-weao56uvui] {
-    position: absolute;
-    bottom: 0;
-    left: 20px;
-    color: #fff;
+.rounded[b-lblmlpcrp8] {
+    border-radius: 0.25rem;
 }
 
-.wrapper-item section .arrow__btn[b-weao56uvui] {
-    position: absolute;
-    color: #fff;
-    text-decoration: none;
-    font-size: 6em;
-    background: black;
-    width: 80px;
-    padding: 20px;
-    text-align: center;
-    z-index: 1;
+.p-5[b-lblmlpcrp8] {
+    padding: 1.25rem;
 }
 
-    .wrapper-item section .left-arrow[b-weao56uvui] {
-        top: 25%;
-        bottom: 0;
-        left: 0;
-        background: linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, black 170%);
-        border-radius: 20px;
-        height: 35%;
-    }
+.px-5[b-lblmlpcrp8] {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
 
-    .wrapper-item section .right-arrow[b-weao56uvui] {
-        top: 25%;
-        bottom: 0;
-        right: 0;
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, black 170%);
-        border-radius: 20px;
-        height: 35%;
-    }
+/* Hide scrollbar for Chrome, Safari, & Opera*/
+
+.no-scrollbar[b-lblmlpcrp8]::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+
+.no-scrollbar[b-lblmlpcrp8] {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+/* /Features/Catalogs/Components/Discover.razor.rz.scp.css */
+.cards[b-o5e5b1c1l2] {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cards-item[b-o5e5b1c1l2] {
+    display: flex;
+    margin: 0px 10px 0px 10px;
+    flex-direction: column;
+    width: 150px;
+    align-items: center;
+    flex-wrap: wrap;
+}
