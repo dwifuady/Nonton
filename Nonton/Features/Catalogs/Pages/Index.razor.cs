@@ -10,9 +10,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        var allCatalogs = await CatalogService.GetAllCatalogsAsync();
-
-        Catalogs = allCatalogs.Where(c => !c.Genres.IsGenreRequired);
+        Catalogs = await CatalogService.GetDefaultCatalogAsync();
 
         StateHasChanged();
     }
