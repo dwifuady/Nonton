@@ -29,7 +29,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-n0I4VN5VHwuiZwvPVB3O5XdQ1qyC4a6nxiMTwtsjT60=",
+      "hash": "sha256-xjzGDWtq7lPuwxZHl4EveNLDDV5CRW2iIqFDT+TdBlg=",
       "url": "index.html"
     },
     {
@@ -413,5 +413,5 @@
       "url": "_content\/SqliteWasmHelper\/browserCache.js"
     }
   ],
-  "version": "I+FSLfVd"
+  "version": "Lqq2GwBW"
 };
