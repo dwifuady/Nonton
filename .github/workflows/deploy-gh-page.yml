@@ -26,7 +26,7 @@ jobs:
     - name: Rewrite base href
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
-        html_path: release/index.html
+        html_path: release/wwwroot/index.html
         base_href: /Nonton/
     
     # copy index.html to 404.html to serve the same file when a file is not found
