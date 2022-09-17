@@ -8,10 +8,9 @@
         @{
             if (StreamResponse?.Streams != null && StreamResponse.Streams.Any())
             {
-                var groupedStreamSource = StreamResponse.Streams.GroupBy(x => x.Name);
-                var streamSources = groupedStreamSource as IGrouping<string?, Stream>[] ?? groupedStreamSource.ToArray();
+                var groupedStreamSource = StreamResponse.Streams.GroupBy(x => x.Name).ToList();
                 <MudExpansionPanels MultiExpansion="true">
-                    @foreach (var streamSource in streamSources)
+                    @foreach (var streamSource in groupedStreamSource)
                     {
                         var sources = StreamResponse.Streams.Where(s => s.Name == streamSource.Key);
                         <MudExpansionPanel Text="@streamSource.Key">
@@ -60,7 +59,7 @@
                     }
                 </MudExpansionPanels>
                 <div class="d-flex flex-column gap-2">
-                    @foreach (var stream in StreamResponse!.Streams!.Where(s => !streamSources.Select(x => x.Key).Contains(s.Name)))
+                    @foreach (var stream in StreamResponse!.Streams!.Where(s => !groupedStreamSource.Select(x => x.Key).Contains(s.Name)))
                     {
                         @if (!string.IsNullOrWhiteSpace(stream.ExternalUrl))
                         {

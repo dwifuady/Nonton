@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Nonton.Dtos;
-using Nonton.Dtos.Manifest;
-using Nonton.Services;
+using Nonton.Features.Addons.Dtos;
+using Nonton.Features.Addons.Dtos.Manifest;
+using Nonton.Features.Stream;
 
 namespace Nonton.Components
 {
     public partial class StreamSourceItem
     {
-        [Parameter] public Addon Addon { get; set; } = null!;
+        [Parameter] public AddonDto Addon { get; set; } = null!;
         [Parameter] public string Id { get; set; } = null!;
         [Parameter] public EventCallback<string> OnItemSelected { get; set; }
 

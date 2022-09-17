@@ -1,0 +1,45 @@
+﻿@using MudBlazor.Extensions
+@using Nonton.Features.Catalogs.Models
+
+<div class="d-flex flex-row justify-space-between">
+    <div style="display: grid; place-items: center;">
+        @if (Catalogs is not null)
+        {
+            <MudChipSet @bind-SelectedChip="@SelectedCatalogChip" Filter="false" Mandatory="true">
+                @for (var i = 0; i < Catalogs.Count(); i++)
+                {
+                    var catalog = Catalogs[i];
+                    <MudChip Text="@catalog.CatalogName" Color="Color.Primary" Value="@catalog" Default="i == 0" OnClick="CatalogChanged"></MudChip>
+                }
+            </MudChipSet>
+        }
+    </div>
+
+    <div style="width: 200px;">
+        @if (Genres?.Genres != null && Genres.Value.Genres.Any())
+        {
+            <MudSelect Label="Genre" T="string" AnchorOrigin="Origin.BottomCenter" @bind-Value="SelectedGenres" SelectedValuesChanged="GenreChanged" Style="margin-top: -5px;">
+                @foreach (var genre in Genres?.Genres!)
+                {
+                    <MudSelectItem Value="@(genre)" />
+                }
+            </MudSelect>
+        }
+    </div>
+</div>
+
+
+@if (Metas is not null)
+{
+    <div class="cards">
+        @foreach (var meta in Metas)
+        {
+            <div @onclick="() => ViewDetail(meta.ImdbId!)">
+                <div class="cards-item">
+                    <MudImage Src="@meta.Poster" Width="145" Height="250" Elevation="25" Class="rounded-lg ma-4 cursor-pointer" ObjectFit="ObjectFit.Cover"></MudImage>
+                    <span style="text-align: center">@meta.Name</span>
+                </div>
+            </div>
+        }
+    </div>
+}
