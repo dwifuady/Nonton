@@ -1,0 +1,36 @@
+﻿@{
+    if (Genres?.Genres != null)
+    {
+        <MudChipSet Filter="true" Mandatory="true">
+            @foreach (var genre in Genres?.Genres!)
+            {
+                var selected = DefaultGenre == genre;
+                if (selected)
+                {
+                    <MudChip Value="@genre" Text="@genre" Default="true"></MudChip>
+                    continue;
+                }
+                <MudChip Value="@genre" Text="@genre" Default="false"></MudChip>
+            }
+        </MudChipSet>
+    }
+}
+
+@code
+{
+    [Parameter] public (List<string> Genres, bool IsRequired)? Genres { get; set; }
+
+    public string? DefaultGenre { get; set; } = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        DefaultGenre = string.Empty;
+        if (Genres is {IsRequired: true })
+        {
+            DefaultGenre = Genres.Value.Genres.FirstOrDefault()!;
+        }
+        base.OnParametersSet();
+    }
+
+    public void Dispose() => Genres = null;
+}

@@ -16,8 +16,7 @@ public partial class Search : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        var allCatalogs = await CatalogService.GetAllCatalogsAsync();
-        Catalogs = allCatalogs.Where(c => c.Searchable.IsSearchable);
+        Catalogs = await CatalogService.GetSearchableCatalogAsync();
 
         NavigationManager.LocationChanged += NavigationManager_LocationChanged!;
         ParseQueryString();

@@ -51,16 +51,29 @@ namespace Nonton.Features.Catalogs
             return catalogs;
         }
 
-        public Task<IEnumerable<Catalog>> GetDefaultCatalogAsync()
+        public async Task<IEnumerable<Catalog>> GetDefaultCatalogAsync()
         {
-            throw new NotImplementedException();
+            var catalogs = await GetAllCatalogsAsync();
+            return catalogs.Where(c => !c.Genres.IsGenreRequired);
         }
 
-        public Task<IEnumerable<Catalog>> GetSearchableCatalogAsync()
+        public async Task<IEnumerable<Catalog>> GetSearchableCatalogAsync()
         {
-            throw new NotImplementedException();
+            var catalogs = await GetAllCatalogsAsync();
+            return catalogs.Where(c => c.Searchable.IsSearchable);
         }
 
+        public async Task<List<Catalog>> GetMovieCatalogsAsync()
+        {
+            var catalogs = await GetAllCatalogsAsync();
+            return catalogs.Where(c => c is MovieCatalog).ToList();
+        }
+
+        public async Task<List<Catalog>> GetSeriesCatalogsAsync()
+        {
+            var catalogs = await GetAllCatalogsAsync();
+            return catalogs.Where(c => c is SeriesCatalog).ToList();
+        }
         /// <summary>
         /// Get List of Genre and IsRequired property
         /// </summary>

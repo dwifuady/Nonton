@@ -3,7 +3,7 @@
 @using Nonton.Features.Addons.Dtos
 
 @inject NavigationManager NavigationManager
-@inject ICatalogApi CatalogService
+@inject ICatalogApi CatalogApi
 @inject IJSRuntime JsRuntime
 
 <LoadingContainer State="LoadingContainerState">
@@ -79,12 +79,12 @@
         {
             if (SearchMode && !string.IsNullOrWhiteSpace(SearchQuery))
             {
-                var discoverItem = await CatalogService.Search(Catalog.AddonBaseUri, Catalog.CatalogType, Catalog.CatalogId, SearchQuery);
+                var discoverItem = await CatalogApi.Search(Catalog.AddonBaseUri, Catalog.CatalogType, Catalog.CatalogId, SearchQuery);
                 Metas = discoverItem.Metas;
             }
             else
             {
-                var discoverItem = await CatalogService.GetDiscoverItem(Catalog.AddonBaseUri, Catalog.CatalogType, Catalog.CatalogId);
+                var discoverItem = await CatalogApi.GetDiscoverItem(Catalog.AddonBaseUri, Catalog.CatalogType, Catalog.CatalogId);
                 Metas = discoverItem.Metas;
             }
         }
