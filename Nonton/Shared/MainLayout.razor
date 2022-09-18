@@ -1,7 +1,13 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 
-<MudLayout>
+<NavMenu></NavMenu>
+
+<div class="m-4">
+    @Body
+</div>
+
+@*<MudLayout>
     <MudAppBar Elevation="1" Dense="@dense" Style="background: rgba(39,39,47,0.5); backdrop-filter: blur(20px)">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
         <MudSpacer />
@@ -38,7 +44,7 @@
             @Body
         </MudContainer>
     </MudMainContent>
-</MudLayout>
+</MudLayout>*@
 
 @code{
     bool open = false;

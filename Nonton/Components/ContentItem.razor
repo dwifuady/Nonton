@@ -8,7 +8,7 @@
 
 <LoadingContainer State="LoadingContainerState">
     <Loading>
-        <div class="d-flex flex-column">
+        <div class="flex flex-col">
             <MudSkeleton SkeletonType="SkeletonType.Text" Height="50px" Width="150px"></MudSkeleton>
             <section class="no-scrollbar content-cards-container">
                 @for (var i = 0; i < 10; i++)
@@ -24,26 +24,30 @@
     <Loaded>
         @if (Metas is not null && Metas.Any())
         {
-            @if (SearchMode)
-            {
-                <MudText Typo="Typo.body1">@Catalog.AddonName - @Catalog.CatalogType.ToTitleCase()</MudText>
-            }
-            else
-            {
-                <MudText Typo="Typo.body1">@Catalog.CatalogType.ToTitleCase() - @Catalog.CatalogName</MudText>
-            }
-
-            <section class="no-scrollbar content-cards-container" id="content-container-@Catalog.CatalogType-@Catalog.CatalogId">
-                @foreach (var meta in Metas)
-                {
-                    <div class="w-[150px] flex-none rounded snap-center snap-always" @onclick="() => ViewDetail(meta.ImdbId!)">
-                        <div class="d-flex flex-column" style="place-items: center;">
-                            <MudImage Src="@meta.Poster" Width="145" Height="250" Elevation="25" Class="rounded-lg ma-4 cursor-pointer" ObjectFit="ObjectFit.Cover"></MudImage>
-                            <span style="text-align: center">@meta.Name</span>
+            <div class="flex flex-col gap-2">
+                <div>
+                    @if (SearchMode)
+                    {
+                        <span class="text-lg">@Catalog.AddonName - @Catalog.CatalogType.ToTitleCase()</span>
+                    }
+                    else
+                    {
+                        <span class="text-lg">@Catalog.CatalogType.ToTitleCase() - @Catalog.CatalogName</span>
+                    }
+                </div>
+                <section class="flex no-scrollbar snap-x snap-mandatory flex-nowrap overflow-x-scroll gap-x-5" id="content-container-@Catalog.CatalogType-@Catalog.CatalogId">
+                    @foreach (var meta in Metas)
+                    {
+                        <div class="w-40 flex-none rounded snap-center snap-always" @onclick="() => ViewDetail(meta.ImdbId!)">
+                            <div class="flex flex-col place-items-center gap-3">
+                                <img src="@meta.Poster" class="w-36 h-64 object-cover rounded-lg"/>
+                                @*<MudImage Src="@meta.Poster" Width="145" Height="250" Elevation="25" Class="rounded-lg ma-4 cursor-pointer" ObjectFit="ObjectFit.Cover"></MudImage>*@
+                                <span class="text-center">@meta.Name</span>
+                            </div>
                         </div>
-                    </div>
-                }
-            </section>
+                    }
+                </section>
+            </div>
         }
     </Loaded>
     <Error>
@@ -55,7 +59,7 @@
 
     [Parameter]
     public Catalog Catalog { get; set; } = null!;
-    
+
     [Parameter]
     public bool SearchMode { get; set; }
 
@@ -98,6 +102,7 @@
     {
         if (!string.IsNullOrWhiteSpace(Catalog.CatalogName))
         {
+            return;
             await JsRuntime.InvokeVoidAsync("forceHorizontalScroll", $"content-container-{Catalog.CatalogType}-{Catalog.CatalogId}");
         }
     }
