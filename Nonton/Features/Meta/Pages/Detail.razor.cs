@@ -38,6 +38,8 @@ namespace Nonton.Features.Meta.Pages
 
         public string SelectedSeason { get; set; } = null!;
 
+        public bool IsTrailerPlaying { get; set; }
+
         private readonly DialogOptions _trailerDialogOptions = new() { MaxWidth = MaxWidth.Medium, FullWidth = true, NoHeader = false, FullScreen = false, CloseOnEscapeKey = true, CloseButton = true };
 
         protected override async Task OnParametersSetAsync()
@@ -65,12 +67,7 @@ namespace Nonton.Features.Meta.Pages
 
         private void PlayTrailer()
         {
-            var dialogParameters = new DialogParameters
-        {
-            { "YoutubeId", ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId }
-        };
-
-            DialogService.Show<YoutubePopup>($"{ContentMeta?.Name} ({ContentMeta?.Year}) | Trailer", dialogParameters, _trailerDialogOptions);
+            IsTrailerPlaying = true;
         }
     }
 }
