@@ -10,6 +10,7 @@ using Nonton.Features.Catalogs;
 using Nonton.Features.Meta;
 using Nonton.Features.Database;
 using Nonton.Features.Stream;
+using Nonton.Features.PageState;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -35,5 +36,7 @@ builder.Services.AddSqliteWasmDbContextFactory<NontonDbContext>(
     opts => opts.UseSqlite("Data Source=nonton.sqlite3"));
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+builder.Services.AddScoped<PageHistoryState>();
 
 await builder.Build().RunAsync();

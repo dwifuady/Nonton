@@ -1,0 +1,9 @@
+﻿@if (StreamResponse?.Streams != null && StreamResponse.Streams.Any())
+{
+    @foreach (var streamSource in StreamResponse.Streams)
+    {
+        <button class="p-2 dark:bg-slate-500 rounded-lg w-80">
+            @streamSource.Name (@streamSource.Title)
+        </button>
+    }
+}

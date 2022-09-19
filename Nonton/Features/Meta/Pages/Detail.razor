@@ -1,5 +1,5 @@
 ﻿@page "/detail/{type}/{id}"
-
+@using Nonton.Features.Stream.Components
 
 <PageTitle>@(ContentMeta is null ? "Nonton" : $"{ContentMeta?.Name} ({@ContentMeta?.Year})")</PageTitle>
 
@@ -8,16 +8,26 @@
     <div class="-m-4">
         <div class="flex flex-col w-full h-screen object-cover bg-top bg-no-repeat p-4 justify-between bg-cover"
          style="background-image: url('@ContentMeta.Poster!.Replace("small", "large")');">
-            <div class="-m-4 p-4 h-64 bg-gradient-to-b from-slate-900 to-transparent w-screen flex flex-col gap-y-20">
-                <img src="@ContentMeta.Logo" class="object-cover" />
+            <div class="-m-4 p-4 h-64 bg-gradient-to-b from-slate-900 to-transparent w-screen flex flex-col">
+                <div>
+                    <a href="@PageHistoryState.GetGoBackPage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block mb-1" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <line x1="5" y1="12" x2="11" y2="18" />
+                            <line x1="5" y1="12" x2="11" y2="6" />
+                        </svg>
+                    </a>
+                    <img src="@ContentMeta.Logo" class="object-cover" />
+                </div>
                 @if (!string.IsNullOrWhiteSpace(ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId))
                 {
                     @if (!IsTrailerPlaying)
                     {
-                        <div class="mx-auto">
+                        <div class="mx-auto mt-14">
                             <button class="rounded-full border-solid border-2 border-teal-500 p-3" @onclick="PlayTrailer">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="text-teal-500 drop-shadow-xl" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M7 4v16l13 -8z" />
                                 </svg>
                             </button>
@@ -32,9 +42,9 @@
             <div class="-m-4 p-4 h-1/2 bg-teal-100 dark:bg-slate-800 w-screen flex flex-col rounded-t-xl justify-between pb-16">
                 <div class="flex flex-col gap-y-2">
                     <div class="tracking-wide">
-                        @ContentMeta.Year | @ContentMeta.ImdbRating | @ContentMeta.Runtime
+                        @ContentMeta?.Year | @ContentMeta?.ImdbRating | @ContentMeta?.Runtime
                     </div>
-                    @if (ContentMeta.Genres is not null)
+                    @if (ContentMeta?.Genres is not null)
                     {
                         <div class="flex flex-row gap-2">
                             @foreach (var genre in ContentMeta.Genres)
@@ -46,7 +56,7 @@
                 </div>
                 <div class="flex flex-col tracking-wide gap-y-2">
                     <span>
-                        @ContentMeta.Description
+                        @ContentMeta?.Description
                     </span>
                     @if (ContentMeta?.Director is not null && ContentMeta.Director.Any())
                     {
@@ -62,106 +72,68 @@
                     }
                 </div>
                 <div class="flex flex-col gap-y-1">
-                    <button class="w-full bg-teal-500 text-white py-2 rounded-lg">Watch</button>
-                    <button class="w-full border-solid border-2 border-teal-500 text-teal-500 py-2 rounded-lg">Select Source</button>
+                    <button class="w-full bg-teal-500 text-white py-2 rounded-lg" @onclick="ToggleSourceSelect">Watch</button>
+                    @if (Type == AddonConstants.TypeSeries)
+                    {
+                        <button class="w-full border-solid border-2 border-teal-500 text-teal-500 py-2 rounded-lg">Select Episode</button>
+                    }
                 </div>
             </div>
         </div>
     </div>
-    <div style="display: none; background-image: url('@ContentMeta.Background'); margin: -70px -28px -85px -85px; box-shadow: inset 0 250px 250px black; height: 98vh; background-repeat: no-repeat; background-position: center; background-size: cover;">
-        <div style="padding: 70px 25px 85px 85px">
-            <div class="d-flex flex-column" style="align-items: center; gap: 15px">
-                <MudImage Src="@ContentMeta.Logo" ObjectFit="ObjectFit.Contain" Width="400"></MudImage>
-                <MudText Typo="Typo.h4" Style="display: none;">@ContentMeta?.Name</MudText>
-                @if (ContentMeta.Genres is not null)
-                {
-                    <div class="d-flex flex-row">
-                        @foreach (var genre in ContentMeta.Genres)
-                        {
-                            <MudChip Color="Color.Dark">@genre</MudChip>
-                        }
-                    </div>
-                }
-                <div class="d-flex flex-row">
-                    <MudChip Color="Color.Dark" Icon="@Icons.Filled.CalendarToday">@ContentMeta.Year</MudChip>
-                    @if (!string.IsNullOrWhiteSpace(ContentMeta.ImdbRating))
-                    {
-                        <MudChip Color="Color.Dark" Icon="@IconConstants.ImdbIcon">@ContentMeta.ImdbRating</MudChip>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(ContentMeta.Runtime))
-                    {
-                        <MudChip Color="Color.Dark" Icon="@Icons.Filled.Watch">@ContentMeta.Runtime</MudChip>
-                    }
-                </div>
-                <MudPaper Height="auto" Width="650px" Style="padding: 20px 20px 20px 20px; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
-                    <MudText Typo="Typo.subtitle1">@ContentMeta.Description</MudText>
-                    <br />
-                    <MudDivider DividerType="DividerType.FullWidth" Light="true"></MudDivider>
-                    <br />
-                    @if (ContentMeta?.Director is not null && ContentMeta.Director.Any())
-                    {
-                        <MudText Typo="Typo.subtitle1">Director : @string.Join(", ", ContentMeta.Director)</MudText>
-                    }
-                    @if (ContentMeta?.Cast is not null && ContentMeta.Cast.Any())
-                    {
-                        <MudText Typo="Typo.subtitle1">Cast : @string.Join(", ", ContentMeta.Cast)</MudText>
-                    }
-                </MudPaper>
-                <div class="d-flex flex-row" style="gap: 10px;">
-                    @if (!string.IsNullOrWhiteSpace(ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId))
-                    {
-                        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" @onclick="PlayTrailer">Trailer</MudButton>
-                    }
-                    @if (Type == AddonConstants.TypeMovie)
-                    {
-                        <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" Color="Color.Dark" StartIcon="@Icons.Filled.PlayArrow" @onclick="() => Watch(ContentMeta!.ImdbId!)">Watch</MudButton>
-                    }
-                </div>
-                @if (Seasons.Any())
-                {
-                    <div style="width: 650px; display: flex; flex-direction: column; justify-content: center; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px); padding: 5px 20px 20px 20px; border-radius: 10px;">
-                        <MudSelect T="string" Label="Seasons" AnchorOrigin="Origin.TopCenter" @bind-Value="SelectedSeason">
-                            @{
-                                foreach (var season in Seasons)
-                                {
-                                        <MudSelectItem Value="@(season != 0 ? $"{season}" : "Special")" />
-                                }
-                            }
-                        </MudSelect>
 
-                        @if (!string.IsNullOrWhiteSpace(SelectedSeason))
-                        {
-                            <div style="max-height: 200px; overflow-y: auto">
-                                @{
-                                    var episodes = ContentMeta?.Videos?.Where(e => e.Season.HasValue && e.Season == (SelectedSeason.Equals("Special") ? 0 : int.Parse(SelectedSeason))).ToList();
-                                    if (episodes != null && episodes.Any())
-                                    {
-                                            <MudExpansionPanels MultiExpansion="false">
-                                                @foreach (var episode in episodes)
+    @if (ShowSourceSelect)
+    {
+        <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <!--
+              Background backdrop, show/hide based on modal state.
+
+              Entering: "ease-out duration-300"
+                From: "opacity-0"
+                To: "opacity-100"
+              Leaving: "ease-in duration-200"
+                From: "opacity-100"
+                To: "opacity-0"
+            -->
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+            <div class="fixed inset-0 z-10 overflow-y-auto">
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <!--
+                      Modal panel, show/hide based on modal state.
+
+                      Entering: "ease-out duration-300"
+                        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        To: "opacity-100 translate-y-0 sm:scale-100"
+                      Leaving: "ease-in duration-200"
+                        From: "opacity-100 translate-y-0 sm:scale-100"
+                        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    -->
+                    <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        <div class="bg-white dark:bg-slate-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                                <div class="text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                    <h3 class="text-lg mb-4 font-medium leading-6 text-gray-900 dark:text-white" id="modal-title">Select Source</h3>
+                                    <div class="flex flex-col gap-2 overflow-y-auto max-h-96">
+                                        @if (Addons != null)
+                                        {
+                                            @foreach (var addon in Addons)
                                             {
-                                                    <MudExpansionPanel Text="@($"{episode.Number} - {episode.Name}")">
-                                                        <div class="d-flex flex-column">
-                                                            <MudText Typo="Typo.subtitle2">@episode.Description</MudText>
-                                                            <MudButton Variant="Variant.Filled"
-                                           ButtonType="ButtonType.Button"
-                                           Color="Color.Dark"
-                                           StartIcon="@Icons.Filled.PlayArrow"
-                                                   @onclick="() => Watch(ContentMeta!.ImdbId!, SelectedSeason, episode.Number.ToString()!)">
-                                                                Watch
-                                                            </MudButton>
-                                                        </div>
-                                                    </MudExpansionPanel>
+                                                <StreamSourceItemV2 Id="@Id" Addon="@addon"></StreamSourceItemV2>
                                             }
-                                            </MudExpansionPanels>
-                                    }
-                                }
+                                        }
+                                    </div>
+                                </div>
                             </div>
-                        }
+                        </div>
+                        <div class="bg-gray-50 dark:bg-slate-800 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                            <button type="button" @onclick="ToggleSourceSelect" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-transparent px-4 py-2 text-base font-medium text-gray-700 dark:text-white shadow-sm hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
+                        </div>
                     </div>
-                }
+                </div>
             </div>
         </div>
-    </div>
+    }
 }
 
 
