@@ -16,11 +16,14 @@ Nonton didn't have it's own back-end service, it needs addons to works. Every ad
 - [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.400-windows-x64-installer)
 - [.NET WebAssembly build tools](https://docs.microsoft.com/en-us/aspnet/core/blazor/webassembly-native-dependencies?view=aspnetcore-6.0)  
 You can install by running ```dotnet workload install wasm-tools``` in a command shell
+- [nodejs](https://nodejs.org/en/) & [tailwindcss](https://tailwindcss.com/)
 
 ### Running the app
 - Use your favorite IDE (VS or JetBrains Rider), or
 - Navigate to the root of this project, and run below command in a command shell  
 ```dotnet run --project .\Nonton\Nonton.csproj```
+- For tailwind, navigate to Nonton csproj directory, and run  
+```npx tailwindcss -i .\Styles\app.css -o .\wwwroot\css\app.css --watch```
 - Open ```https://localhost:7172/``` on your browser
 
 

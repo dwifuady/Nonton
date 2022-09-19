@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Nonton.Components;
+using Nonton.Features.Addons;
+using Nonton.Features.Addons.Dtos.Manifest;
+using Nonton.Features.PageState;
 using Nonton.Features.Stream;
 
 namespace Nonton.Features.Meta.Pages
@@ -13,9 +15,14 @@ namespace Nonton.Features.Meta.Pages
         [Inject] public IDialogService DialogService { get; set; } = null!;
         [Inject] public IMetaService MetaService { get; set; } = null!;
         [Inject] public IStreamService StreamService { get; set; } = null!;
+        [Inject] public IAddonService AddonService { get; set; } = null!;
         [Inject] public NavigationManager NavigationManager { get; set; } = null!;
+        [Inject] public PageHistoryState PageHistoryState { get; set; } = null!;
 
         public Addons.Dtos.Meta? ContentMeta { get; set; }
+        public bool ShowSourceSelect { get; set; }
+        public IEnumerable<AddonDto>? Addons { get; set; }
+
 
         public List<int?> Seasons
         {
@@ -38,12 +45,12 @@ namespace Nonton.Features.Meta.Pages
 
         public string SelectedSeason { get; set; } = null!;
 
-        private readonly DialogOptions _trailerDialogOptions = new() { MaxWidth = MaxWidth.Medium, FullWidth = true, NoHeader = false, FullScreen = false, CloseOnEscapeKey = true, CloseButton = true };
+        public bool IsTrailerPlaying { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
             var id = Id;
-            if (Id.Contains(":"))
+            if (Id.Contains(':'))
             {
                 id = Id.Split(':')[0];
                 SelectedSeason = Id.Split(':')[1];
@@ -51,6 +58,11 @@ namespace Nonton.Features.Meta.Pages
 
             var detail = await MetaService.GetMeta(Type, id);
             ContentMeta = detail.Meta;
+
+
+            PageHistoryState.AddPageToHistory($"/detail/{Type}/{Id}");
+
+            await LoadSource();
 
             StateHasChanged();
         }
@@ -65,12 +77,17 @@ namespace Nonton.Features.Meta.Pages
 
         private void PlayTrailer()
         {
-            var dialogParameters = new DialogParameters
-        {
-            { "YoutubeId", ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId }
-        };
+            IsTrailerPlaying = true;
+        }
 
-            DialogService.Show<YoutubePopup>($"{ContentMeta?.Name} ({ContentMeta?.Year}) | Trailer", dialogParameters, _trailerDialogOptions);
+        private void ToggleSourceSelect()
+        {
+            ShowSourceSelect = !ShowSourceSelect;
+        }
+
+        private async Task LoadSource()
+        {
+            Addons ??= await AddonService.LoadAllStreamAddons();
         }
     }
 }

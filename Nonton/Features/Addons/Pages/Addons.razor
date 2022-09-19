@@ -17,34 +17,34 @@
             var defaultAddon = AllAddons.Where(x => x.IsDefaultAddon);
             var installedAddon = AllAddons.Where(x => !x.IsDefaultAddon);
             
-            <MudText Typo="Typo.body1" Class="ma-4">Default Addons</MudText>
+                <MudText Typo="Typo.body1" Class="ma-4">Default Addons</MudText>
             foreach (var addon in defaultAddon)
             {
-                <AddonCard
+                    <AddonCard
                     Addon="addon"
                     Installable="false"
                     Removable="false"
                     ShowDisableToggle="false">
-                </AddonCard>
+                    </AddonCard>
             }
 
-            <MudText Typo="Typo.body1" Class="ma-4 mt-6">Installed Addons</MudText>
+                <MudText Typo="Typo.body1" Class="ma-4 mt-6">Installed Addons</MudText>
             foreach (var addon in installedAddon)
             {
-                <AddonCard
+                    <AddonCard
                     Addon="addon"
                     Installable="false"
                     Removable="true"
                     ShowDisableToggle="false"
                     OnRemoved="() => DeleteAddon(addon.Manifest!.Id!)"
-                    >
-                </AddonCard>
+                        >
+                    </AddonCard>
             }
         }
     </div>
 }
 
-<MudDrawer @bind-Open="@_openAddonBrowser" Anchor="Anchor.Bottom" Elevation="1" Variant="@DrawerVariant.Temporary" Height="80%" Style="background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
+<MudDrawer @bind-Open="@_openAddonBrowser" Anchor="Anchor.Bottom" Elevation="1" Variant="@DrawerVariant.Temporary" Height="80%" Style="display: none; background: rgba(39, 39, 47, 0.5); backdrop-filter: blur(20px);">
     <MudDrawerHeader>
         <MudTextField
             @ref="SearchBox"

@@ -14,6 +14,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Pages\**" />
+	  <Content Remove="Pages\**" />
+	  <EmbeddedResource Remove="Pages\**" />
+	  <None Remove="Pages\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <EmbeddedResource Include="ILLink.Descriptors.xml">
 		  <LogicalName>ILLink.Descriptors.xml</LogicalName>
 	  </EmbeddedResource>
@@ -30,10 +37,6 @@
 
 	<ItemGroup>
 		<ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Pages\" />
 	</ItemGroup>
 
 </Project>

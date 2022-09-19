@@ -1,9 +1,16 @@
 ﻿@page "/search"
-
-@if (Catalogs is not null && Catalogs.Any())
-{
-    foreach (var catalog in Catalogs)
+<EditForm OnValidSubmit="DoSearch" Model="SearchModel">
+    <InputText @bind-Value="SearchModel.SearchString" class="w-full h-10 rounded-lg px-4 text-gray-900 mb-4" placeholder="Search..." ></InputText>
+</EditForm>
+@{
+    if (!string.IsNullOrWhiteSpace(Keywords))
     {
-        <ContentItem Catalog="@catalog" SearchMode="true" SearchQuery="@Keywords"></ContentItem>
+        if (Catalogs is not null && Catalogs.Any())
+        {
+            foreach (var catalog in Catalogs)
+            {
+                <ContentItem Catalog="@catalog" SearchMode="true" SearchQuery="@Keywords"></ContentItem>
+            }
+        }
     }
 }
