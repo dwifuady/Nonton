@@ -60,7 +60,7 @@ namespace Nonton.Features.Meta.Pages
             ContentMeta = detail.Meta;
 
 
-            PageHistoryState.AddPageToHistory($"/detail/{Id}");
+            PageHistoryState.AddPageToHistory($"/detail/{Type}/{Id}");
 
             await LoadSource();
 

@@ -9,13 +9,15 @@
 <LoadingContainer State="LoadingContainerState">
     <Loading>
         <div class="flex flex-col">
-            <MudSkeleton SkeletonType="SkeletonType.Text" Height="50px" Width="150px"></MudSkeleton>
-            <section class="no-scrollbar content-cards-container">
+            <div class="w-40 h-8 mb-2 bg-slate-700 rounded-lg animate-pulse"></div>
+            <section class="flex no-scrollbar snap-x snap-mandatory flex-nowrap overflow-x-scroll gap-x-5">
                 @for (var i = 0; i < 10; i++)
                 {
-                    <div class="d-flex flex-column">
-                        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="240px" Width="150px" Class="w-[150px] flex-none rounded snap-center snap-always"></MudSkeleton>
-                        <MudSkeleton SkeletonType="SkeletonType.Text" Height="50px" Width="150px"></MudSkeleton>
+                    <div class="w-40 flex-none rounded snap-center snap-always cursor-pointer animate-pulse">
+                        <div class="flex flex-col place-items-center gap-3">
+                            <div class="w-36 h-64 object-cover rounded-lg bg-slate-700"></div>
+                            <div class="w-32 h-6 bg-slate-700 rounded-lg"></div>
+                        </div>
                     </div>
                 }
             </section>
@@ -38,7 +40,7 @@
                 <section class="flex no-scrollbar snap-x snap-mandatory flex-nowrap overflow-x-scroll gap-x-5" id="content-container-@Catalog.CatalogType-@Catalog.CatalogId">
                     @foreach (var meta in Metas)
                     {
-                        <div class="w-40 flex-none rounded snap-center snap-always" @onclick="() => ViewDetail(meta.ImdbId!)">
+                        <div class="w-40 flex-none rounded snap-center snap-always cursor-pointer" @onclick="() => ViewDetail(meta.ImdbId!)">
                             <div class="flex flex-col place-items-center gap-3">
                                 <img src="@meta.Poster" class="w-36 h-64 object-cover rounded-lg"/>
                                 <span class="text-center">@meta.Name</span>
