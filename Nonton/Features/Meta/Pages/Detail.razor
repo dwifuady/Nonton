@@ -6,43 +6,87 @@
 @if (ContentMeta is not null)
 {
     <div class="-m-4">
-        <div class="flex flex-col w-full h-screen object-cover bg-top bg-no-repeat p-4 justify-between bg-cover"
-         style="background-image: url('@ContentMeta.Poster!.Replace("small", "large")');">
-            <div class="-m-4 p-4 h-64 bg-gradient-to-b from-slate-900 to-transparent flex flex-col">
-                <div>
-                    <button onclick="history.back();">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block mb-1" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <line x1="5" y1="12" x2="11" y2="18" />
-                            <line x1="5" y1="12" x2="11" y2="6" />
-                        </svg>
-                    </button>
-                    <img src="@ContentMeta.Logo" class="object-cover" />
-                </div>
-                @if (!string.IsNullOrWhiteSpace(ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId))
-                {
-                    @if (!IsTrailerPlaying)
+        <div class="flex flex-col">
+            <div class="p-3 z-10" style="background: linear-gradient(to bottom, #000000 10%, rgb(0, 0, 0) 90%)">
+                <button onclick="history.back();">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-block mb-1" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <line x1="5" y1="12" x2="11" y2="18" />
+                        <line x1="5" y1="12" x2="11" y2="6" />
+                    </svg>
+                </button>
+                <span class="ml-3 text-white text-lg">@ContentMeta.Name</span>
+            </div>
+            <div class="w-full h-64 object-cover bg-top bg-no-repeat justify-between bg-cover">
+                <div class="w-screen max-w-lg h-24 absolute -mt-5 flex justify-end p-6" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 90%)">
+                    @if (IsTrailerPlaying)
                     {
-                        <div class="mx-auto mt-14">
-                            <button class="rounded-full border-solid border-2 border-teal-500 p-3" @onclick="PlayTrailer">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="text-teal-500 drop-shadow-xl" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M7 4v16l13 -8z" />
-                                </svg>
-                            </button>
+                        <button @onclick="CloseTrailer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block mb-1" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </button>
+                    }
+                </div>
+                <div class="flex flex-col w-full object-cover h-52 bg-cover place-content-center" style="background-image: url('@ContentMeta.Background');">
+                    @if (!string.IsNullOrWhiteSpace(ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId))
+                    {
+                        @if (!IsTrailerPlaying && !IsContentPlaying)
+                        {
+                            <div class="mx-auto">
+                                <button class="rounded-full border-solid border-2 border-teal-500 p-3" @onclick="PlayTrailer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="text-teal-500 drop-shadow-xl" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M7 4v16l13 -8z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        }
+                        else if(IsTrailerPlaying && !IsContentPlaying)
+                        {
+                            <div class="w-screen max-w-lg">
+                                <iframe class="aspect-video w-full" src="@($"https://www.youtube.com/embed/{ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId}?autoplay=1")" title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        }
+                    }
+                    @if (!IsTrailerPlaying && IsContentPlaying)
+                    {
+                        <div class="w-screen max-w-lg">
+                            <Player Url="@ContentUrl" IsFullSizePlayer="@false"></Player>
                         </div>
                     }
-                    else
-                    {
-                        <iframe class="aspect-video w-full" src="@($"https://www.youtube.com/embed/{ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId}?autoplay=1")" title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    }
-                }
+                </div>
             </div>
-            <div class="-m-4 p-4 h-1/2 bg-teal-100 dark:bg-slate-800 flex flex-col rounded-t-xl justify-between pb-16">
+            <div class="px-4 h-1/2 bg-slate-100 dark:bg-slate-800 flex flex-col rounded-t-xl justify-between pb-16 gap-4">
+                <div class="flex flex-col gap-y-1">
+                    @*wip - now only focus on movies*@
+                    @if (Type == AddonConstants.TypeMovie)
+                    {
+                        <button class="w-full bg-teal-500 text-white py-2 rounded-lg" @onclick="ToggleSourceSelect">Watch</button>
+                    }
+                    @if (Type == AddonConstants.TypeSeries)
+                    {
+                        <button class="w-full border-solid border-2 border-teal-500 text-teal-500 py-2 rounded-lg">Select Episode</button>
+                    }
+                </div>
                 <div class="flex flex-col gap-y-2">
                     <div class="tracking-wide">
-                        @ContentMeta?.Year | @ContentMeta?.ImdbRating | @ContentMeta?.Runtime
+                        @if (!string.IsNullOrWhiteSpace(ContentMeta?.ImdbRating))
+                        {
+                            <span>IMDB @ContentMeta?.ImdbRating</span>
+                        }
+                        <br/>
+                        @if (!string.IsNullOrWhiteSpace(ContentMeta?.Year))
+                        {
+                            <span>@ContentMeta?.Year | </span>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(ContentMeta?.Runtime))
+                        {
+                            <span>@ContentMeta?.Runtime</span>
+                        }
                     </div>
                     @if (ContentMeta?.Genres is not null)
                     {
@@ -69,17 +113,6 @@
                         <span>
                             Cast : @string.Join(", ", ContentMeta.Cast)
                         </span>
-                    }
-                </div>
-                <div class="flex flex-col gap-y-1">
-                    @*wip - now only focus on movies*@
-                    @if (Type == AddonConstants.TypeMovie)
-                    {
-                        <button class="w-full bg-teal-500 text-white py-2 rounded-lg" @onclick="ToggleSourceSelect">Watch</button>
-                    }
-                    @if (Type == AddonConstants.TypeSeries)
-                    {
-                        <button class="w-full border-solid border-2 border-teal-500 text-teal-500 py-2 rounded-lg">Select Episode</button>
                     }
                 </div>
             </div>
@@ -118,12 +151,12 @@
                             <div class="flex place-content-center">
                                 <div class="text-center sm:mt-0 sm:ml-4 sm:text-left">
                                     <h3 class="text-lg mb-4 font-medium leading-6 text-gray-900 dark:text-white" id="modal-title">Select Source</h3>
-                                    <div class="flex flex-col gap-2 overflow-y-auto max-h-96">
+                                    <div class="flex flex-col gap-2 overflow-y-auto max-h-96 no-scrollbar">
                                         @if (Addons != null)
                                         {
                                             @foreach (var addon in Addons)
                                             {
-                                                <StreamSourceItemV2 Id="@Id" Addon="@addon"></StreamSourceItemV2>
+                                                <StreamSourceItem Id="@Id" Addon="@addon" OnItemSelected="PlayContent"></StreamSourceItem>
                                             }
                                         }
                                     </div>

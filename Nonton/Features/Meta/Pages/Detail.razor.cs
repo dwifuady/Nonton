@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Text;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Nonton.Features.Addons;
 using Nonton.Features.Addons.Dtos.Manifest;
@@ -44,6 +45,8 @@ namespace Nonton.Features.Meta.Pages
         public string SelectedSeason { get; set; } = null!;
 
         public bool IsTrailerPlaying { get; set; }
+        public bool IsContentPlaying { get; set; }
+        public string? ContentUrl { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -75,6 +78,11 @@ namespace Nonton.Features.Meta.Pages
             IsTrailerPlaying = true;
         }
 
+        private void CloseTrailer()
+        {
+            IsTrailerPlaying = false;
+        }
+
         private void ToggleSourceSelect()
         {
             ShowSourceSelect = !ShowSourceSelect;
@@ -83,6 +91,14 @@ namespace Nonton.Features.Meta.Pages
         private async Task LoadSource()
         {
             Addons ??= await AddonService.LoadAllStreamAddons();
+        }
+
+        private void PlayContent(string url)
+        {
+            IsContentPlaying = true;
+            ShowSourceSelect = false;
+            // ContentUrl = "https://lamberta.github.io/html5-animation/examples/ch04/assets/movieclip.mp4";
+            ContentUrl = url;
         }
     }
 }

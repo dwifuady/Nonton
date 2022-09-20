@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Nonton.Components;
 using Nonton.Features.Meta;
 
 namespace Nonton.Features.Stream.Pages
@@ -30,16 +29,7 @@ namespace Nonton.Features.Stream.Pages
                 { "type", Type},
                 { "Id", Id }
             };
-
-            var dialog = DialogService.Show<StreamSourceDialog>($"Select source", dialogParameters, _sourceSelectDialogOptions);
-
-            var result = await dialog.Result;
-
-            if (!result.Cancelled && !string.IsNullOrWhiteSpace(result.Data.ToString()))
-            {
-                PlayContent(result.Data.ToString()!);
-                dialog.Close();
-            }
+            
         }
 
         private void PlayContent(string url)

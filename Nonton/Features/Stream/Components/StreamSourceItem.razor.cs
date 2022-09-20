@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
+using Nonton.Components;
 using Nonton.Features.Addons.Dtos;
 using Nonton.Features.Addons.Dtos.Manifest;
-using Nonton.Features.Stream;
 
-namespace Nonton.Components
+namespace Nonton.Features.Stream.Components
 {
     public partial class StreamSourceItem
     {
@@ -13,11 +12,10 @@ namespace Nonton.Components
         [Parameter] public EventCallback<string> OnItemSelected { get; set; }
 
         [Inject] public IStreamService StreamService { get; set; } = null!;
-        [Inject] public ISnackbar Snackbar { get; set; } = null!;
-
         public StreamResponse? StreamResponse { get; set; }
 
         public LoadingContainerState LoadingStateStreamSource { get; set; }
+
 
         protected override async Task OnParametersSetAsync()
         {
@@ -34,7 +32,7 @@ namespace Nonton.Components
             }
         }
 
-        private void PlayContent(string url)
+        private void SelectSource(string url)
         {
             OnItemSelected.InvokeAsync(url);
         }

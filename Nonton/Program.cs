@@ -10,7 +10,6 @@ using Nonton.Features.Catalogs;
 using Nonton.Features.Meta;
 using Nonton.Features.Database;
 using Nonton.Features.Stream;
-using Nonton.Features.PageState;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
