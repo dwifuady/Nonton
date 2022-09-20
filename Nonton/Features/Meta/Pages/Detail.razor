@@ -10,14 +10,14 @@
          style="background-image: url('@ContentMeta.Poster!.Replace("small", "large")');">
             <div class="-m-4 p-4 h-64 bg-gradient-to-b from-slate-900 to-transparent flex flex-col">
                 <div>
-                    <a href="@PageHistoryState.GetGoBackPage()">
+                    <button onclick="history.back();">
                         <svg xmlns="http://www.w3.org/2000/svg" class="inline-block mb-1" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <line x1="5" y1="12" x2="19" y2="12" />
                             <line x1="5" y1="12" x2="11" y2="18" />
                             <line x1="5" y1="12" x2="11" y2="6" />
                         </svg>
-                    </a>
+                    </button>
                     <img src="@ContentMeta.Logo" class="object-cover" />
                 </div>
                 @if (!string.IsNullOrWhiteSpace(ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId))

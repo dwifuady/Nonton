@@ -2,7 +2,6 @@
 using MudBlazor;
 using Nonton.Features.Addons;
 using Nonton.Features.Addons.Dtos.Manifest;
-using Nonton.Features.PageState;
 using Nonton.Features.Stream;
 
 namespace Nonton.Features.Meta.Pages
@@ -17,8 +16,7 @@ namespace Nonton.Features.Meta.Pages
         [Inject] public IStreamService StreamService { get; set; } = null!;
         [Inject] public IAddonService AddonService { get; set; } = null!;
         [Inject] public NavigationManager NavigationManager { get; set; } = null!;
-        [Inject] public PageHistoryState PageHistoryState { get; set; } = null!;
-
+        
         public Addons.Dtos.Meta? ContentMeta { get; set; }
         public bool ShowSourceSelect { get; set; }
         public IEnumerable<AddonDto>? Addons { get; set; }
@@ -58,9 +56,6 @@ namespace Nonton.Features.Meta.Pages
 
             var detail = await MetaService.GetMeta(Type, id);
             ContentMeta = detail.Meta;
-
-
-            PageHistoryState.AddPageToHistory($"/detail/{Type}/{Id}");
 
             await LoadSource();
 
