@@ -13,7 +13,7 @@
       "url": "css\/app-deprecated.css"
     },
     {
-      "hash": "sha256-F4+ajWauEJ3bex2o8+I3q4osW0PeYyovBCba+CPFNmo=",
+      "hash": "sha256-7cjLV\/krCYIBFO0hQqMVmLJbYDXUM9IEJF7IbJnFZoM=",
       "url": "css\/app.css"
     },
     {
@@ -33,7 +33,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-xFyskT+1XCxl2Kn3YcHKW2BW+Q81m2CAAzl+znVOqeA=",
+      "hash": "sha256-dTgmKcuy5JbBpt3euEHIMDs0sPCWKLG9bMGdBEzGx+I=",
       "url": "index.html"
     },
     {
@@ -65,7 +65,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-TEp0FlNmZdaIkoSX77meGlWRGQarT+Bws3CtdLu38Wc=",
+      "hash": "sha256-ooZcEC7I4Ul+R5TTq9r9Ho+NKY9dlcLEX3CjRGM9eZE=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -129,7 +129,7 @@
       "url": "_framework\/Microsoft.Extensions.Configuration.Json.dll"
     },
     {
-      "hash": "sha256-WGf0B4zY\/hVOZp\/UnBUWbRfiZ8oVSKgPQDBvFAwa1a8=",
+      "hash": "sha256-FgaAZc3MLE0COonvTJJ9SwBTngGNa9TykiGwDmOHzR0=",
       "url": "_framework\/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
     },
     {
@@ -173,7 +173,7 @@
       "url": "_framework\/Microsoft.Win32.Primitives.dll"
     },
     {
-      "hash": "sha256-r3i\/78EYF6um9IHtGfdinCcDAIt0W0ENhF0po3D\/xqo=",
+      "hash": "sha256-IQ27miBvpi2IUsahkliR5ZdVafqR6Fh5ThBDRkVgkb0=",
       "url": "_framework\/MudBlazor.dll"
     },
     {
@@ -181,7 +181,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-\/5ya6YsUJx9ks12F1QO4e+hz20YWUWGWAZBJ7WcnksM=",
+      "hash": "sha256-6\/+nXRJY19SYPynle1RRKHhCjz\/vSLR0qL0aL3gxzys=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -313,7 +313,7 @@
       "url": "_framework\/System.ObjectModel.dll"
     },
     {
-      "hash": "sha256-\/KL6F8zkWt8Q23Mc6aweqDKKI9he7lDsL2zArUFM02M=",
+      "hash": "sha256-oWL3CB5516JnEbNauvzE5JV0LXBUmbUAxsRXySLAR\/M=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -397,7 +397,7 @@
       "url": "_framework\/dotnet.6.0.9.98z2438nxa.js"
     },
     {
-      "hash": "sha256-YLYX\/LlGewTTMUkveNBqV8MfcwIvCWfOwZddMqNHLMc=",
+      "hash": "sha256-vEU3aSD9OREtm\/g2jfbcgCxO7CKavnZ9m8\/TylSU6oE=",
       "url": "_framework\/dotnet.wasm"
     },
     {
@@ -417,5 +417,5 @@
       "url": "_content\/SqliteWasmHelper\/browserCache.js"
     }
   ],
-  "version": "xEaPg+gB"
+  "version": "QquJt\/rL"
 };
