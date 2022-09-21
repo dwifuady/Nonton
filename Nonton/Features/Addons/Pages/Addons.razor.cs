@@ -12,7 +12,7 @@ namespace Nonton.Features.Addons.Pages
         [Inject] public HttpClient HttpClient { get; set; } = null!;
         [Inject] public ISnackbar Snackbar { get; set; } = null!;
 
-        public IEnumerable<AddonDto>? AllAddons { get; set; }
+        public IEnumerable<AddonDto>? AllInstalledAddons { get; set; }
         public IEnumerable<AddonDto>? AddonsCollection { get; set; }
         public IEnumerable<AddonDto>? FilteredAddonsCollection
         {
@@ -27,9 +27,21 @@ namespace Nonton.Features.Addons.Pages
             }
         }
         public string? SearchString { get; set; }
-        public MudTextField<string>? SearchBox { get; set; }
+        
+        private bool _isInstalledSelected = true;
+        private bool _isCommunitySelected;
+        private bool _showConfirmBox = false;
 
-        private bool _openAddonBrowser = false;
+        private string _confirmBoxTitle = "";
+        private string _confirmBoxDescription = "";
+        private string _confirmBoxAddonUrl = "";
+        private string _confirmBoxAddonId = "";
+        private AddonConfirmBoxTypeEnum _confirmBoxType;
+        public enum AddonConfirmBoxTypeEnum
+        {
+            Install,
+            Uninstall
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -38,16 +50,21 @@ namespace Nonton.Features.Addons.Pages
 
         private async Task LoadAddons()
         {
-            AllAddons = await AddonService.LoadAllAddons();
+            AllInstalledAddons = await AddonService.LoadAllAddons();
             StateHasChanged();
         }
 
         private async Task BrowseAddons()
         {
-            _openAddonBrowser = true;
+            _isCommunitySelected = true;
+            _isInstalledSelected = false;
             AddonsCollection ??= await AddonService.GetAddonCollection();
+        }
 
-            if (SearchBox != null) await SearchBox.FocusAsync();
+        private void LoadInstalledAddons()
+        {
+            _isCommunitySelected = false;
+            _isInstalledSelected = true;
         }
 
         private async Task InstallFromUrl()
@@ -79,26 +96,27 @@ namespace Nonton.Features.Addons.Pages
             {
                 var manifestString = await DownloadAddonManifest(url);
                 await SaveAddon(url, manifestString);
-                Snackbar.Add("Addon installed", Severity.Success);
+                _showConfirmBox = false;
             }
-            else
-            {
-                Snackbar.Add("Invalid addon manifest", Severity.Warning);
-            }
+
+            await LoadAddons();
+            //todo add warning/error message
         }
 
-        private async Task Install(AddonDto addon)
+        private void Install(AddonDto addon)
         {
-            var confirmBox = await DialogService.ShowMessageBox(
-                "Install",
-                $"Install addon {addon!.Manifest!.Name}?",
-                yesText: "Install",
-                cancelText: "Cancel");
+            _confirmBoxTitle = "Install";
+            _confirmBoxDescription = $"Install addon {addon!.Manifest!.Name}?";
+            _showConfirmBox = true;
+            _confirmBoxAddonUrl = addon!.TransportUrl;
+            _confirmBoxType = AddonConfirmBoxTypeEnum.Install;
+        }
 
-            if (confirmBox.HasValue && confirmBox.Value)
-            {
-                await Install(addon.TransportUrl!);
-            }
+        private async Task Uninstall(string addonId)
+        {
+            await AddonService.DeleteAddon(addonId);
+            _showConfirmBox = false;
+            await LoadAddons();
         }
 
         private async Task<string> DownloadAddonManifest(string url)
@@ -121,23 +139,13 @@ namespace Nonton.Features.Addons.Pages
             await LoadAddons();
         }
 
-        private async Task DeleteAddon(string id)
+        private void DeleteAddon(string id)
         {
-            var addon = AllAddons!.SingleOrDefault(x => x.Manifest!.Id!.Equals(id));
-
-            var confirmBox = await DialogService.ShowMessageBox(
-                "Warning",
-                $"Delete addon {addon!.Manifest!.Name}?",
-                yesText: "Delete",
-                cancelText: "Cancel");
-
-            if (confirmBox.HasValue && confirmBox.Value)
-            {
-                await AddonService.DeleteAddon(id);
-            }
-
-            Snackbar.Add("Addon Removed");
-            await LoadAddons();
+            _confirmBoxTitle = "Uninstall";
+            _confirmBoxDescription = $"Uninstall addon {id}?";
+            _showConfirmBox = true;
+            _confirmBoxAddonId = id;
+            _confirmBoxType = AddonConfirmBoxTypeEnum.Uninstall;
         }
     }
 }
