@@ -99,14 +99,13 @@
         }
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (!string.IsNullOrWhiteSpace(Catalog.CatalogName))
-        {
-            return;
-            await JsRuntime.InvokeVoidAsync("forceHorizontalScroll", $"content-container-{Catalog.CatalogType}-{Catalog.CatalogId}");
-        }
-    }
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    if (!string.IsNullOrWhiteSpace(Catalog.CatalogName))
+    //    {
+    //        await JsRuntime.InvokeVoidAsync("forceHorizontalScroll", $"content-container-{Catalog.CatalogType}-{Catalog.CatalogId}");
+    //    }
+    //}
 
     public async Task ViewDetail(string id)
     {
