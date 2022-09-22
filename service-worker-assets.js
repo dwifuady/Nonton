@@ -13,7 +13,7 @@
       "url": "css\/app-deprecated.css"
     },
     {
-      "hash": "sha256-1YYKx\/ccLhhFxDKuMj16zexSqSO+7uY+QuBRdWni3NI=",
+      "hash": "sha256-8fxtwNafPRAa+b608VTVY8YRkttvm9HljvvPV5Oe148=",
       "url": "css\/app.css"
     },
     {
@@ -69,7 +69,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-CexjoEErounSkpkbLpP\/bsWVFpxCmdihq5DpmlZLeH4=",
+      "hash": "sha256-ZppQDkNWDtFzM\/UU9VNXBdMxT\/+YlNguH3jPOXCRHpY=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -177,7 +177,7 @@
       "url": "_framework\/Microsoft.Win32.Primitives.dll"
     },
     {
-      "hash": "sha256-wUmuCvXTf2FlP8KnKBgNbX4OgtMvbROPThCs9EEpqQk=",
+      "hash": "sha256-TgNhbS9BW1JUGA6jPPLBEOp0bxnj0G5DiG1C11JN6Zw=",
       "url": "_framework\/MudBlazor.dll"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-ZJ3kpNjHy0OTQUPRgFJcna1tc9RNU7UpBofkuqGVMd0=",
+      "hash": "sha256-ezA5cZcF2OdJe6V7xfU3vf0G3zF6B+PbYZQVIPXv4Ok=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -433,5 +433,5 @@
       "url": "_content\/Toolbelt.Blazor.PWA.Updater\/Toolbelt.Blazor.PWA.Updater.bundle.scp.css"
     }
   ],
-  "version": "TgbyzUi8"
+  "version": "y704tIye"
 };
