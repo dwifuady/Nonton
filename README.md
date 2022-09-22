@@ -4,6 +4,7 @@ A [Stremio](https://www.stremio.com/) Client built with Blazor
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/dwifuady/Nonton?color=%234682B4)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dwifuady/Nonton?color=%23483D8B)
+![Github Page](https://github.com/dwifuady/Nonton/actions/workflows/deploy-gh-page.yml/badge.svg)
 
 Nonton is a side-project for me to experiment with a few technologies that interest me.  
 It is a [Blazor WebAssembly](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) application and hosted in this Github page [https://dwifuady.github.io/Nonton/](https://dwifuady.github.io/Nonton/)
