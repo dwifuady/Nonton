@@ -1,6 +1,6 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using Nonton.Commons;
 using Nonton.Features.Addons;
 using Nonton.Features.Addons.Dtos.Manifest;
 using Nonton.Features.Stream;
@@ -56,6 +56,10 @@ namespace Nonton.Features.Meta.Pages
                 id = Id.Split(':')[0];
                 SelectedSeason = Id.Split(':')[1];
             }
+            else if (Type == AddonConstants.TypeSeries)
+            {
+                SelectedSeason = "1";
+            }
 
             var detail = await MetaService.GetMeta(Type, id);
             ContentMeta = detail.Meta;
@@ -63,14 +67,6 @@ namespace Nonton.Features.Meta.Pages
             await LoadSource();
 
             StateHasChanged();
-        }
-
-        private void Watch(string id, string season = "", string episode = "")
-        {
-            if (string.IsNullOrWhiteSpace(season) && string.IsNullOrWhiteSpace(episode))
-                NavigationManager.NavigateTo($"watch/{Type}/{id}");
-            else
-                NavigationManager.NavigateTo($"watch/{Type}/{id}:{season}:{episode}");
         }
 
         private void PlayTrailer()
@@ -86,6 +82,18 @@ namespace Nonton.Features.Meta.Pages
         private void ToggleSourceSelect()
         {
             ShowSourceSelect = !ShowSourceSelect;
+        }
+
+        private void WatchFirstEpisode()
+        {
+            Id = $"{Id}:1:1";
+            ToggleSourceSelect();
+        }
+
+        private void WatchEpisode(string episodeId)
+        {
+            Id = episodeId;
+            ToggleSourceSelect();
         }
 
         private async Task LoadSource()
