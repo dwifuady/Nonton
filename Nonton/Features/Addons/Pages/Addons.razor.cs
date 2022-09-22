@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Nonton.Components;
 using Nonton.Features.Addons.Dtos.Manifest;
@@ -10,7 +11,6 @@ namespace Nonton.Features.Addons.Pages
         [Inject] public IAddonService AddonService { get; set; } = null!;
         [Inject] public IDialogService DialogService { get; set; } = null!;
         [Inject] public HttpClient HttpClient { get; set; } = null!;
-        [Inject] public ISnackbar Snackbar { get; set; } = null!;
 
         public IEnumerable<AddonDto>? AllInstalledAddons { get; set; }
         public IEnumerable<AddonDto>? AddonsCollection { get; set; }
@@ -18,6 +18,11 @@ namespace Nonton.Features.Addons.Pages
         {
             get
             {
+                if (SearchString is not null && SearchString.Contains("manifest.json"))
+                {
+                    InstallFromUrl(SearchString);
+                    SearchString = string.Empty;
+                }
                 return string.IsNullOrWhiteSpace(SearchString)
                     ? AddonsCollection
                     : AddonsCollection?.Where(a => a.Manifest!.Name!.ToLower().Contains(SearchString.ToLower()) || a.Manifest is
@@ -26,6 +31,7 @@ namespace Nonton.Features.Addons.Pages
                     } && a.Manifest.Description.ToLower().Contains(SearchString));
             }
         }
+
         public string? SearchString { get; set; }
         
         private bool _isInstalledSelected = true;
@@ -67,27 +73,28 @@ namespace Nonton.Features.Addons.Pages
             _isInstalledSelected = true;
         }
 
-        private async Task InstallFromUrl()
+        private void InstallFromUrl(string url)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.Large };
-            var dialog = DialogService.Show<AddNewAddon>("New addon", options);
+            _confirmBoxTitle = "Install";
+            _confirmBoxDescription = $"Install addon from {url}?";
+            _showConfirmBox = true;
+            _confirmBoxAddonUrl = url;
+            _confirmBoxType = AddonConfirmBoxTypeEnum.Install;
+            //var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.Large };
+            //var dialog = DialogService.Show<AddNewAddon>("New addon", options);
 
-            var result = await dialog.Result;
+            //var result = await dialog.Result;
 
-            if (!result.Cancelled)
-            {
-                var url = result.Data.ToString();
-                if (!string.IsNullOrWhiteSpace(url))
-                {
-                    var manifestString = await DownloadAddonManifest(url);
-                    await SaveAddon(url, manifestString);
-                    Snackbar.Add("Addon installed", Severity.Success);
-                }
-                else
-                {
-                    Snackbar.Add("Invalid addon manifest", Severity.Warning);
-                }
-            }
+            //if (!result.Cancelled)
+            //{
+            //    var url = result.Data.ToString();
+            //    if (!string.IsNullOrWhiteSpace(url))
+            //    {
+            //        var manifestString = await DownloadAddonManifest(url);
+            //        await SaveAddon(url, manifestString);
+
+            //    }
+            //}
         }
 
         private async Task Install(string url)
