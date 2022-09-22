@@ -5,10 +5,10 @@
 <div class="flex flex-col gap-4">
     <span class="text-lg">Addons</span>
     <div class="flex flex-row gap-2" role="group">
-        <button class="rounded-full py-2 px-4 w-auto @(_isInstalledSelected ? "bg-teal-500 text-white dark:bg-slate-700 dark:text-teal-500" : "text-white")" @onclick="LoadInstalledAddons">
+        <button class="rounded-full py-2 px-4 w-auto @(_isInstalledSelected ? "bg-teal-500 text-white dark:bg-slate-700 dark:text-teal-500" : "dark:text-white text-gray-800")" @onclick="LoadInstalledAddons">
             Installed
         </button>
-        <button class="rounded-full py-2 px-4 w-auto @(_isCommunitySelected ? "bg-teal-500 text-white dark:bg-slate-700 dark:text-teal-500" : "text-white")" @onclick="BrowseAddons">
+        <button class="rounded-full py-2 px-4 w-auto @(_isCommunitySelected ? "bg-teal-500 text-white dark:bg-slate-700 dark:text-teal-500" : "dark:text-white text-gray-800")" @onclick="BrowseAddons">
             Community
         </button>
     </div>
