@@ -30,20 +30,41 @@ namespace Nonton.Features.Catalogs
                     var isSkippable = IsSkippable(catalogDto);
                     switch (catalogDto.Type)
                     {
-                        case AddonConstants.TypeMovie:
+                        case AddonConstants.TypeMovieShortName:
                             {
                                 var catalog = new MovieCatalog(catalogAddon.Manifest.Name!, catalogAddon.BaseUri,
                                     catalogDto.Id!, catalogDto.Name!, genres, isSearchable, isSkippable);
                                 catalogs.Add(catalog);
                                 break;
                             }
-                        case AddonConstants.TypeSeries:
+                        case AddonConstants.TypeSeriesShortName:
                             {
                                 var catalog = new SeriesCatalog(catalogAddon.Manifest.Name!, catalogAddon.BaseUri,
                                     catalogDto.Id!, catalogDto.Name!, genres, isSearchable, isSkippable);
                                 catalogs.Add(catalog);
                                 break;
                             }
+                        case AddonConstants.TypeAnimeShortName:
+                        {
+                            var catalog = new AnimeCatalog(catalogAddon.Manifest.Name!, catalogAddon.BaseUri,
+                                catalogDto.Id!, catalogDto.Name!, genres, isSearchable, isSkippable);
+                            catalogs.Add(catalog);
+                            break;
+                        }
+                        case AddonConstants.TypeChannelShortName:
+                        {
+                            var catalog = new ChannelCatalog(catalogAddon.Manifest.Name!, catalogAddon.BaseUri,
+                                catalogDto.Id!, catalogDto.Name!, genres, isSearchable, isSkippable);
+                            catalogs.Add(catalog);
+                            break;
+                        }
+                        case AddonConstants.TypeTvShortName:
+                        {
+                            var catalog = new TvCatalog(catalogAddon.Manifest.Name!, catalogAddon.BaseUri,
+                                catalogDto.Id!, catalogDto.Name!, genres, isSearchable, isSkippable);
+                            catalogs.Add(catalog);
+                            break;
+                        }
                     }
                 }
             }
@@ -74,6 +95,25 @@ namespace Nonton.Features.Catalogs
             var catalogs = await GetAllCatalogsAsync();
             return catalogs.Where(c => c is SeriesCatalog).ToList();
         }
+
+        public async Task<List<Catalog>> GetAnimeCatalogsAsync()
+        {
+            var catalogs = await GetAllCatalogsAsync();
+            return catalogs.Where(c => c is AnimeCatalog).ToList();
+        }
+
+        public async Task<List<Catalog>> GetChannelCatalogsAsync()
+        {
+            var catalogs = await GetAllCatalogsAsync();
+            return catalogs.Where(c => c is ChannelCatalog).ToList();
+        }
+
+        public async Task<List<Catalog>> GetTvCatalogsAsync()
+        {
+            var catalogs = await GetAllCatalogsAsync();
+            return catalogs.Where(c => c is TvCatalog).ToList();
+        }
+
         /// <summary>
         /// Get List of Genre and IsRequired property
         /// </summary>

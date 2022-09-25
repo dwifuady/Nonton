@@ -2,10 +2,10 @@ namespace Nonton.Features.Addons.Dtos;
 
 using System.Text.Json.Serialization;
 
-public class StreamResponse
+public class StreamResponseDto
 {
     [JsonPropertyName("streams")]
-    public List<Stream>? Streams { get; set; }
+    public List<StreamDto>? Streams { get; set; }
 
     [JsonPropertyName("cacheMaxAge")]
     public int CacheMaxAge { get; set; }

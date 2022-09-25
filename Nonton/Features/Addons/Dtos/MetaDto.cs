@@ -2,7 +2,7 @@
 
 using System.Text.Json.Serialization;
 
-public class Meta
+public class MetaDto
 {
     [JsonPropertyName("imdb_id")]
     public string? ImdbId { get; set; }
@@ -47,13 +47,13 @@ public class Meta
     public string? Year { get; set; }
 
     [JsonPropertyName("popularities")]
-    public Popularities? Popularities { get; set; }
+    public PopularitiesDto? Popularities { get; set; }
 
     [JsonPropertyName("poster")]
     public string? Poster { get; set; }
 
     [JsonPropertyName("trailers")]
-    public List<Trailer>? Trailers { get; set; }
+    public List<TrailerDto>? Trailers { get; set; }
 
     [JsonPropertyName("background")]
     public string? Background { get; set; }
@@ -74,17 +74,17 @@ public class Meta
     public string? ReleaseInfo { get; set; }
 
     [JsonPropertyName("trailerStreams")]
-    public List<TrailerStream>? TrailerStreams { get; set; }
+    public List<TrailerStreamDto>? TrailerStreams { get; set; }
 
     [JsonPropertyName("links")]
-    public List<Link>? Links { get; set; }
+    public List<LinkDto>? Links { get; set; }
 
     [JsonPropertyName("behaviorHints")]
-    public BehaviorHints? BehaviorHints { get; set; }
+    public BehaviorHintsDto? BehaviorHints { get; set; }
 
     [JsonPropertyName("runtime")]
     public string? Runtime { get; set; }
 
     [JsonPropertyName("videos")]
-    public List<Video>? Videos { get; set; }
+    public List<VideoDto>? Videos { get; set; }
 }

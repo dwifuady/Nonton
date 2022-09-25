@@ -6,8 +6,7 @@ public interface ICatalog
     string AddonBaseUri { get; }
     string CatalogId { get; }
     string CatalogName { get; }
-    const string CatalogType = "";
-
+    
     /// <summary>
     /// Genres, IsRequired
     /// </summary>

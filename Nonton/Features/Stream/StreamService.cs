@@ -20,18 +20,18 @@ namespace Nonton.Features.Stream
             _addonService = addonService;
         }
 
-        public async Task<IEnumerable<StreamResponse>> GetStream(string id)
+        public async Task<IEnumerable<StreamResponseDto>> GetStream(string id)
         {
             var streamAddons = await _addonService.LoadAllStreamAddons();
 
-            var streamResponses = new List<StreamResponse>();
+            var streamResponses = new List<StreamResponseDto>();
 
             if (streamAddons == null) return streamResponses;
 
-            var streamType = AddonConstants.TypeMovie;
+            var streamType = AddonConstants.TypeMovieShortName;
             if (id.Contains(":"))
             {
-                streamType = AddonConstants.TypeSeries;
+                streamType = AddonConstants.TypeSeriesShortName;
             }
 
             foreach (var streamAddon in streamAddons)
@@ -47,12 +47,12 @@ namespace Nonton.Features.Stream
             return streamResponses;
         }
 
-        public async Task<StreamResponse?> GetStream(AddonDto addon, string id)
+        public async Task<StreamResponseDto?> GetStream(AddonDto addon, string id)
         {
-            var streamType = AddonConstants.TypeMovie;
+            var streamType = AddonConstants.TypeMovieShortName;
             if (id.Contains(":"))
             {
-                streamType = AddonConstants.TypeSeries;
+                streamType = AddonConstants.TypeSeriesShortName;
             }
 
             var api = RestService.For<IStremioApi>(addon.BaseUri);

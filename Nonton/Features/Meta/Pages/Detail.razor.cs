@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using Nonton.Commons;
 using Nonton.Features.Addons;
 using Nonton.Features.Addons.Dtos.Manifest;
+using Nonton.Features.Meta.Models;
 using Nonton.Features.Stream;
 
 namespace Nonton.Features.Meta.Pages
@@ -11,36 +11,16 @@ namespace Nonton.Features.Meta.Pages
     {
         [Parameter] public string Id { get; set; } = null!;
         [Parameter] public string Type { get; set; } = null!;
-
-        [Inject] public IDialogService DialogService { get; set; } = null!;
+        
         [Inject] public IMetaService MetaService { get; set; } = null!;
         [Inject] public IStreamService StreamService { get; set; } = null!;
         [Inject] public IAddonService AddonService { get; set; } = null!;
         [Inject] public NavigationManager NavigationManager { get; set; } = null!;
         
-        public Addons.Dtos.Meta? ContentMeta { get; set; }
         public bool ShowSourceSelect { get; set; }
         public IEnumerable<AddonDto>? Addons { get; set; }
+        public IMeta? Meta { get; set; }
 
-
-        public List<int?> Seasons
-        {
-            get
-            {
-                if (ContentMeta?.Videos is null) return new List<int?>();
-                var seasons = ContentMeta.Videos
-                    .Where(x => x.Season.HasValue && x.Season.Value > 0)
-                    .GroupBy(x => x.Season)
-                    .Select(x => x.Key)
-                    .OrderBy(x => x).ToList();
-                if (ContentMeta.Videos.Any(x => x.Season == 0))
-                {
-                    seasons.Add(0);
-                }
-
-                return seasons;
-            }
-        }
 
         public string SelectedSeason { get; set; } = null!;
 
@@ -56,13 +36,12 @@ namespace Nonton.Features.Meta.Pages
                 id = Id.Split(':')[0];
                 SelectedSeason = Id.Split(':')[1];
             }
-            else if (Type == AddonConstants.TypeSeries)
+            else if (Type == AddonConstants.TypeSeriesShortName)
             {
                 SelectedSeason = "1";
             }
 
-            var detail = await MetaService.GetMeta(Type, id);
-            ContentMeta = detail.Meta;
+            Meta = await MetaService.GetMeta(Type, id);
 
             await LoadSource();
 
@@ -105,8 +84,8 @@ namespace Nonton.Features.Meta.Pages
         {
             IsContentPlaying = true;
             ShowSourceSelect = false;
-            // ContentUrl = "https://lamberta.github.io/html5-animation/examples/ch04/assets/movieclip.mp4";
-            ContentUrl = url;
+            ContentUrl = "https://lamberta.github.io/html5-animation/examples/ch04/assets/movieclip.mp4";
+            //ContentUrl = url;
         }
     }
 }

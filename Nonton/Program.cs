@@ -27,11 +27,12 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 });
 builder.Services.AddScoped<IAddonService, AddonService>();
-builder.Services.AddScoped<ICatalogApi, CatalogApi>();
-builder.Services.AddScoped<IMetaService, MetaService>();
 builder.Services.AddScoped<IStreamService, StreamService>();
-builder.Services.AddScoped<IAddonService, AddonService>();
+builder.Services.AddScoped<ICatalogApi, CatalogApi>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<IMetaApi, MetaApi>();
+builder.Services.AddScoped<IMetaService, MetaService>();
+
 builder.Services.AddSqliteWasmDbContextFactory<NontonDbContext>(
     opts => opts.UseSqlite("Data Source=nonton.sqlite3"));
 

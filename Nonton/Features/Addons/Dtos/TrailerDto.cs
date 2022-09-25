@@ -2,7 +2,7 @@
 
 namespace Nonton.Features.Addons.Dtos;
 
-public class Trailer
+public class TrailerDto
 {
     [JsonPropertyName("source")]
     public string? Source { get; set; }

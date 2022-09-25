@@ -3,7 +3,9 @@
 namespace Nonton.Features.Catalogs.Models;
 public class Catalog : ICatalog
 {
-    public virtual string CatalogType => AddonConstants.TypeDefault;
+    public virtual CatalogTypeEnum CatalogType => CatalogTypeEnum.Default;
+    public virtual string CatalogTitle => AddonConstants.TypeDefault;
+    public virtual string CatalogShortName => AddonConstants.TypeDefault;
     public Catalog(string addonName, string addonBaseUri, string catalogId, string catalogName)
     {
         AddonName = addonName;

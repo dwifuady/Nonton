@@ -38,7 +38,7 @@ public class ManifestDto
     public string? Background { get; set; }
 
     [JsonPropertyName("behaviorHints")]
-    public BehaviorHints? BehaviorHints { get; set; }
+    public BehaviorHintsDto? BehaviorHints { get; set; }
 
     [JsonPropertyName("resources")]
     public object? ResourcesObject { get; set; }

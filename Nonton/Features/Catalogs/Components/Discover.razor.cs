@@ -19,7 +19,7 @@ namespace Nonton.Features.Catalogs.Components
         public Catalog? SelectedCatalog { get; set; }
         public (List<string> Genres, bool IsRequired)? Genres { get; set; }
         public string? SelectedGenres { get; set; }
-        public IEnumerable<Addons.Dtos.Meta>? Metas { get; set; }
+        public IEnumerable<Addons.Dtos.MetaDto>? Metas { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -56,7 +56,7 @@ namespace Nonton.Features.Catalogs.Components
         {
             if (SelectedCatalog is not null)
             {
-                var discoverItem = await CatalogApi.GetDiscoverItem(SelectedCatalog.AddonBaseUri, SelectedCatalog.CatalogType, SelectedCatalog.CatalogId, SelectedGenres ?? "");
+                var discoverItem = await CatalogApi.GetCatalogItem(SelectedCatalog.AddonBaseUri, SelectedCatalog.CatalogShortName, SelectedCatalog.CatalogId, SelectedGenres ?? "");
                 Metas = discoverItem.Metas;
                 StateHasChanged();
             }

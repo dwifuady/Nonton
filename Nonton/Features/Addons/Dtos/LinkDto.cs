@@ -2,7 +2,7 @@
 
 using System.Text.Json.Serialization;
 
-public class Link
+public class LinkDto
 {
     [JsonPropertyName("name")]
     public string? Name { get; set; }

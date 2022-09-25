@@ -92,12 +92,12 @@ public class AddonService : IAddonService
 
         foreach (var addon in allAddons)
         {
-            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(AddonConstants.ResourcesStream) && (addon.Manifest.Types!.Contains(AddonConstants.TypeMovie) || addon.Manifest.Types!.Contains(AddonConstants.TypeSeries)))
+            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(AddonConstants.ResourcesStream) && (addon.Manifest.Types!.Contains(AddonConstants.TypeMovieShortName) || addon.Manifest.Types!.Contains(AddonConstants.TypeSeriesShortName)))
             {
                 addons.Add(addon);
             }
 
-            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesStream) && (addon.Manifest.Types!.Contains(AddonConstants.TypeMovie) || addon.Manifest.Types!.Contains(AddonConstants.TypeSeries)))
+            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesStream) && (addon.Manifest.Types!.Contains(AddonConstants.TypeMovieShortName) || addon.Manifest.Types!.Contains(AddonConstants.TypeSeriesShortName)))
             {
                 addons.Add(addon);
             }
