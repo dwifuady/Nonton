@@ -21,7 +21,7 @@ public class AddonService : IAddonService
 
         await using var context = await _dbFactory.CreateDbContextAsync();
         var installedAddons = await context.NontonExtensions.ToListAsync();
-
+        var disabledExtension = await context.DisabledExtensions.ToListAsync();
         var addons = defaultAddons!.ToList();
         foreach (var addon in installedAddons)
         {
@@ -37,12 +37,25 @@ public class AddonService : IAddonService
             }
         }
 
+        foreach (var addon in addons)
+        {
+            addon.IsEnabled = disabledExtension.All(de => de.TransportUrl != addon.TransportUrl);
+        }
+
         return addons;
+    }
+
+    public async Task<IEnumerable<AddonDto>?> LoadAllActiveAddons()
+    {
+        await using var context = await _dbFactory.CreateDbContextAsync();
+        var allAddons = await LoadAllAddons();
+        var disabledExtension = await context.DisabledExtensions.ToListAsync();
+        return allAddons?.Where(a => disabledExtension.All(de => de.TransportUrl != a.TransportUrl));
     }
 
     public async Task<IEnumerable<AddonDto>?> LoadAllCatalogAddons()
     {
-        var allAddons = await LoadAllAddons();
+        var allAddons = await LoadAllActiveAddons();
         var addons = new List<AddonDto>();
         if (allAddons == null) return await Task.FromResult(addons);
 
@@ -64,7 +77,7 @@ public class AddonService : IAddonService
 
     public async Task<IEnumerable<AddonDto>?> LoadAllMetaAddons()
     {
-        var allAddons = await LoadAllAddons();
+        var allAddons = await LoadAllActiveAddons();
         var addons = new List<AddonDto>();
         if (allAddons == null) return await Task.FromResult(addons);
 
@@ -86,7 +99,7 @@ public class AddonService : IAddonService
 
     public async Task<IEnumerable<AddonDto>?> LoadAllStreamAddons()
     {
-        var allAddons = await LoadAllAddons();
+        var allAddons = await LoadAllActiveAddons();
         var addons = new List<AddonDto>();
         if (allAddons == null) return await Task.FromResult(addons);
 
@@ -167,5 +180,33 @@ public class AddonService : IAddonService
     public async Task<IEnumerable<AddonDto>?> LoadDefaultAddons()
     {
         return await Task.FromResult(DefaultAddons.AllDefaultAddons());
+    }
+
+    public async Task ToggleAddonStatus(AddonDto addon, bool isEnabled)
+    {
+        await using var context = await _dbFactory.CreateDbContextAsync();
+        if (isEnabled)
+        {
+            var disabledExtension = context.DisabledExtensions.FirstOrDefault(a =>
+                a.AddonId == addon.Manifest.Id && a.TransportUrl == addon.TransportUrl);
+
+            if (disabledExtension is not null)
+            {
+                context.DisabledExtensions.Remove(disabledExtension);
+            }
+        }
+        else
+        {
+            var disabledExtension = new DisabledExtension
+            {
+                Id = Guid.NewGuid().ToString(),
+                AddonId = addon.Manifest.Id!,
+                TransportUrl = addon.TransportUrl
+            };
+
+            context.DisabledExtensions.Add(disabledExtension);
+        }
+        await context.SaveChangesAsync();
+
     }
 }

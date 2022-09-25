@@ -23,7 +23,14 @@
 
                     foreach (var addon in AllInstalledAddons)
                     {
-                        <AddonCard Addon="addon" Installable="false" Removable="@(addon.IsDefaultAddon == false)" ShowDisableToggle="false" OnRemoved="() => DeleteAddon(addon.Manifest!.Id!)"></AddonCard>
+                        <AddonCard Addon="addon" 
+                                   Installable="false" 
+                                   Removable="@(addon.IsDefaultAddon == false)" 
+                                   ShowDisableToggle="true" 
+                                   Enabled="addon.IsEnabled"
+                                   OnStatusToggleClicked="() => ToggleAddonStatus(addon, !addon.IsEnabled)"
+                                   OnRemoved="() => DeleteAddon(addon.Manifest!.Id!)"
+                                   ></AddonCard>
                     }
                 }
             </div>

@@ -137,5 +137,11 @@ namespace Nonton.Features.Addons.Pages
             _confirmBoxAddonId = id;
             _confirmBoxType = AddonConfirmBoxTypeEnum.Uninstall;
         }
+
+        private async Task ToggleAddonStatus(AddonDto addon, bool isEnabled)
+        {
+            Console.WriteLine($"Toggle triggered {isEnabled}");
+            await AddonService.ToggleAddonStatus(addon, isEnabled);
+        }
     }
 }

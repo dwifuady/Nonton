@@ -17,5 +17,6 @@ namespace Nonton.Features.Addons.Dtos.Manifest
             : TransportUrl.Replace("/manifest.json", "");
 
         [JsonIgnore] public bool IsDefaultAddon { get; set; }
+        [JsonIgnore] public bool IsEnabled { get; set; }
     }
 }

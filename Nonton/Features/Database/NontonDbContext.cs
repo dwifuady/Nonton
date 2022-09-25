@@ -17,5 +17,6 @@ namespace Nonton.Features.Database
         }
 
         public DbSet<NontonExtension> NontonExtensions { get; set; } = null!;
+        public DbSet<DisabledExtension> DisabledExtensions { get; set; } = null!;
     }
 }
