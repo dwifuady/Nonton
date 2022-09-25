@@ -2,7 +2,7 @@
 
 using System.Text.Json.Serialization;
 
-public class Popularities
+public class PopularitiesDto
 {
     [JsonPropertyName("moviedb")]
     public double? MovieDb { get; set; }

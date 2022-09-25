@@ -1,7 +1,7 @@
 ﻿namespace Nonton.Features.Addons.Dtos;
 using System.Text.Json.Serialization;
 
-public class TrailerStream
+public class TrailerStreamDto
 {
     [JsonPropertyName("title")]
     public string? Title { get; set; }

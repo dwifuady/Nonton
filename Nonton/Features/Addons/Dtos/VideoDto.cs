@@ -2,7 +2,7 @@
 
 namespace Nonton.Features.Addons.Dtos
 {
-    public class Video
+    public class VideoDto
     {
         [JsonPropertyName("id")]
         public string? Id { get; set; }

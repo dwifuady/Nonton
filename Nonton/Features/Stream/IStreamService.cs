@@ -5,7 +5,7 @@ namespace Nonton.Features.Stream
 {
     public interface IStreamService
     {
-        Task<IEnumerable<StreamResponse>> GetStream(string id);
-        Task<StreamResponse?> GetStream(AddonDto addon, string id);
+        Task<IEnumerable<StreamResponseDto>> GetStream(string id);
+        Task<StreamResponseDto?> GetStream(AddonDto addon, string id);
     }
 }

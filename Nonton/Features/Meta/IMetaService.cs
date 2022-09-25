@@ -1,9 +1,5 @@
-﻿using Nonton.Features.Addons.Dtos;
-
-namespace Nonton.Features.Meta
+﻿namespace Nonton.Features.Meta;
+public interface IMetaService
 {
-    public interface IMetaService
-    {
-        Task<Detail> GetMeta(string type, string id);
-    }
+    Task<Models.IMeta> GetMeta(string metaType, string id);
 }

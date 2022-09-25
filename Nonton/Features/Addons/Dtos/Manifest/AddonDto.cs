@@ -28,7 +28,7 @@ namespace Nonton.Features.Addons.Dtos.Manifest
             {
                 return addon.Manifest.Catalogs
                     .Where(x =>
-                        x.Type is AddonConstants.TypeMovie or AddonConstants.TypeSeries &&
+                        x.Type is AddonConstants.TypeMovieShortName or AddonConstants.TypeSeriesShortName &&
                         ((x.ExtraRequired != null && !x.ExtraRequired.Any()) || x.ExtraRequired is null));
             }
 
@@ -41,7 +41,7 @@ namespace Nonton.Features.Addons.Dtos.Manifest
             {
                 return addon.Manifest.Catalogs
                     .Where(x =>
-                        x.Type is AddonConstants.TypeMovie or AddonConstants.TypeSeries &&
+                        x.Type is AddonConstants.TypeMovieShortName or AddonConstants.TypeSeriesShortName &&
                         ((x.ExtraSupported != null && x.ExtraSupported.Any() && x.ExtraSupported.Contains(AddonConstants.ExtraSearch)) ));
             }
 

@@ -30,14 +30,14 @@
                 <div>
                     @if (SearchMode)
                     {
-                        <span class="text-lg">@Catalog.AddonName - @Catalog.CatalogType.ToTitleCase()</span>
+                        <span class="text-lg">@Catalog.AddonName - @Catalog.CatalogTitle</span>
                     }
                     else
                     {
-                        <span class="text-lg">@Catalog.CatalogType.ToTitleCase() - @Catalog.CatalogName</span>
+                        <span class="text-lg">@Catalog.CatalogTitle - @Catalog.CatalogName</span>
                     }
                 </div>
-                <section class="flex no-scrollbar snap-x snap-mandatory flex-nowrap overflow-x-scroll gap-x-5" id="content-container-@Catalog.CatalogType-@Catalog.CatalogId">
+                <section class="flex no-scrollbar snap-x snap-mandatory flex-nowrap overflow-x-scroll gap-x-5" id="content-container-@Catalog.CatalogShortName-@Catalog.CatalogId">
                     @foreach (var meta in Metas)
                     {
                         <div class="w-40 flex-none rounded snap-center snap-always cursor-pointer" @onclick="() => ViewDetail(meta.ImdbId!)">
@@ -67,7 +67,7 @@
     [Parameter]
     public string? SearchQuery { get; set; }
 
-    public IEnumerable<Meta>? Metas { get; set; }
+    public IEnumerable<MetaDto>? Metas { get; set; }
 
     public LoadingContainerState LoadingContainerState { get; set; } = LoadingContainerState.Empty;
 
@@ -84,12 +84,12 @@
         {
             if (SearchMode && !string.IsNullOrWhiteSpace(SearchQuery))
             {
-                var discoverItem = await CatalogApi.Search(Catalog.AddonBaseUri, Catalog.CatalogType, Catalog.CatalogId, SearchQuery);
+                var discoverItem = await CatalogApi.Search(Catalog.AddonBaseUri, Catalog.CatalogShortName, Catalog.CatalogId, SearchQuery);
                 Metas = discoverItem.Metas;
             }
             else
             {
-                var discoverItem = await CatalogApi.GetDiscoverItem(Catalog.AddonBaseUri, Catalog.CatalogType, Catalog.CatalogId);
+                var discoverItem = await CatalogApi.GetCatalogItem(Catalog.AddonBaseUri, Catalog.CatalogShortName, Catalog.CatalogId);
                 Metas = discoverItem.Metas;
             }
         }
@@ -109,6 +109,6 @@
 
     public async Task ViewDetail(string id)
     {
-        await Task.Run(() => NavigationManager.NavigateTo($"detail/{Catalog.CatalogType}/{id}"));
+        await Task.Run(() => NavigationManager.NavigateTo($"detail/{Catalog.CatalogShortName}/{id}"));
     }
 }

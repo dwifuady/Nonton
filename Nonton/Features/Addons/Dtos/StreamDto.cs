@@ -2,7 +2,7 @@ namespace Nonton.Features.Addons.Dtos;
 
 using System.Text.Json.Serialization;
 
-public class Stream
+public class StreamDto
 {
     [JsonPropertyName("name")]
     public string? Name { get; set; }
@@ -32,5 +32,5 @@ public class Stream
     public string? Url { get; set; }
 
     [JsonPropertyName("behaviorHints")]
-    public BehaviorHints? BehaviorHints { get; set; }
+    public BehaviorHintsDto? BehaviorHints { get; set; }
 }

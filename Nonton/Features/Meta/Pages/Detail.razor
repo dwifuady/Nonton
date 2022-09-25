@@ -1,9 +1,10 @@
 ﻿@page "/detail/{type}/{id}"
 @using Nonton.Features.Stream.Components
+@using Nonton.Features.Meta.Models
 
-<PageTitle>@(ContentMeta is null ? "Nonton" : $"{ContentMeta?.Name} ({@ContentMeta?.Year})")</PageTitle>
+<PageTitle>@($"{Meta?.Name} ({@Meta?.Year})")</PageTitle>
 
-@if (ContentMeta is not null)
+@if (Meta is not null)
 {
     <div class="-m-4">
         <div class="flex flex-col">
@@ -16,7 +17,7 @@
                         <line x1="5" y1="12" x2="11" y2="6" />
                     </svg>
                 </button>
-                <span class="ml-3 text-white text-lg">@ContentMeta.Name</span>
+                <span class="ml-3 text-white text-lg">@Meta.Name</span>
             </div>
             <div class="w-full h-64 object-cover bg-top bg-no-repeat justify-between bg-cover">
                 <div class="w-screen max-w-lg h-24 absolute -mt-5 flex justify-end p-6" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 90%)">
@@ -31,25 +32,29 @@
                         </button>
                     }
                 </div>
-                <div class="flex flex-col w-full object-cover h-60 bg-cover place-content-center" style="background-image: url('@ContentMeta.Background');">
-                    @if (!string.IsNullOrWhiteSpace(ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId))
+                <div class="flex flex-col w-full object-cover h-60 bg-cover place-content-center" style="background-image: url('@Meta.Background');">
+                    @if (Meta is MovieMeta movieMeta)
                     {
-                        @if (!IsTrailerPlaying && !IsContentPlaying)
+                        var trailerSource = movieMeta?.Trailers.FirstOrDefault(x => x.Type == AddonConstants.TrailerTypeTrailer).Source;
+                        if (!string.IsNullOrWhiteSpace(trailerSource))
                         {
-                            <div class="mx-auto">
-                                <button class="rounded-full border-solid border-2 border-teal-500 p-3" @onclick="PlayTrailer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="text-teal-500 drop-shadow-xl" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M7 4v16l13 -8z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        }
-                        else if(IsTrailerPlaying && !IsContentPlaying)
-                        {
-                            <div class="max-w-lg -mt-8">
-                                <iframe class="aspect-video w-full" src="@($"https://www.youtube.com/embed/{ContentMeta?.TrailerStreams?.FirstOrDefault()?.YtId}?autoplay=1")" title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
+                            @if (!IsTrailerPlaying && !IsContentPlaying)
+                            {
+                                <div class="mx-auto">
+                                    <button class="rounded-full border-solid border-2 border-teal-500 p-3" @onclick="PlayTrailer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="text-teal-500 drop-shadow-xl" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M7 4v16l13 -8z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            }
+                            else if(IsTrailerPlaying && !IsContentPlaying)
+                            {
+                                <div class="max-w-lg -mt-8">
+                                    <iframe class="aspect-video w-full" src="@($"https://www.youtube.com/embed/{trailerSource}?autoplay=1")" title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            }
                         }
                     }
                     @if (!IsTrailerPlaying && IsContentPlaying)
@@ -62,35 +67,35 @@
             </div>
             <div class="px-4 h-1/2 bg-slate-100 dark:bg-slate-800 flex flex-col rounded-t-xl justify-between pb-16 gap-4 mt-4">
                 <div class="flex flex-col gap-y-1">
-                    @if (Type == AddonConstants.TypeMovie)
+                    @if (Type == AddonConstants.TypeMovieShortName)
                     {
                         <button class="w-full bg-teal-500 text-white py-2 rounded-lg" @onclick="ToggleSourceSelect">Watch</button>
                     }
-                    @if (Type == AddonConstants.TypeSeries)
+                    @if (Type == AddonConstants.TypeSeriesShortName)
                     {
                         <button class="w-full bg-teal-500 text-white py-2 rounded-lg" @onclick='WatchFirstEpisode'>Watch First Episode</button>
                     }
                 </div>
                 <div class="flex flex-col gap-y-2">
                     <div class="tracking-wide">
-                        @if (!string.IsNullOrWhiteSpace(ContentMeta?.ImdbRating))
+                        @if (!string.IsNullOrWhiteSpace(Meta?.ImdbRating))
                         {
-                            <span>IMDB @ContentMeta?.ImdbRating</span>
+                            <span>IMDB @Meta?.ImdbRating</span>
                         }
                         <br/>
-                        @if (!string.IsNullOrWhiteSpace(ContentMeta?.Year))
+                        @if (!string.IsNullOrWhiteSpace(Meta?.Year))
                         {
-                            <span>@ContentMeta?.Year | </span>
+                            <span>@Meta?.Year | </span>
                         }
-                        @if (!string.IsNullOrWhiteSpace(ContentMeta?.Runtime))
+                        @if (!string.IsNullOrWhiteSpace(Meta?.Runtime))
                         {
-                            <span>@ContentMeta?.Runtime</span>
+                            <span>@Meta?.Runtime</span>
                         }
                     </div>
-                    @if (ContentMeta?.Genres is not null)
+                    @if (Meta?.Genres is not null)
                     {
                         <div class="flex flex-row gap-2">
-                            @foreach (var genre in ContentMeta.Genres)
+                            @foreach (var genre in Meta.Genres)
                             {
                                 <span class="px-2 py-1 bg-teal-200 text-teal-600 dark:bg-gray-600 dark:text-white rounded-xl">@genre</span>
                             }
@@ -99,36 +104,36 @@
                 </div>
                 <div class="flex flex-col tracking-wide gap-y-2">
                     <span>
-                        @ContentMeta?.Description
+                        @Meta?.Description
                     </span>
-                    @if (ContentMeta?.Director is not null && ContentMeta.Director.Any())
+                    @if (Meta?.Director is not null && Meta.Director.Any())
                     {
                         <span>
-                            Director : @string.Join(", ", ContentMeta.Director)
+                            Director : @string.Join(", ", Meta.Director)
                         </span>
                     }
-                    @if (ContentMeta?.Cast is not null && ContentMeta.Cast.Any())
+                    @if (Meta?.Cast is not null && Meta.Cast.Any())
                     {
                         <span>
-                            Cast : @string.Join(", ", ContentMeta.Cast)
+                            Cast : @string.Join(", ", Meta.Cast)
                         </span>
                     }
                 </div>
                 @{
-                    if (Type == AddonConstants.TypeSeries)
+                    if (Meta is SeriesMeta seriesMeta)
                     {
                         <div class="flex flex-col w-28">
                             <select class="rounded-lg p-2 text-gray-900" @bind="SelectedSeason">
-                                @foreach (var season in Seasons.Where(season => season.HasValue))
+                                @foreach (var season in seriesMeta.Seasons.OrderBy(s => s.SeasonNumber))
                                 {
-                                    <option value="@season">@(season != 0 ? $"Season {season}" : "Special")</option>
+                                    <option value="@season.SeasonNumber">@season.SeasonDescription</option>
                                 }
                             </select>
                         </div>
                         <div>
                             <section class="flex no-scrollbar snap-x snap-mandatory flex-nowrap overflow-x-scroll gap-x-5" id="content-container">
                                 @{
-                                    var episodes = ContentMeta?.Videos?.Where(e => e.Season.HasValue && e.Season == (SelectedSeason.Equals("Special") ? 0 : int.Parse(SelectedSeason))).ToList();
+                                    var episodes = seriesMeta.Episodes?.Where(e => e.Season == int.Parse(SelectedSeason)).ToList();
                                     if (episodes != null && episodes.Any())
                                     {
                                         @foreach (var episode in episodes)

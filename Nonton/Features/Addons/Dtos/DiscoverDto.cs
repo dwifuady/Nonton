@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-public class Discover
+public class DiscoverDto
 {
     [JsonPropertyName("metas")]
-    public List<Meta>? Metas { get; set; }
+    public List<MetaDto>? Metas { get; set; }
 
     [JsonPropertyName("hasMore")]
     public bool HasMore { get; set; }

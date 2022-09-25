@@ -12,7 +12,7 @@ namespace Nonton.Features.Stream.Components
         [Parameter] public EventCallback<string> OnItemSelected { get; set; }
 
         [Inject] public IStreamService StreamService { get; set; } = null!;
-        public StreamResponse? StreamResponse { get; set; }
+        public StreamResponseDto? StreamResponse { get; set; }
 
         public LoadingContainerState LoadingStateStreamSource { get; set; }
 

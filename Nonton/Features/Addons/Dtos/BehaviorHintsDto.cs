@@ -2,7 +2,7 @@
 
 using System.Text.Json.Serialization;
 
-public class BehaviorHints
+public class BehaviorHintsDto
 {
     [JsonPropertyName("defaultVideoId")]
     public string? DefaultVideoId { get; set; }

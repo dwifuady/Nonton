@@ -3,7 +3,9 @@
 namespace Nonton.Features.Catalogs.Models;
 public class MovieCatalog : Catalog
 {
-    public override string CatalogType => AddonConstants.TypeMovie;
+    public override CatalogTypeEnum CatalogType => CatalogTypeEnum.Movie;
+    public override string CatalogTitle => AddonConstants.TypeMovieTitle;
+    public override string CatalogShortName => AddonConstants.TypeMovieShortName;
 
     public MovieCatalog(string addonName, string addonBaseUri, string catalogId, string catalogName) : base(addonName, addonBaseUri, catalogId, catalogName)
     {
