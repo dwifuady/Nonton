@@ -24,7 +24,7 @@
             @if (ContentItemType == ContentItemType.Discover)
             {
 
-                <section class="grid grid-cols-3" id="content-container-@Catalog.CatalogShortName-@Catalog.CatalogId">
+                <section class="grid grid-cols-2 gap-y-5" id="content-container-@Catalog.CatalogShortName-@Catalog.CatalogId">
                     @foreach (var meta in Metas)
                     {
                         <div class="w-40 flex-none rounded snap-center snap-always cursor-pointer" @onclick="() => ViewDetail(meta.ImdbId!)">
