@@ -21,16 +21,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="ILLink.Descriptors.xml">
-		  <LogicalName>ILLink.Descriptors.xml</LogicalName>
-	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
-		<PackageReference Include="MudBlazor" Version="6.0.15" />
 		<PackageReference Include="Refit" Version="6.3.2" />
 		<PackageReference Include="SqliteWasmHelper" Version="1.1.1-beta-g8a155f5a42" />
 		<PackageReference Include="Toolbelt.Blazor.PWA.Updater" Version="2.0.0" />

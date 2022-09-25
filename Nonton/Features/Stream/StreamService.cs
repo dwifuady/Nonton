@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
-using Nonton.Commons;
+﻿using Nonton.Commons;
 using Nonton.Features.Addons;
 using Nonton.Features.Addons.Api;
 using Nonton.Features.Addons.Dtos;
@@ -11,7 +9,6 @@ namespace Nonton.Features.Stream
 {
     public class StreamService : IStreamService
     {
-        [Inject] public ISnackbar Snackbar { get; set; } = null!;
 
         private readonly IAddonService _addonService;
 
