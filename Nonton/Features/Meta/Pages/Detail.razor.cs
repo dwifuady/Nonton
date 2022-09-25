@@ -84,8 +84,8 @@ namespace Nonton.Features.Meta.Pages
         {
             IsContentPlaying = true;
             ShowSourceSelect = false;
-            ContentUrl = "https://lamberta.github.io/html5-animation/examples/ch04/assets/movieclip.mp4";
-            //ContentUrl = url;
+            //ContentUrl = "https://lamberta.github.io/html5-animation/examples/ch04/assets/movieclip.mp4";
+            ContentUrl = url;
         }
     }
 }
