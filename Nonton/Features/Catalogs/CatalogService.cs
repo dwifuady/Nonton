@@ -65,6 +65,13 @@ namespace Nonton.Features.Catalogs
                             catalogs.Add(catalog);
                             break;
                         }
+                        case AddonConstants.TypeGameShortName:
+                        {
+                            var catalog = new GamesCatalog(catalogAddon.Manifest.Name!, catalogAddon.BaseUri,
+                                catalogDto.Id!, catalogDto.Name!, genres, isSearchable, isSkippable);
+                            catalogs.Add(catalog);
+                            break;
+                            }
                     }
                 }
             }
@@ -82,6 +89,12 @@ namespace Nonton.Features.Catalogs
         {
             var catalogs = await GetAllCatalogsAsync();
             return catalogs.Where(c => c.Searchable.IsSearchable);
+        }
+
+        public async Task<List<Catalog>> GetCatalogsByType(CatalogTypeEnum catalogType)
+        {
+            var catalogs = await GetAllCatalogsAsync();
+            return catalogs.Where(c => c.CatalogType == catalogType).ToList();
         }
 
         public async Task<List<Catalog>> GetMovieCatalogsAsync()

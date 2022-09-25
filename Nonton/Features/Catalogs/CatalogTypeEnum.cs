@@ -7,5 +7,6 @@ public enum CatalogTypeEnum
     Series,
     Anime,
     Channel,
-    Tv
+    Tv,
+    Games
 }

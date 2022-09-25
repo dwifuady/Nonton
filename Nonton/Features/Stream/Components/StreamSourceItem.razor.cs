@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Nonton.Components;
 using Nonton.Features.Addons.Dtos;
 using Nonton.Features.Addons.Dtos.Manifest;
+using Nonton.Shared;
 
 namespace Nonton.Features.Stream.Components
 {
