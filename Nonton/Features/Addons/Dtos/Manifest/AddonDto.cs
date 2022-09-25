@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Nonton.Commons;
 
 namespace Nonton.Features.Addons.Dtos.Manifest
 {
@@ -18,34 +17,5 @@ namespace Nonton.Features.Addons.Dtos.Manifest
             : TransportUrl.Replace("/manifest.json", "");
 
         [JsonIgnore] public bool IsDefaultAddon { get; set; }
-    }
-
-    public static class AddonExtension
-    {
-        public static IEnumerable<CatalogDto>? GetDefaultCatalogs(this AddonDto addon)
-        {
-            if (addon.Manifest?.Catalogs != null && addon.Manifest.Catalogs.Any())
-            {
-                return addon.Manifest.Catalogs
-                    .Where(x =>
-                        x.Type is AddonConstants.TypeMovieShortName or AddonConstants.TypeSeriesShortName &&
-                        ((x.ExtraRequired != null && !x.ExtraRequired.Any()) || x.ExtraRequired is null));
-            }
-
-            return null;
-        }
-
-        public static IEnumerable<CatalogDto>? GetSearchableCatalogs(this AddonDto addon)
-        {
-            if (addon.Manifest?.Catalogs != null && addon.Manifest.Catalogs.Any())
-            {
-                return addon.Manifest.Catalogs
-                    .Where(x =>
-                        x.Type is AddonConstants.TypeMovieShortName or AddonConstants.TypeSeriesShortName &&
-                        ((x.ExtraSupported != null && x.ExtraSupported.Any() && x.ExtraSupported.Contains(AddonConstants.ExtraSearch)) ));
-            }
-
-            return null;
-        }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Nonton.Components;
 using Nonton.Features.Addons.Dtos.Manifest;
 
 namespace Nonton.Features.Addons.Pages
@@ -80,21 +78,6 @@ namespace Nonton.Features.Addons.Pages
             _showConfirmBox = true;
             _confirmBoxAddonUrl = url;
             _confirmBoxType = AddonConfirmBoxTypeEnum.Install;
-            //var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.Large };
-            //var dialog = DialogService.Show<AddNewAddon>("New addon", options);
-
-            //var result = await dialog.Result;
-
-            //if (!result.Cancelled)
-            //{
-            //    var url = result.Data.ToString();
-            //    if (!string.IsNullOrWhiteSpace(url))
-            //    {
-            //        var manifestString = await DownloadAddonManifest(url);
-            //        await SaveAddon(url, manifestString);
-
-            //    }
-            //}
         }
 
         private async Task Install(string url)

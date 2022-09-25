@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Nonton.Components
+namespace Nonton.Shared
 {
     public enum LoadingContainerState { Loading, Loaded, Error, Empty }
     public partial class LoadingContainer
