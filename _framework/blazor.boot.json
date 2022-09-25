@@ -7,7 +7,7 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "Microsoft.AspNetCore.Components.dll": "sha256-+vLiowcUD4ylsoi16Rqwa47IeBP7PW0aq1T7UWYZ\/8M=",
+      "Microsoft.AspNetCore.Components.dll": "sha256-XtVLKE4xHyhG2OU7cvH+YcEv+Ka+9qSOK0hY6yQgXRs=",
       "Microsoft.AspNetCore.Components.Forms.dll": "sha256-vwa0GizKL9ASeZjp8k70fIWl61clY2Y\/YL5HAaKiejU=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-NxIDeJNhPkHSWcJ0eRElQ2ilZyBpo0TxTtTm25Jnj+4=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-9mTxD0hYntNNJ6\/32BPbVC3XRc3KbW6VgA07GMRI0xA=",
@@ -35,7 +35,7 @@
       "Microsoft.Win32.Primitives.dll": "sha256-YXalj1pH8Fe0XjSweuSBnPj57vdy7mJU72GHb8rUPG0=",
       "MudBlazor.dll": "sha256-TgNhbS9BW1JUGA6jPPLBEOp0bxnj0G5DiG1C11JN6Zw=",
       "netstandard.dll": "sha256-IJgqag8hy4fyQFiLT5tXj1ucsKiWjsHF3BmSEgKcgX8=",
-      "Nonton.dll": "sha256-WyxfgI+xMkgGcqM338ZAp8mdvHOi3dNoyc3TtWlfznQ=",
+      "Nonton.dll": "sha256-zuED+l5Xxasy9+gYBaVaHM1FboMuODN3Kp6hquyezSE=",
       "Refit.dll": "sha256-SwBG7gNBJMv8tY8JbzLIzpzNzjZUkdJE48Q9uCysd6g=",
       "SQLitePCLRaw.batteries_v2.dll": "sha256-2QeGG\/\/WYKByIDzfutVzVUIdJQlHIlsXQwuQbTEOHoo=",
       "SQLitePCLRaw.core.dll": "sha256-2FeknlBhJjPV1l5KbRBUXq1SNikSYFuSNXNmUSJQCOM=",

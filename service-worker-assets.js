@@ -13,7 +13,7 @@
       "url": "css\/app-deprecated.css"
     },
     {
-      "hash": "sha256-S\/\/IoQrA0ka1lq5ad+5ORVX1RPXKFMUgdTMyB5qQRTE=",
+      "hash": "sha256-f5WhbhNGQlVg3KSHVQ5Xaq7\/fiKymtB45TQe+dakoGQ=",
       "url": "css\/app.css"
     },
     {
@@ -69,11 +69,11 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-+tmkV8HFA1qFKeyP3Ycba8M+NIpxODq7k68SHrEbKlY=",
+      "hash": "sha256-ue7xDuH2M7QSD3RDs1QAlcr2McDYBh52IxrevZq0Efs=",
       "url": "_framework\/blazor.boot.json"
     },
     {
-      "hash": "sha256-+vLiowcUD4ylsoi16Rqwa47IeBP7PW0aq1T7UWYZ\/8M=",
+      "hash": "sha256-XtVLKE4xHyhG2OU7cvH+YcEv+Ka+9qSOK0hY6yQgXRs=",
       "url": "_framework\/Microsoft.AspNetCore.Components.dll"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-WyxfgI+xMkgGcqM338ZAp8mdvHOi3dNoyc3TtWlfznQ=",
+      "hash": "sha256-zuED+l5Xxasy9+gYBaVaHM1FboMuODN3Kp6hquyezSE=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -433,5 +433,5 @@
       "url": "_content\/Toolbelt.Blazor.PWA.Updater\/Toolbelt.Blazor.PWA.Updater.bundle.scp.css"
     }
   ],
-  "version": "n3cWy3+5"
+  "version": "f9m34VUI"
 };
