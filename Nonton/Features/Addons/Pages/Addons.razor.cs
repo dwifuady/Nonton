@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using Nonton.Features.Addons.Dtos.Manifest;
 
 namespace Nonton.Features.Addons.Pages
@@ -7,7 +6,6 @@ namespace Nonton.Features.Addons.Pages
     public partial class Addons
     {
         [Inject] public IAddonService AddonService { get; set; } = null!;
-        [Inject] public IDialogService DialogService { get; set; } = null!;
         [Inject] public HttpClient HttpClient { get; set; } = null!;
 
         public IEnumerable<AddonDto>? AllInstalledAddons { get; set; }
