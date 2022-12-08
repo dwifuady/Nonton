@@ -1,4 +1,4 @@
 [submodule "SqliteWasmHelper"]
 	path = SqliteWasmHelper
 	url = https://github.com/dwifuady/SqliteWasmHelper.git
-	branch = main
+	branch = net7
