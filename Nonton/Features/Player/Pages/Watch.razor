@@ -1,0 +1,32 @@
+﻿@page "/watch/{encodedplayableitem}"
+@layout EmptyLayout
+
+<PageTitle>@($"{PlayableItem?.Title}")</PageTitle>
+
+@if (PlayableItem is not null)
+{
+    if (!PlayableItem.IsYoutubeTrailer && !string.IsNullOrWhiteSpace(PlayableItem.Url))
+    {
+        <div class="absolute left-0 right-0">
+            <Video Source="@(PlayableItem.Url)"
+               AutoPlay="true"
+               Controls="true"
+               ControlsList="new []{ VideoControlsType.Play, VideoControlsType.Progress, VideoControlsType.Captions, VideoControlsType.Fullscreen, VideoControlsType.Mute, VideoControlsType.Volume, VideoControlsType.CurrentTime }"
+               DisableContextMenu="true"
+               SeekTime="10"
+               StreamingLibrary="StreamingLibrary.Dash"
+               AutomaticallyHideControls="true"></Video>
+        </div>
+    }
+    else if (PlayableItem.IsYoutubeTrailer)
+    {
+        <div class="absolute left-0 right-0 plyr__video-embed" id="player">
+            <iframe
+                src="@(PlayableItem.Url)?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
+                allowfullscreen
+                allowtransparency
+                allow="autoplay"
+            ></iframe>
+        </div>
+    }
+}

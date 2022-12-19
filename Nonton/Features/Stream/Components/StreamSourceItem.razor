@@ -31,6 +31,17 @@
                 }
             }
         }
+        @if (_isDebugMode)
+        {
+            <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(_demoUrl)">
+                Demo <br />
+                (Demo Video)
+            </button>
+            <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(_demoUrl2)">
+                Demo 2<br />
+                (Demo Video 2)
+            </button>
+        }
     </Loaded>
     <Empty>
         <span class="p-2 rounded-lg w-96 h-12">No source available</span>

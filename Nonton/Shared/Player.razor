@@ -1,66 +1,28 @@
 ﻿@inject IJSRuntime JsRuntime
 
-@if (IsFullSizePlayer)
+@if (!string.IsNullOrWhiteSpace(Url))
 {
-    <div class="player-container" id="player" tabindex="1" style="position: absolute;height: 100vh;z-index: 9999;width: 100%;left: 0;top: 0;">
-        <video id="video-content" class="video-js vjs-default-skin vjs-big-play-centered w-full h-full" controls autoplay preload="auto" style="width: 100%; height: 100%;"
-               data-setup='{
-                "autoplay": true
-                }'>
-            <source src="@Url" type="video/webm" />
-            <p class="vjs-no-js">
-                To view this video please enable JavaScript, and consider upgrading to a
-                web browser that
-                <a href="https://videojs.com/html5-video-support/" target="_blank">
-                    supports HTML5 video
-                </a>
-            </p>
-        </video>
+    <div class="aspect-video w-full">
+        <Video 
+            Source="@(Url)" 
+            AutoPlay="true"
+            Controls="true"
+            ControlsList="new []{ VideoControlsType.Play, VideoControlsType.Progress, VideoControlsType.Captions, VideoControlsType.Fullscreen, VideoControlsType.Mute, VideoControlsType.Volume, VideoControlsType.CurrentTime }"
+            DisableContextMenu="true"
+            SeekTime="10"
+            StreamingLibrary="StreamingLibrary.Dash"
+            
+            ></Video>
     </div>
 }
-else
-{
-    <div class="player-container aspect-video w-full" id="player" tabindex="1">
-        <video id="video-content" class="video-js vjs-default-skin vjs-big-play-centered w-full h-full vim-css" controls autoplay preload="auto" style="width: 100%; height: 100%;"
-           data-setup='{
-                "autoplay": true
-                }'>
-            <source src="@Url" type="video/webm" />
-            @*<track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/chi_hans/vtt' srclang='zh' label='Chinese' default />
-            <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/eng/vtt' srclang='en' label='English' />
-            <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/spa/vtt' srclang='es' label='Spanish' />
-            <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/fre_ca/vtt' srclang='fr' label='French' />*@
-            <p class="vjs-no-js">
-                To view this video please enable JavaScript, and consider upgrading to a
-                web browser that
-                <a href="https://videojs.com/html5-video-support/" target="_blank">
-                    supports HTML5 video
-                </a>
-            </p>
-        </video>
-    </div>
-}
+
 
 @code {
     [Parameter]
     public string? Url { get; set; }
-    [Parameter]
-    public bool IsFullSizePlayer { get; set; }
-
-    protected override void OnParametersSet()
+    
+    public void Dispose()
     {
-        if (!string.IsNullOrWhiteSpace(Url))
-        {
-            JsRuntime.InvokeVoidAsync("window.initVideo", Url);
-        }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (!string.IsNullOrWhiteSpace(Url))
-        {
-            await JsRuntime.InvokeVoidAsync("window.initVideo", Url);
-            await JsRuntime.InvokeVoidAsync("window.focus", "player");
-        }
+        Url = string.Empty;
     }
 }
