@@ -11,9 +11,3 @@
             });
     };
 }
-
-setFullHeightPlayer = function () {
-    setTimeout(function() {
-        document.getElementsByClassName('plyr')[0].classList.add('h-screen');
-    }, 100);
-}

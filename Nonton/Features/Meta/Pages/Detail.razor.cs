@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System;
+using System.Text.Json;
+using Microsoft.AspNetCore.Components;
 using Nonton.Commons;
 using Nonton.Features.Addons;
 using Nonton.Features.Addons.Dtos.Manifest;
 using Nonton.Features.Catalogs.Models;
 using Nonton.Features.Meta.Models;
+using Nonton.Features.Player.Dtos;
 using Nonton.Features.Stream;
 using Nonton.Shared;
 
@@ -52,7 +55,18 @@ public partial class Detail
 
     private void PlayTrailer()
     {
-        IsTrailerPlaying = true;
+        if (Meta is MovieMeta movieMeta)
+        {
+            var trailerSource = movieMeta?.Trailers.FirstOrDefault(x => x.Type == AddonConstants.TrailerTypeTrailer).Source;
+            var playableItem = new PlayableItem
+            {
+                Url = $"https://www.youtube.com/embed/{trailerSource}",
+                IsYoutubeTrailer = true,
+                Title = Meta?.Name,
+                ImdbId = Meta?.ImdbId
+            };
+            NavigationManager.NavigateTo($"watch/{JsonSerializer.Serialize(playableItem).ToBase64()}");
+        }
     }
 
     private void CloseTrailer()
@@ -84,6 +98,13 @@ public partial class Detail
 
     private void PlayContent(string url)
     {
-        NavigationManager.NavigateTo($"watch/{url.ToBase64()}");
+        var playableItem = new PlayableItem
+        {
+            Url = url,
+            IsYoutubeTrailer = false,
+            Title = Meta?.Name,
+            ImdbId = Meta?.ImdbId
+        };
+        NavigationManager.NavigateTo($"watch/{JsonSerializer.Serialize(playableItem).ToBase64()}");
     }
 }
