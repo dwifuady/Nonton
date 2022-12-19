@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="Nonton.styles.css" rel="stylesheet" />
-    <link href="https://vjs.zencdn.net/7.20.2/video-js.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
@@ -51,7 +50,7 @@
     </style>
 </head>
 
-<body class="bg-slate-100 dark:bg-slate-800 text-gray-800 dark:text-white max-w-lg mx-auto">
+<body class="bg-slate-100 dark:bg-slate-800 text-gray-800 dark:text-white">
     <div id="app">
         <svg class="loading-progress">
             <circle r="40%" cx="50%" cy="50%" />
@@ -65,33 +64,7 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script src="https://vjs.zencdn.net/7.20.2/video.min.js"></script>
-    <script src="js/videojs-landscape-fullscreen.min.js"></script>
-    <script>
-        window.initVideo = (url) => {
-            videojs.Vhs.GOAL_BUFFER_LENGTH = 100;
-            videojs.Vhs.MAX_GOAL_BUFFER_LENGTH = 150;
-            let player = videojs(document.getElementById('video-content'));
-            player.src(url);
-
-            player.ready(function () {
-                var promise = player.play();
-
-                if (promise !== undefined) {
-                    promise.then(function () {
-                        // Autoplay started!
-                    }).catch(function (error) {
-                        // Autoplay was prevented.
-                    });
-                }
-            });
-
-            player.landscapeFullscreen();
-        };
-        window.focus = (id) => {
-            document.getElementById(id).focus();
-        }
-    </script>
+    
     <script src="_framework/blazor.webassembly.js" autostart="false"></script>
     <script type="module">
         import { BrotliDecode } from './decode.min.js';
@@ -117,6 +90,7 @@
     </script>
     <script src="js/app.js"></script>
     <script src="_content/Toolbelt.Blazor.PWA.Updater.Service/script.min.js"></script>
+    <script src="_content/Blazorise.Video/vendors/plyr.js?v=1.1.4.1"></script>
 </body>
 
 </html>
