@@ -15,7 +15,17 @@ namespace Nonton.Features.Stream.Components
         public StreamResponseDto? StreamResponse { get; set; }
 
         public LoadingContainerState LoadingStateStreamSource { get; set; }
+        private static string _demoUrl = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+        private static string _demoUrl2 = "https://lamberta.github.io/html5-animation/examples/ch04/assets/movieclip.mp4";
+        private bool _isDebugMode = false;
 
+        protected override void OnInitialized()
+        {
+#if DEBUG
+            _isDebugMode = true;
+#endif
+            base.OnInitialized();
+        }
 
         protected override async Task OnParametersSetAsync()
         {

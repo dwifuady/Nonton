@@ -1,3 +1,4 @@
+using Blazorise;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,8 @@ builder.Services.AddSqliteWasmDbContextFactory<NontonDbContext>(
     opts => opts.UseSqlite("Data Source=nonton.sqlite3"));
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddBlazorise();
+builder.Services.AddEmptyProviders();
 builder.Services.AddPWAUpdater();
 
 await builder.Build().RunAsync();
