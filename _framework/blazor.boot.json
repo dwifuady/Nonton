@@ -35,7 +35,7 @@
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-i2xGLiyWjCECt4ok6MjGtUR2qelVsWU00AlcAateTFE=",
       "Microsoft.Net.Http.Headers.dll": "sha256-P66ftDrXwc6ayND8uYzIk0CPQy1GjNZAPHx9RMhi3V4=",
       "netstandard.dll": "sha256-r1DUp4XG+bslQCu+jy4jZFiBJn8ttvi4wteyusXixiY=",
-      "Nonton.dll": "sha256-jTYTCPoFHep\/nSK+ZavytHIe49YyocIk+Jll3PDiSw4=",
+      "Nonton.dll": "sha256-KTMD4qxE5c6fDwoenj4Cq9uG6WHNeW4ZxQs2rE1dTXQ=",
       "Refit.dll": "sha256-SwBG7gNBJMv8tY8JbzLIzpzNzjZUkdJE48Q9uCysd6g=",
       "SQLitePCLRaw.batteries_v2.dll": "sha256-QKXdVPR3+dDapThW25ARyok9JtLTTRTdLoG6LfEQQhg=",
       "SQLitePCLRaw.core.dll": "sha256-l57cyQVqwG1fUrEtm3czsSF5FKtQvxI6sxLgJ+esV6U=",
@@ -85,7 +85,7 @@
       "System.Threading.dll": "sha256-2YQVuPeRZLtXztxfCtMhYjXY79HZscqXcDgwqOamzPk=",
       "System.Threading.Thread.dll": "sha256-mq1NgPE3rPCn6\/iQCXE\/zsUcQai1aS\/QoZXzeMrRVC8=",
       "System.Transactions.Local.dll": "sha256-x3HcmP7NqOPHOmMLF2BT7LzUZe+9VaJlPcei+eou\/Mo=",
-      "System.Web.HttpUtility.dll": "sha256-8CX4kRSDMx4WGtsTRH1dCC2CY8FPnnC\/LPJIMCrvUgg=",
+      "System.Web.HttpUtility.dll": "sha256-X7uRWJ1TrAo6dzc37MK6ZmuPR2L\/1iI+sGPS6R667vM=",
       "Toolbelt.Blazor.PWA.Updater.dll": "sha256-5FVqcQJakHXnVR1WgwPKyQb98d7np\/HwfGj13Zg3IVw=",
       "Toolbelt.Blazor.PWA.Updater.Service.dll": "sha256-Q1Y91uawcyy23DY6\/4D\/AyqXDbtAVdDXGYCVGWoHjmg="
     },

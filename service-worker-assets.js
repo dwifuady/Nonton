@@ -37,7 +37,7 @@
       "url": "js\/app.js"
     },
     {
-      "hash": "sha256-KCkG+C2diAPpOIn+jTss2bba\/ErUqafi4dEQDm9E\/TU=",
+      "hash": "sha256-79NP4mp3uzmLoAWQoWCh26pxeCXn4JGedG3o5bknlx8=",
       "url": "js\/watch.js"
     },
     {
@@ -69,7 +69,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-dWtrjftWUbR6+5mdTG15KhPVfEgULaqFsSqmP9DcNEw=",
+      "hash": "sha256-cf3y8kaOIQX6okWbCbjcshKcaWoNcwR0XDjS4Y+M+08=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-jTYTCPoFHep\/nSK+ZavytHIe49YyocIk+Jll3PDiSw4=",
+      "hash": "sha256-KTMD4qxE5c6fDwoenj4Cq9uG6WHNeW4ZxQs2rE1dTXQ=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -385,7 +385,7 @@
       "url": "_framework\/System.Transactions.Local.dll"
     },
     {
-      "hash": "sha256-8CX4kRSDMx4WGtsTRH1dCC2CY8FPnnC\/LPJIMCrvUgg=",
+      "hash": "sha256-X7uRWJ1TrAo6dzc37MK6ZmuPR2L\/1iI+sGPS6R667vM=",
       "url": "_framework\/System.Web.HttpUtility.dll"
     },
     {
@@ -561,5 +561,5 @@
       "url": "_content\/Toolbelt.Blazor.PWA.Updater\/Toolbelt.Blazor.PWA.Updater.bundle.scp.css"
     }
   ],
-  "version": "5bJAJ9Bo"
+  "version": "\/sW+r31b"
 };
