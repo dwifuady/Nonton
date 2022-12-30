@@ -4,7 +4,7 @@
 
 <PageTitle>@($"{Meta?.Name} ({@Meta?.Year})")</PageTitle>
 
-@if (Meta is not null)
+    @if (Meta is not null)
 {
     <div class="-m-4">
         <div class="flex flex-col">
@@ -25,9 +25,9 @@
                     {
                         <button @onclick="CloseTrailer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="inline-block mb-1" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <line x1="18" y1="6" x2="6" y2="18"/>
-                                <line x1="6" y1="6" x2="18" y2="18"/>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
                             </svg>
                         </button>
                     }
@@ -38,30 +38,15 @@
                         var trailerSource = movieMeta?.Trailers.FirstOrDefault(x => x.Type == AddonConstants.TrailerTypeTrailer).Source;
                         if (!string.IsNullOrWhiteSpace(trailerSource))
                         {
-                            @if (!IsTrailerPlaying && !IsContentPlaying)
-                            {
-                                <div class="mx-auto">
-                                    <button class="rounded-full border-solid border-2 border-teal-500 p-3" @onclick="PlayTrailer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="text-teal-500 drop-shadow-xl" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <path d="M7 4v16l13 -8z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            }
-                            else if(IsTrailerPlaying && !IsContentPlaying)
-                            {
-                                <div class="max-w-lg -mt-8">
-                                    <iframe class="aspect-video w-full" src="@($"https://www.youtube.com/embed/{trailerSource}?autoplay=1")" title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                            }
+                            <div class="mx-auto">
+                                <button class="rounded-full border-solid border-2 border-teal-500 p-3" @onclick="PlayTrailer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="text-teal-500 drop-shadow-xl" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 4v16l13 -8z" />
+                                    </svg>
+                                </button>
+                            </div>
                         }
-                    }
-                    @if (!IsTrailerPlaying && IsContentPlaying)
-                    {
-                        <div class="w-screen max-w-lg">
-                            <Player Url="@ContentUrl"></Player>
-                        </div>
                     }
                 </div>
             </div>
@@ -82,7 +67,7 @@
                         {
                             <span>IMDB @Meta?.ImdbRating</span>
                         }
-                        <br/>
+                        <br />
                         @if (!string.IsNullOrWhiteSpace(Meta?.Year))
                         {
                             <span>@Meta?.Year | </span>
@@ -140,7 +125,7 @@
                                         {
                                             <div class="w-46 flex-none rounded snap-center snap-always cursor-pointer" @onclick='() => WatchEpisode(episode.Id!)'>
                                                 <div class="flex flex-col place-items-center gap-3">
-                                                    <img src="@episode.Thumbnail" class="h-28 aspect-video object-cover rounded-lg"/>
+                                                    <img src="@episode.Thumbnail" class="h-28 aspect-video object-cover rounded-lg" />
                                                     <div class="flex w-36">
                                                         <span class="text-center">@episode.Name</span>
                                                     </div>

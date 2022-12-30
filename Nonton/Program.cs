@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Nonton;
+using Nonton.Commons;
 using SqliteWasmHelper;
 using Nonton.Features.Addons;
 using Nonton.Features.Catalogs;
@@ -28,5 +29,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddBlazorise();
 builder.Services.AddEmptyProviders();
 builder.Services.AddPWAUpdater();
+builder.Services.AddSingleton<PlayableItemStateContainer>();
 
 await builder.Build().RunAsync();

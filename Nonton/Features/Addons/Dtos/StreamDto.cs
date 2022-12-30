@@ -33,4 +33,10 @@ public class StreamDto
 
     [JsonPropertyName("behaviorHints")]
     public BehaviorHintsDto? BehaviorHints { get; set; }
+    
+    [JsonPropertyName("description")] 
+    public string? Description { get; set; }
+
+    [JsonPropertyName("subtitles")]
+    public List<Subtitle>? Subtitles { get; set; }
 }
