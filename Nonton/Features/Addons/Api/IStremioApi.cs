@@ -23,5 +23,8 @@ namespace Nonton.Features.Addons.Api
 
         [Get("/addonscollection.json")]
         Task<List<AddonDto>>? GetAddonCollection();
+
+        [Get("/subtitles/{type}/{id}.json")]
+        Task<SubtitleDto>? GetSubtitles(string type, string id);
     }
 }

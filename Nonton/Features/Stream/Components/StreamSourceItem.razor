@@ -1,4 +1,5 @@
-﻿<LoadingContainer State="LoadingStateStreamSource">
+﻿@using Nonton.Features.Addons.Dtos
+<LoadingContainer State="LoadingStateStreamSource">
     <Loading>
         <div class="p-2 dark:bg-slate-500 rounded-lg w-96 animate-pulse h-12"></div>
         <div class="p-2 dark:bg-slate-500 rounded-lg w-96 animate-pulse h-12"></div>
@@ -17,9 +18,9 @@
                 }
                 else if (!string.IsNullOrWhiteSpace(streamSource?.Url))
                 {
-                    <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(streamSource.Url)">
+                    <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(streamSource)">
                         @streamSource.Name <br />
-                        (@streamSource.Title)
+                        (@(streamSource.Title ?? streamSource.Description))
                     </button>
                 }
                 else if (!string.IsNullOrWhiteSpace(streamSource?.InfoHash))
@@ -33,11 +34,11 @@
         }
         @if (_isDebugMode)
         {
-            <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(_demoUrl)">
+            <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(new StreamDto { Url = _demoUrl})">
                 Demo <br />
                 (Demo Video)
             </button>
-            <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(_demoUrl2)">
+            <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(new StreamDto { Url = _demoUrl2})">
                 Demo 2<br />
                 (Demo Video 2)
             </button>

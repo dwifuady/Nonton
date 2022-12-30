@@ -55,46 +55,12 @@ public class AddonService : IAddonService
 
     public async Task<IEnumerable<AddonDto>?> LoadAllCatalogAddons()
     {
-        var allAddons = await LoadAllActiveAddons();
-        var addons = new List<AddonDto>();
-        if (allAddons == null) return await Task.FromResult(addons);
-
-        foreach (var addon in allAddons)
-        {
-            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(AddonConstants.ResourcesCatalog))
-            {
-                addons.Add(addon);
-            }
-
-            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesCatalog))
-            {
-                addons.Add(addon);
-            }
-        }
-
-        return await Task.FromResult(addons);
+        return await LoadAddons(AddonConstants.ResourcesCatalog);
     }
 
     public async Task<IEnumerable<AddonDto>?> LoadAllMetaAddons()
     {
-        var allAddons = await LoadAllActiveAddons();
-        var addons = new List<AddonDto>();
-        if (allAddons == null) return await Task.FromResult(addons);
-
-        foreach (var addon in allAddons)
-        {
-            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(AddonConstants.ResourcesMeta))
-            {
-                addons.Add(addon);
-            }
-
-            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesMeta))
-            {
-                addons.Add(addon);
-            }
-        }
-
-        return await Task.FromResult(addons);
+        return await LoadAddons(AddonConstants.ResourcesMeta);
     }
 
     public async Task<IEnumerable<AddonDto>?> LoadAllStreamAddons()
@@ -111,6 +77,33 @@ public class AddonService : IAddonService
             }
 
             if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(AddonConstants.ResourcesStream) && (addon.Manifest.Types!.Contains(AddonConstants.TypeMovieShortName) || addon.Manifest.Types!.Contains(AddonConstants.TypeSeriesShortName)))
+            {
+                addons.Add(addon);
+            }
+        }
+
+        return await Task.FromResult(addons);
+    }
+
+    public async Task<IEnumerable<AddonDto>?> LoadAllSubtitleAddons()
+    {
+        return await LoadAddons(AddonConstants.ResourcesSubtitle);
+    }
+
+    private async Task<IEnumerable<AddonDto>?> LoadAddons(string resourceType)
+    {
+        var allAddons = await LoadAllActiveAddons();
+        var addons = new List<AddonDto>();
+        if (allAddons == null) return await Task.FromResult(addons);
+
+        foreach (var addon in allAddons)
+        {
+            if (addon.Manifest?.ResourcesString is not null && addon.Manifest.ResourcesString.Contains(resourceType))
+            {
+                addons.Add(addon);
+            }
+
+            if (addon.Manifest?.Resources is not null && addon.Manifest.Resources.Select(r => r.Name).Contains(resourceType))
             {
                 addons.Add(addon);
             }

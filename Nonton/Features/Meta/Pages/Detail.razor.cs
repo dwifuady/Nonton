@@ -1,18 +1,16 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Web;
 using Microsoft.AspNetCore.Components;
 using Nonton.Commons;
 using Nonton.Features.Addons;
+using Nonton.Features.Addons.Dtos;
 using Nonton.Features.Addons.Dtos.Manifest;
-using Nonton.Features.Catalogs.Models;
 using Nonton.Features.Meta.Models;
 using Nonton.Features.Player.Dtos;
 using Nonton.Features.Stream;
-using Nonton.Shared;
 
 namespace Nonton.Features.Meta.Pages;
 
-public partial class Detail
+public partial class Detail : IDisposable
 {
     [Parameter] public string Id { get; set; } = null!;
     [Parameter] public string Type { get; set; } = null!;
@@ -21,17 +19,20 @@ public partial class Detail
     [Inject] public IStreamService StreamService { get; set; } = null!;
     [Inject] public IAddonService AddonService { get; set; } = null!;
     [Inject] public NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] public PlayableItemStateContainer StateContainer { get; set; } = null!;
 
     public bool ShowSourceSelect { get; set; }
     public IEnumerable<AddonDto>? Addons { get; set; }
     public IMeta? Meta { get; set; }
 
-
     public string SelectedSeason { get; set; } = null!;
 
     public bool IsTrailerPlaying { get; set; }
-    public bool IsContentPlaying { get; set; }
-    public string? ContentUrl { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        StateContainer.OnChange += StateHasChanged;
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -65,7 +66,8 @@ public partial class Detail
                 Title = Meta?.Name,
                 ImdbId = Meta?.ImdbId
             };
-            NavigationManager.NavigateTo($"watch/{JsonSerializer.Serialize(playableItem).ToBase64()}");
+            StateContainer.PlayableItem = playableItem;
+            NavigationManager.NavigateTo($"watch/{Type}/{Id}");
         }
     }
 
@@ -96,15 +98,49 @@ public partial class Detail
         Addons ??= await AddonService.LoadAllStreamAddons();
     }
 
-    private void PlayContent(string url)
+    private void PlayContent(StreamDto streamDto)
     {
+        if (string.IsNullOrWhiteSpace(streamDto.Url))
+            return;
+
         var playableItem = new PlayableItem
         {
-            Url = url,
+            Url = streamDto.Url,
             IsYoutubeTrailer = false,
             Title = Meta?.Name,
             ImdbId = Meta?.ImdbId
         };
-        NavigationManager.NavigateTo($"watch/{JsonSerializer.Serialize(playableItem).ToBase64()}");
+
+        if (streamDto.Subtitles is not null)
+        {
+            List<Subtitle> subtitles = new();
+            foreach (var streamDtoSubtitle in streamDto.Subtitles)
+            {
+                //some addons encode url twice
+                var decodedUrl = HttpUtility.UrlDecode(HttpUtility.UrlDecode(streamDtoSubtitle.Url));
+                //remove default stremio streaming server url
+                var subtitleUrl = decodedUrl?.Replace(AddonConstants.DefaultStremioStreamingServerUrl + AddonConstants.DefaultStremioSubtitlePathUrl, "");
+
+                if (string.IsNullOrWhiteSpace(subtitleUrl)) continue;
+                var sub = new Subtitle
+                {
+                    Id = streamDtoSubtitle.Id,
+                    Lang = streamDtoSubtitle.Lang,
+                    Url = subtitleUrl
+                };
+                subtitles.Add(sub);
+            }
+
+            playableItem.Subtitles = subtitles;
+        }
+
+        StateContainer.PlayableItem = playableItem;
+        
+        NavigationManager.NavigateTo($"watch/{Type}/{Id}");
+    }
+
+    public void Dispose()
+    {
+        StateContainer.OnChange -= StateHasChanged;
     }
 }

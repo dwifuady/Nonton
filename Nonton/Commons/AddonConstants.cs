@@ -9,6 +9,7 @@ namespace Nonton.Commons
         public const string ResourcesMeta = "meta";
         public const string ResourcesAddonCatalog = "addon_catalog";
         public const string ResourcesStream = "stream";
+        public const string ResourcesSubtitle = "subtitles";
 
         public const string TypeDefault = "";
         public const string TypeMovieShortName = "movie";
@@ -48,5 +49,8 @@ namespace Nonton.Commons
 
         public static string ToTitleCase(this string s) =>
             CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
+
+        public static string DefaultStremioStreamingServerUrl = "http://127.0.0.1:11470/";
+        public static string DefaultStremioSubtitlePathUrl = "subtitles.vtt?from=";
     }
 }

@@ -9,7 +9,7 @@ namespace Nonton.Features.Stream.Components
     {
         [Parameter] public AddonDto Addon { get; set; } = null!;
         [Parameter] public string Id { get; set; } = null!;
-        [Parameter] public EventCallback<string> OnItemSelected { get; set; }
+        [Parameter] public EventCallback<StreamDto> OnItemSelected { get; set; }
 
         [Inject] public IStreamService StreamService { get; set; } = null!;
         public StreamResponseDto? StreamResponse { get; set; }
@@ -42,9 +42,9 @@ namespace Nonton.Features.Stream.Components
             }
         }
 
-        private void SelectSource(string url)
+        private void SelectSource(StreamDto streamDto)
         {
-            OnItemSelected.InvokeAsync(url);
+            OnItemSelected.InvokeAsync(streamDto);
         }
     }
 }

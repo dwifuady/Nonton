@@ -1,4 +1,4 @@
-﻿@page "/watch/{encodedplayableitem}"
+﻿@page "/watch/{type}/{id}"
 @layout EmptyLayout
 
 <PageTitle>@($"{PlayableItem?.Title}")</PageTitle>
@@ -9,13 +9,30 @@
     {
         <div class="absolute left-0 right-0">
             <Video Source="@(PlayableItem.Url)"
-               AutoPlay="true"
-               Controls="true"
-               ControlsList="new []{ VideoControlsType.Play, VideoControlsType.Progress, VideoControlsType.Captions, VideoControlsType.Fullscreen, VideoControlsType.Mute, VideoControlsType.Volume, VideoControlsType.CurrentTime }"
-               DisableContextMenu="true"
-               SeekTime="10"
-               StreamingLibrary="StreamingLibrary.Dash"
-               AutomaticallyHideControls="true"></Video>
+                   AutoPlay="true"
+                   Controls="true"
+           ControlsList="new[] { VideoControlsType.Play, VideoControlsType.Progress, VideoControlsType.Captions, VideoControlsType.Mute, VideoControlsType.Volume, VideoControlsType.CurrentTime, VideoControlsType.Settings, VideoControlsType.Fullscreen }"
+                   DisableContextMenu="true"
+                   SeekTime="10"
+                   StreamingLibrary="@StreamingLibrary"
+                   AutomaticallyHideControls="true"
+                   Attributes="VideoAttributes">
+                
+                @if (PlayableItem?.Subtitles?.Count > 0)
+                {
+                    foreach (var subtitle in PlayableItem.Subtitles)
+                    {
+                        @if (!string.IsNullOrWhiteSpace(subtitle.Lang))
+                        {
+                            //limit to this two for now, can not show long list of subtitles yet
+                            if (subtitle.Lang.Contains("English") || subtitle.Lang.Contains("Indonesia"))
+                            {
+                                <track kind="subtitles" label="@subtitle.Lang" src="@subtitle.Url" />
+                            }
+                        }
+                    }
+                }
+            </Video>
         </div>
     }
     else if (PlayableItem.IsYoutubeTrailer)
