@@ -3,12 +3,14 @@
 
 <PageTitle>Home</PageTitle>
 
-@if (Catalogs is not null && Catalogs.Any())
-{
-    foreach (var catalog in Catalogs)
+<div class="mx-4">
+    @if (Catalogs is not null && Catalogs.Any())
     {
-        <div class="my-4">
-            <ContentItem Catalog="catalog"></ContentItem>
-        </div>
+        foreach (var catalog in Catalogs)
+        {
+            <div class="my-4">
+                <ContentItem Catalog="catalog"></ContentItem>
+            </div>
+        }
     }
-}
+</div>

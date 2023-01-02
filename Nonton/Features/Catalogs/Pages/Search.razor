@@ -1,66 +1,68 @@
 ﻿@page "/search"
 @using Nonton.Features.Catalogs.Components
 
+<div class="mx-4">
 <EditForm OnValidSubmit="DoSearch" Model="SearchModel">
-    <InputText @bind-Value="SearchModel.SearchString" class="w-full h-10 rounded-lg px-4 text-gray-900 mb-4" placeholder="Search..."></InputText>
+    <InputText @bind-Value="SearchModel.SearchString" class="w-full h-10 rounded-lg px-8 text-gray-900 mb-4" placeholder="Search..."></InputText>
 </EditForm>
-@{
-    if (!string.IsNullOrWhiteSpace(Keywords))
-    {
-        if (SearchableCatalogs is not null && SearchableCatalogs.Any())
+    @{
+        if (!string.IsNullOrWhiteSpace(Keywords))
         {
-            foreach (var catalog in SearchableCatalogs)
+            if (SearchableCatalogs is not null && SearchableCatalogs.Any())
             {
-                <ContentItem Catalog="@catalog" ContentItemType="@ContentItemType.Search" SearchQuery="@Keywords"></ContentItem>
+                foreach (var catalog in SearchableCatalogs)
+                {
+                    <ContentItem Catalog="@catalog" ContentItemType="@ContentItemType.Search" SearchQuery="@Keywords"></ContentItem>
+                }
             }
         }
-    }
-    else
-    {
-        <div class="flex gap-2 mb-4">
-            <div>
-                <select class="rounded-lg p-2 text-gray-900" @onchange="SelectedTypeChanged">
-                    @foreach (var type in AddonConstants.TypeDict)
+        else
+        {
+            <div class="flex gap-2 mb-4">
+                <div>
+                    <select class="rounded-lg p-2 text-gray-900" @onchange="SelectedTypeChanged">
+                        @foreach (var type in AddonConstants.TypeDict)
+                        {
+                            <option value="@type.Value">@type.Value</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    @if (Catalogs is not null && Catalogs.Any())
                     {
-                        <option value="@type.Value">@type.Value</option>
+                        <select class="rounded-lg p-2 text-gray-900" @onchange="SelectedCatalogChanged">
+                            @foreach (var catalog in Catalogs)
+                            {
+                                <option value="@catalog.CatalogId">@catalog.CatalogName</option>
+                            }
+                        </select>
                     }
-                </select>
+                </div>
+                <div>
+                    @if (SelectedCatalog?.Genres != null)
+                    {
+                        <select class="rounded-lg p-2 text-gray-900" @bind="SelectedGenre">
+                            @if (SelectedCatalog.Genres.Genres != null)
+                            {
+                                @if (!SelectedCatalog.Genres.IsGenreRequired)
+                                {
+                                    <option value="" disabled>Select Genre</option>
+                                }
+                                foreach (var genre in SelectedCatalog.Genres.Genres)
+                                {
+                                    <option value="@genre">@genre</option>
+                                }
+                            }
+                        </select>
+                    }
+                </div>
             </div>
             <div>
-                @if (Catalogs is not null && Catalogs.Any())
+                @if (SelectedCatalog is not null)
                 {
-                    <select class="rounded-lg p-2 text-gray-900" @onchange="SelectedCatalogChanged">
-                        @foreach (var catalog in Catalogs)
-                        {
-                            <option value="@catalog.CatalogId">@catalog.CatalogName</option>
-                        }
-                    </select>
+                    <ContentItem Catalog="@SelectedCatalog" ContentItemType="@ContentItemType.Discover" SearchQuery="@Keywords" Genre="@SelectedGenre"></ContentItem>
                 }
             </div>
-            <div>
-                @if (SelectedCatalog?.Genres != null)
-                {
-                    <select class="rounded-lg p-2 text-gray-900" @bind="SelectedGenre">
-                        @if (SelectedCatalog.Genres.Genres != null)
-                        {
-                            @if (!SelectedCatalog.Genres.IsGenreRequired)
-                            {
-                                <option value="" disabled>Select Genre</option>
-                            }
-                            foreach (var genre in SelectedCatalog.Genres.Genres)
-                            {
-                                <option value="@genre">@genre</option>
-                            }
-                        }
-                    </select>
-                }
-            </div>
-        </div>
-        <div>
-            @if (SelectedCatalog is not null)
-            {
-                <ContentItem Catalog="@SelectedCatalog" ContentItemType="@ContentItemType.Discover" SearchQuery="@Keywords" Genre="@SelectedGenre"></ContentItem>
-            }
-        </div>
+        }
     }
-}
+</div>

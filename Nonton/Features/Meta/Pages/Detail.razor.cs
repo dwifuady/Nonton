@@ -108,7 +108,8 @@ public partial class Detail : IDisposable
             Url = streamDto.Url,
             IsYoutubeTrailer = false,
             Title = Meta?.Name,
-            ImdbId = Meta?.ImdbId
+            ImdbId = Meta?.ImdbId,
+            Poster = Meta?.Background
         };
 
         if (streamDto.Subtitles is not null)
