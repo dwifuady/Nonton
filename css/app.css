@@ -625,6 +625,16 @@ video {
   margin-bottom: 1rem;
 }
 
+.-my-4 {
+  margin-top: -1rem;
+  margin-bottom: -1rem;
+}
+
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -651,10 +661,6 @@ video {
 
 .-mt-5 {
   margin-top: -1.25rem;
-}
-
-.-mt-8 {
-  margin-top: -2rem;
 }
 
 .mt-4 {
@@ -723,10 +729,6 @@ video {
 
 .h-12 {
   height: 3rem;
-}
-
-.h-full {
-  height: 100%;
 }
 
 .h-screen {
@@ -1098,6 +1100,11 @@ video {
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .pt-2 {

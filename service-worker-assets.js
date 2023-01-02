@@ -9,7 +9,7 @@
       "url": "css\/app-deprecated.css"
     },
     {
-      "hash": "sha256-qzgcv2u1czfZI4HMAj0nkDvrHYwW7rlQlMfA1EYMY44=",
+      "hash": "sha256-ZrjqmRsNe+zZD+MkXWOHPqTwPez6dE448uiK42C+Vhs=",
       "url": "css\/app.css"
     },
     {
@@ -37,7 +37,7 @@
       "url": "js\/app.js"
     },
     {
-      "hash": "sha256-79NP4mp3uzmLoAWQoWCh26pxeCXn4JGedG3o5bknlx8=",
+      "hash": "sha256-RnSmGk3V\/O5u8apvceZWmYWuxAnriwONcHAzA+Uw1UU=",
       "url": "js\/watch.js"
     },
     {
@@ -69,7 +69,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-cf3y8kaOIQX6okWbCbjcshKcaWoNcwR0XDjS4Y+M+08=",
+      "hash": "sha256-OQYmEzApt7eyO+65abk1CSz1EPx3NlPqdM\/lVuCPvyo=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-KTMD4qxE5c6fDwoenj4Cq9uG6WHNeW4ZxQs2rE1dTXQ=",
+      "hash": "sha256-xTFcW6zVbvdYNtQL3ssdVhw0LoY9byMfv85PwS8TD9A=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -561,5 +561,5 @@
       "url": "_content\/Toolbelt.Blazor.PWA.Updater\/Toolbelt.Blazor.PWA.Updater.bundle.scp.css"
     }
   ],
-  "version": "\/sW+r31b"
+  "version": "R0cr0zkt"
 };
