@@ -17,8 +17,7 @@ public partial class Watch : IDisposable
     [Inject] public PlayableItemStateContainer StateContainer { get; set; } = null!;
     public PlayableItem? PlayableItem { get; set; }
     public Dictionary<string, object> VideoAttributes { get; set; } = new();
-    public StreamingLibrary StreamingLibrary { get; set; } = StreamingLibrary.None;
-
+    public StreamingLibrary StreamingLibrary { get; set; } = StreamingLibrary.Dash;
     private IJSObjectReference? _module;
 
     protected override void OnInitialized()
@@ -31,6 +30,16 @@ public partial class Watch : IDisposable
         _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/watch.js");
         PlayableItem = StateContainer.PlayableItem;
         await InitPlyr();
+    }
+
+    private async Task FullScreenEntered()
+    {
+        await _module!.InvokeVoidAsync("setScreenOrientation", "landscape");
+    }
+
+    private async Task FullScreenExited()
+    {
+        await _module!.InvokeVoidAsync("setScreenOrientation", "portrait");
     }
 
     private async Task SetFullHeightPlayer()
@@ -52,7 +61,7 @@ public partial class Watch : IDisposable
         {
             await InitPlyrForYoutube();
         }
-        
+
         SetStreamingLibrary();
         SetPlyrAttributes();
         await SetFullHeightPlayer();
@@ -84,7 +93,7 @@ public partial class Watch : IDisposable
             VideoAttributes.Add("crossorigin", "anonymous");
         }
     }
-    
+
     public void Dispose()
     {
         StateContainer.OnChange -= StateHasChanged;

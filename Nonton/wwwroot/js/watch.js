@@ -35,6 +35,10 @@ export function initPlyr() {
     }, 1000);
 }
 
+export function setScreenOrientation(orientation) {
+    screen.orientation.lock(orientation);
+}
+
 export function downloadSubtitle(filename, data) {
 
     // Create the URL
