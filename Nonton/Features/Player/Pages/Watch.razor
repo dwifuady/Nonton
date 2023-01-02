@@ -16,7 +16,9 @@
                    SeekTime="10"
                    StreamingLibrary="@StreamingLibrary"
                    AutomaticallyHideControls="true"
-                   Attributes="VideoAttributes">
+                   Attributes="VideoAttributes"
+                   Poster="@PlayableItem.Poster"
+                   >
                 
                 @if (PlayableItem?.Subtitles?.Count > 0)
                 {
@@ -24,7 +26,7 @@
                     {
                         @if (!string.IsNullOrWhiteSpace(subtitle.Lang))
                         {
-                            //limit to this two for now, can not show long list of subtitles yet
+                            //limit to these two for now, can not show long list of subtitles yet
                             if (subtitle.Lang.Contains("English") || subtitle.Lang.Contains("Indonesia"))
                             {
                                 <track kind="subtitles" label="@subtitle.Lang" src="@subtitle.Url" />
