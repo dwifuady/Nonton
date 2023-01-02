@@ -17,7 +17,7 @@ public partial class Watch : IDisposable
     [Inject] public PlayableItemStateContainer StateContainer { get; set; } = null!;
     public PlayableItem? PlayableItem { get; set; }
     public Dictionary<string, object> VideoAttributes { get; set; } = new();
-    public StreamingLibrary StreamingLibrary { get; set; } = StreamingLibrary.Dash;
+    public StreamingLibrary StreamingLibrary { get; set; } = StreamingLibrary.None;
 
     private IJSObjectReference? _module;
 
@@ -52,7 +52,7 @@ public partial class Watch : IDisposable
         {
             await InitPlyrForYoutube();
         }
-
+        
         SetStreamingLibrary();
         SetPlyrAttributes();
         await SetFullHeightPlayer();
@@ -69,8 +69,7 @@ public partial class Watch : IDisposable
 
     private void SetStreamingLibrary()
     {
-        if (PlayableItem is null) return;
-        if (PlayableItem.Url.EndsWith("m3u8"))
+        if (PlayableItem!.Url.EndsWith("m3u8"))
         {
             StreamingLibrary = StreamingLibrary.Hls;
         }
@@ -78,8 +77,12 @@ public partial class Watch : IDisposable
 
     private void SetPlyrAttributes()
     {
-        //setting crossorigin to anonymous so it can load subtitle from other source
-        VideoAttributes.Add("crossorigin", "anonymous");
+        // temp solution, adding crossorigin attr will make the realdebrid's video unplayable
+        if (PlayableItem!.Url.EndsWith("m3u8"))
+        {
+            //setting crossorigin to anonymous so it can load subtitle from other source
+            VideoAttributes.Add("crossorigin", "anonymous");
+        }
     }
     
     public void Dispose()
