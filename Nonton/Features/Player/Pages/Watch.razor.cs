@@ -18,7 +18,6 @@ public partial class Watch : IDisposable
     public PlayableItem? PlayableItem { get; set; }
     public Dictionary<string, object> VideoAttributes { get; set; } = new();
     public StreamingLibrary StreamingLibrary { get; set; } = StreamingLibrary.Dash;
-
     private IJSObjectReference? _module;
 
     protected override void OnInitialized()
@@ -31,6 +30,16 @@ public partial class Watch : IDisposable
         _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/watch.js");
         PlayableItem = StateContainer.PlayableItem;
         await InitPlyr();
+    }
+
+    private async Task FullScreenEntered()
+    {
+        await _module!.InvokeVoidAsync("setScreenOrientation", "landscape");
+    }
+
+    private async Task FullScreenExited()
+    {
+        await _module!.InvokeVoidAsync("setScreenOrientation", "portrait");
     }
 
     private async Task SetFullHeightPlayer()
@@ -69,8 +78,7 @@ public partial class Watch : IDisposable
 
     private void SetStreamingLibrary()
     {
-        if (PlayableItem is null) return;
-        if (PlayableItem.Url.EndsWith("m3u8"))
+        if (PlayableItem!.Url.EndsWith("m3u8"))
         {
             StreamingLibrary = StreamingLibrary.Hls;
         }
@@ -78,10 +86,14 @@ public partial class Watch : IDisposable
 
     private void SetPlyrAttributes()
     {
-        //setting crossorigin to anonymous so it can load subtitle from other source
-        VideoAttributes.Add("crossorigin", "anonymous");
+        // temp solution, adding crossorigin attr will make the realdebrid's video unplayable
+        if (PlayableItem!.Url.EndsWith("m3u8"))
+        {
+            //setting crossorigin to anonymous so it can load subtitle from other source
+            VideoAttributes.Add("crossorigin", "anonymous");
+        }
     }
-    
+
     public void Dispose()
     {
         StateContainer.OnChange -= StateHasChanged;

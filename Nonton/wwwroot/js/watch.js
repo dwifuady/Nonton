@@ -21,8 +21,22 @@ export function loadPlyrAssets() {
 
 export function initPlyr() {
     setTimeout(function () {
-        const player = new Plyr('#player');
+        const player = new Plyr('#player', { autoplay: true });
+
+        window.player = player;
+
+        player.on('enterfullscreen', event => {
+            screen.orientation.lock('landscape');
+        });
+
+        player.on('exitfullscreen', event => {
+            screen.orientation.lock('portrait');
+        });
     }, 1000);
+}
+
+export function setScreenOrientation(orientation) {
+    screen.orientation.lock(orientation);
 }
 
 export function downloadSubtitle(filename, data) {

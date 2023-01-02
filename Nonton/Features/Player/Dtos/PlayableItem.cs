@@ -9,4 +9,5 @@ public class PlayableItem
     public string? ImdbId { get; set; }
     public string Url { get; set; } = null!;
     public List<Subtitle>? Subtitles { get; set; }
+    public string? Poster { get; set; }
 }
