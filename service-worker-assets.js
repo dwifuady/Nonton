@@ -37,7 +37,7 @@
       "url": "js\/app.js"
     },
     {
-      "hash": "sha256-RnSmGk3V\/O5u8apvceZWmYWuxAnriwONcHAzA+Uw1UU=",
+      "hash": "sha256-uqE7pF5Qiqr77j\/87L1A1kxmJhmE\/BJJXpGlCHS9CDc=",
       "url": "js\/watch.js"
     },
     {
@@ -69,7 +69,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-OQYmEzApt7eyO+65abk1CSz1EPx3NlPqdM\/lVuCPvyo=",
+      "hash": "sha256-aTeMFOcVxFse7utijXevsV4rcfwiYuNa3cuhXdEZOVo=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-xTFcW6zVbvdYNtQL3ssdVhw0LoY9byMfv85PwS8TD9A=",
+      "hash": "sha256-79GvXbjbTyYy8vlQVggtdyC6A0Olh+FAUQRFHwgyrp8=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -281,6 +281,10 @@
       "url": "_framework\/System.Drawing.Primitives.dll"
     },
     {
+      "hash": "sha256-m0bkQ5t5Bf3ttwOEpUQmqsD1rqKbX6FdEc0WYEE9eE4=",
+      "url": "_framework\/System.IO.Compression.dll"
+    },
+    {
       "hash": "sha256-2O5Asm4Q9mtJjgQnedOpfHUiSP6I1kGpdyfSiyWk+So=",
       "url": "_framework\/System.Linq.dll"
     },
@@ -297,7 +301,7 @@
       "url": "_framework\/System.Memory.dll"
     },
     {
-      "hash": "sha256-0bq\/tJmcifI2CpLyOT+sikLnvVPXit0GZEteAirm9+A=",
+      "hash": "sha256-sVoaHcQZSxALgmnclf0M2hbklUg073UavR3VxI8piag=",
       "url": "_framework\/System.Net.Http.dll"
     },
     {
@@ -317,7 +321,7 @@
       "url": "_framework\/System.ObjectModel.dll"
     },
     {
-      "hash": "sha256-ekn3psNSLhOiFluWAKUbZ8vSqYVHHJM4RrRnN0kIrXo=",
+      "hash": "sha256-XUsej+TqSBWdNTcVOH13CQCEJcci4GoXPaOSJXMpl\/w=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -401,7 +405,7 @@
       "url": "_framework\/dotnet.7.0.1.75ymmns1b8.js"
     },
     {
-      "hash": "sha256-VKvBJ09xOBMRGvZyY05is3CPLAk8RGUeyj+zWXDxXnQ=",
+      "hash": "sha256-l1dy3yIpezDUIziIxVyHgw+Rt+AB7Zur\/rIDD99HzM0=",
       "url": "_framework\/dotnet.wasm"
     },
     {
@@ -561,5 +565,5 @@
       "url": "_content\/Toolbelt.Blazor.PWA.Updater\/Toolbelt.Blazor.PWA.Updater.bundle.scp.css"
     }
   ],
-  "version": "R0cr0zkt"
+  "version": "0PE71H\/d"
 };
