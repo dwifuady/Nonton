@@ -31,7 +31,7 @@
                             //limit to these two for now, can not show long list of subtitles yet
                             if (subtitle.Lang.Contains("English") || subtitle.Lang.Contains("Indonesia"))
                             {
-                                <track kind="subtitles" label="@subtitle.Lang" src="@subtitle.Url" />
+                                <track kind="captions" label="@subtitle.Lang" src="@subtitle.Url" srclang="@subtitle.Id" />
                             }
                         }
                     }

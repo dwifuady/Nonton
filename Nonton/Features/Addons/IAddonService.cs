@@ -8,6 +8,7 @@ public interface IAddonService
     Task<IEnumerable<AddonDto>?> LoadAllCatalogAddons();
     Task<IEnumerable<AddonDto>?> LoadAllMetaAddons();
     Task<IEnumerable<AddonDto>?> LoadAllStreamAddons();
+    Task<IEnumerable<AddonDto>?> LoadAllSubtitleAddons();
     Task<AddonDto?> LoadDefaultCatalogAddons();
     Task SaveAddon(string url, string manifestString);
     Task DeleteAddon(string id);
