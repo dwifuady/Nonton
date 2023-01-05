@@ -9,12 +9,11 @@ A [Stremio](https://www.stremio.com/) Client built with Blazor
 Nonton is a side-project for me to experiment with a few technologies that interest me.  
 It is a [Blazor WebAssembly](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) application and hosted in this Github page [https://dwifuady.github.io/Nonton/](https://dwifuady.github.io/Nonton/)
 
-Nonton is not a Stremio replacement, but I am trying to implement every features on the Stremio to Nonton.  
 Nonton didn't have it's own back-end service, it needs addons to works. Every addon is installed locally in the browser cache.
 
 ## Run Locally
 ### Prerequisites
-- [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.400-windows-x64-installer)
+- [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - [.NET WebAssembly build tools](https://docs.microsoft.com/en-us/aspnet/core/blazor/webassembly-native-dependencies?view=aspnetcore-6.0)  
 You can install by running ```dotnet workload install wasm-tools``` in a command shell
 - [nodejs](https://nodejs.org/en/) & [tailwindcss](https://tailwindcss.com/)
