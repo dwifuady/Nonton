@@ -1,0 +1,71 @@
+﻿<LoadingContainer State="LoadingContainerState">
+    <Loading>
+        <div class="flex flex-col mb-4">
+            @if (ContentItemType != ContentItemType.Discover)
+            {
+                <div class="w-40 h-8 mb-2 bg-slate-700 rounded-lg animate-pulse"></div>
+            }
+            <section class="flex no-scrollbar snap-x snap-mandatory flex-nowrap overflow-x-scroll gap-x-5">
+                @for (var i = 0; i < 10; i++)
+                {
+                    <div class="w-40 flex-none rounded snap-center snap-always cursor-pointer animate-pulse">
+                        <div class="flex flex-col place-items-center gap-3">
+                            <div class="w-36 h-64 object-cover rounded-lg bg-slate-700"></div>
+                            <div class="w-32 h-6 bg-slate-700 rounded-lg"></div>
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+    </Loading>
+    <Loaded>
+        @if (Metas is not null && Metas.Any())
+        {
+            @if (ContentItemType == ContentItemType.Discover)
+            {
+                <div class="grid grid-cols-2 gap-y-5 slick">
+                    @foreach (var meta in Metas)
+                    {
+                        <div class="w-40 flex-none rounded" @onclick="() => ViewDetail(meta.ImdbId!)">
+                            <div class="flex flex-col place-items-center gap-3">
+                                <img src="@meta.Poster" class="w-36 h-64 object-cover rounded-lg" />
+                                <span class="text-center">@meta.Name</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="flex flex-col gap-2">
+                    <div>
+                        @if (ContentItemType == ContentItemType.Search)
+                        {
+                            <span class="text-lg">@Catalog.AddonName - @Catalog.CatalogTitle</span>
+                        }
+                        else if (ContentItemType == ContentItemType.Default)
+                        {
+                            <span class="text-lg">@Catalog.CatalogTitle - @Catalog.CatalogName</span>
+                        }
+                    </div>
+
+                    <div class="flex flex-col relative slick">
+                        @foreach (var meta in Metas)
+                        {
+                            <div class="w-40 flex-none rounded" @onclick="() => ViewDetail(meta.ImdbId!)">
+                                <div class="flex flex-col place-items-center gap-3">
+                                    <img data-lazy="@meta.Poster" class="w-36 h-64 object-cover rounded-lg" />
+                                    <span class="text-center">@meta.Name</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            }
+        }
+    </Loaded>
+    <Error>
+
+    </Error>
+</LoadingContainer>
