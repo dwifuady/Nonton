@@ -26,6 +26,7 @@ namespace Nonton.Features.Catalogs.Components
         public IEnumerable<MetaDto>? Metas { get; set; }
 
         public LoadingContainerState LoadingContainerState { get; set; } = LoadingContainerState.Empty;
+        private IJSObjectReference? _module;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -55,13 +56,14 @@ namespace Nonton.Features.Catalogs.Components
             }
         }
 
-        //protected override async Task OnAfterRenderAsync(bool firstRender)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(Catalog.CatalogName))
-        //    {
-        //        await JsRuntime.InvokeVoidAsync("forceHorizontalScroll", $"content-container-{Catalog.CatalogType}-{Catalog.CatalogId}");
-        //    }
-        //}
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/carousel.js");
+            if (_module is not null && LoadingContainerState.Equals(LoadingContainerState.Loaded) && !string.IsNullOrWhiteSpace(Catalog.CatalogName))
+            {
+                await _module.InvokeVoidAsync("initFlickityContent", $"content-{Catalog.CatalogShortName}-{Catalog.CatalogId}");
+            }
+        }
 
         public async Task ViewDetail(string id)
         {

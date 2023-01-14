@@ -4,7 +4,7 @@ namespace Nonton.Features.Catalogs;
 public interface ICatalogService
 {
     Task<IEnumerable<Catalog>> GetAllCatalogsAsync();
-    Task<IEnumerable<Catalog>> GetDefaultCatalogAsync();
+    Task<IReadOnlyList<Catalog>> GetDefaultCatalogAsync();
     Task<IEnumerable<Catalog>> GetSearchableCatalogAsync();
     Task<List<Catalog>> GetCatalogsByType(CatalogTypeEnum catalogType);
     Task<List<Catalog>> GetMovieCatalogsAsync();

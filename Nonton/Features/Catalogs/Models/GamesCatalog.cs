@@ -5,8 +5,8 @@ namespace Nonton.Features.Catalogs.Models;
 public class GamesCatalog : Catalog
 {
     public override CatalogTypeEnum CatalogType => CatalogTypeEnum.Games;
-    public override string CatalogTitle => AddonConstants.TypeGamesTitle;
-    public override string CatalogShortName => AddonConstants.TypeGameShortName;
+    public override string CatalogTitle => AddonConstants.AddonTypeGamesTitle;
+    public override string CatalogShortName => AddonConstants.AddonTypeGameShortName;
     public GamesCatalog(string addonName, string addonBaseUri, string catalogId, string catalogName) : base(addonName, addonBaseUri, catalogId, catalogName)
     {
     }

@@ -42,7 +42,7 @@ public partial class Detail : IDisposable
             id = Id.Split(':')[0];
             SelectedSeason = Id.Split(':')[1];
         }
-        else if (Type == AddonConstants.TypeSeriesShortName)
+        else if (Type == AddonConstants.AddonTypeSeriesShortName)
         {
             SelectedSeason = "1";
         }

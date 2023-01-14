@@ -43,7 +43,7 @@ namespace Nonton.Features.Catalogs.Components
 
             if (_module is not null && LoadingContainerState.Equals(LoadingContainerState.Loaded))
             {
-                await _module.InvokeVoidAsync("initSlick");
+                await _module.InvokeVoidAsync("initFlickity");
             }
         }
 
@@ -68,14 +68,6 @@ namespace Nonton.Features.Catalogs.Components
                 Console.WriteLine(e);
             }
         }
-
-        //protected override async Task OnAfterRenderAsync(bool firstRender)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(Catalog.CatalogName))
-        //    {
-        //        await JsRuntime.InvokeVoidAsync("forceHorizontalScroll", $"content-container-{Catalog.CatalogType}-{Catalog.CatalogId}");
-        //    }
-        //}
 
         public async Task ViewDetail(string id)
         {

@@ -4,8 +4,8 @@ namespace Nonton.Features.Catalogs.Models;
 public class Catalog : ICatalog
 {
     public virtual CatalogTypeEnum CatalogType => CatalogTypeEnum.Default;
-    public virtual string CatalogTitle => AddonConstants.TypeDefault;
-    public virtual string CatalogShortName => AddonConstants.TypeDefault;
+    public virtual string CatalogTitle => AddonConstants.AddonTypeDefault;
+    public virtual string CatalogShortName => AddonConstants.AddonTypeDefault;
     public Catalog(string addonName, string addonBaseUri, string catalogId, string catalogName)
     {
         AddonName = addonName;
@@ -13,13 +13,15 @@ public class Catalog : ICatalog
         CatalogId = catalogId;
         CatalogName = catalogName;
     }
-
-    public Catalog(string addonName, string addonBaseUri, string catalogId, string catalogName, (List<string>, bool) genres, (bool, bool) searchable, (bool, bool) skippable)
+    
+    public Catalog(string addonName, 
+        string addonBaseUri, 
+        string catalogId, 
+        string catalogName,
+        (List<string>, bool) genres, 
+        (bool, bool) searchable, 
+        (bool, bool) skippable) : this(addonName, addonBaseUri, catalogId, catalogName)
     {
-        AddonName = addonName;
-        AddonBaseUri = addonBaseUri;
-        CatalogId = catalogId;
-        CatalogName = catalogName;
         Genres = genres;
         Searchable = searchable;
         Skippable = skippable;

@@ -13,7 +13,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <style>
         .loading-progress {
             position: relative;
@@ -47,38 +47,6 @@
             .loading-progress-text:after {
                 content: var(--blazor-load-percentage-text, "Loading");
             }
-
-        button.slick-arrow {
-            font-size: 0;
-            line-height: 0;
-            position: absolute;
-            top: 0;
-            display: block;
-            height: 16rem;
-            background: rgba(0,0,0,.5);
-            padding: 0;
-            cursor: pointer;
-            color: transparent;
-            border: none;
-            outline: none;
-            text-rendering: auto;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            z-index: 10;
-            width: 2.5vw;
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
-
-        button.slick-arrow.slick-next {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z' /%3E%3C/svg%3E");
-            right: 0px;
-        }
-
-        button.slick-arrow.slick-prev {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z' /%3E%3C/svg%3E");
-            left: 0px;
-        }
     </style>
 </head>
 
@@ -123,9 +91,7 @@
     <script src="js/app.js"></script>
     <script src="_content/Toolbelt.Blazor.PWA.Updater.Service/script.min.js"></script>
     <script src="_content/Blazorise.Video/vendors/plyr.js?v=1.1.4.1"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 </body>
 
 </html>

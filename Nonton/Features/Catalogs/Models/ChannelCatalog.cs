@@ -4,8 +4,8 @@ namespace Nonton.Features.Catalogs.Models;
 public class ChannelCatalog : Catalog
 {
     public override CatalogTypeEnum CatalogType => CatalogTypeEnum.Channel;
-    public override string CatalogTitle => AddonConstants.TypeChannelTitle;
-    public override string CatalogShortName => AddonConstants.TypeChannelShortName;
+    public override string CatalogTitle => AddonConstants.AddonTypeChannelTitle;
+    public override string CatalogShortName => AddonConstants.AddonTypeChannelShortName;
 
     public ChannelCatalog(string addonName, string addonBaseUri, string catalogId, string catalogName) : base(addonName, addonBaseUri, catalogId, catalogName)
     {

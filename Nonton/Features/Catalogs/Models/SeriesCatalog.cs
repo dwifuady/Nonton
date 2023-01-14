@@ -4,8 +4,8 @@ namespace Nonton.Features.Catalogs.Models;
 public class SeriesCatalog : Catalog
 {
     public override CatalogTypeEnum CatalogType => CatalogTypeEnum.Series;
-    public override string CatalogTitle => AddonConstants.TypeSeriesTitle;
-    public override string CatalogShortName => AddonConstants.TypeSeriesShortName;
+    public override string CatalogTitle => AddonConstants.AddonTypeSeriesTitle;
+    public override string CatalogShortName => AddonConstants.AddonTypeSeriesShortName;
 
     public SeriesCatalog(string addonName, string addonBaseUri, string catalogId, string catalogName) : base(addonName, addonBaseUri, catalogId, catalogName)
     {
