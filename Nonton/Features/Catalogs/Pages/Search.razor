@@ -1,7 +1,7 @@
 ﻿@page "/search"
 @using Nonton.Features.Catalogs.Components
 
-<div class="mx-4">
+<div class="mx-4 mb-20">
 <EditForm OnValidSubmit="DoSearch" Model="SearchModel">
     <InputText @bind-Value="SearchModel.SearchString" class="w-full h-10 rounded-lg px-8 text-gray-900 mb-4" placeholder="Search..."></InputText>
 </EditForm>
@@ -12,7 +12,9 @@
             {
                 foreach (var catalog in SearchableCatalogs)
                 {
-                    <ContentItem Catalog="@catalog" ContentItemType="@ContentItemType.Search" SearchQuery="@Keywords"></ContentItem>
+                    <div class="my-4">
+                        <ContentItem Catalog="@catalog" ContentItemType="@ContentItemType.Search" SearchQuery="@Keywords"></ContentItem>
+                    </div>
                 }
             }
         }
@@ -60,7 +62,9 @@
             <div>
                 @if (SelectedCatalog is not null)
                 {
-                    <ContentItem Catalog="@SelectedCatalog" ContentItemType="@ContentItemType.Discover" SearchQuery="@Keywords" Genre="@SelectedGenre"></ContentItem>
+                    <div class="my-4">
+                        <ContentItem Catalog="@SelectedCatalog" ContentItemType="@ContentItemType.Discover" SearchQuery="@Keywords" Genre="@SelectedGenre"></ContentItem>
+                    </div>
                 }
             </div>
         }

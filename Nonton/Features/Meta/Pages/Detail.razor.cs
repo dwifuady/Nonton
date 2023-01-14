@@ -1,12 +1,15 @@
 ﻿using System.Web;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Nonton.Commons;
 using Nonton.Features.Addons;
 using Nonton.Features.Addons.Dtos;
 using Nonton.Features.Addons.Dtos.Manifest;
+using Nonton.Features.Catalogs.Models;
 using Nonton.Features.Meta.Models;
 using Nonton.Features.Player.Dtos;
 using Nonton.Features.Stream;
+using Nonton.Shared;
 
 namespace Nonton.Features.Meta.Pages;
 
@@ -20,15 +23,16 @@ public partial class Detail : IDisposable
     [Inject] public IAddonService AddonService { get; set; } = null!;
     [Inject] public NavigationManager NavigationManager { get; set; } = null!;
     [Inject] public PlayableItemStateContainer StateContainer { get; set; } = null!;
+    [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
 
     public bool ShowSourceSelect { get; set; }
     public IEnumerable<AddonDto>? Addons { get; set; }
     public IMeta? Meta { get; set; }
 
     public string SelectedSeason { get; set; } = null!;
-
-    public bool IsTrailerPlaying { get; set; }
     
+    private IJSObjectReference? _module;
+
     protected override void OnInitialized()
     {
         StateContainer.OnChange += StateHasChanged;
@@ -42,7 +46,7 @@ public partial class Detail : IDisposable
             id = Id.Split(':')[0];
             SelectedSeason = Id.Split(':')[1];
         }
-        else if (Type == AddonConstants.TypeSeriesShortName)
+        else if (Type == AddonConstants.AddonTypeSeriesShortName)
         {
             SelectedSeason = "1";
         }
@@ -52,6 +56,15 @@ public partial class Detail : IDisposable
         await LoadSource();
 
         StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/carousel.js");
+        if (_module is not null && Meta is ISeriesMeta { Episodes.Count: > 0 })
+        {
+            await _module.InvokeVoidAsync("initFlickityEpisodes");
+        }
     }
 
     private void PlayTrailer()
@@ -70,12 +83,7 @@ public partial class Detail : IDisposable
             NavigationManager.NavigateTo($"watch/{Type}/{Id}");
         }
     }
-
-    private void CloseTrailer()
-    {
-        IsTrailerPlaying = false;
-    }
-
+    
     private void ToggleSourceSelect()
     {
         ShowSourceSelect = !ShowSourceSelect;
@@ -136,7 +144,7 @@ public partial class Detail : IDisposable
         }
 
         StateContainer.PlayableItem = playableItem;
-        
+
         NavigationManager.NavigateTo($"watch/{Type}/{Id}");
     }
 

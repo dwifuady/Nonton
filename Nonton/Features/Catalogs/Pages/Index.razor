@@ -3,7 +3,15 @@
 
 <PageTitle>Home</PageTitle>
 
-<div class="mx-4">
+<div class="mx-4 mb-20">
+    <span class="text-2xl">Nonton</span>
+    @if (CarouselCatalog is not null)
+    {
+        <div class="my-4">
+            <CarouselItem Catalog="CarouselCatalog"></CarouselItem>
+        </div>
+    }
+
     @if (Catalogs is not null && Catalogs.Any())
     {
         foreach (var catalog in Catalogs)

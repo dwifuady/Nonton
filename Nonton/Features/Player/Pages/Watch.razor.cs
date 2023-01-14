@@ -113,6 +113,11 @@ public partial class Watch : IDisposable
 
     private async Task DownloadSubtitles()
     {
+        if (PlayableItem is not null && PlayableItem.IsYoutubeTrailer)
+        {
+            return;
+        }
+
         if (SubtitleAddons is null)
         {
             Console.WriteLine("No subtitle addons");

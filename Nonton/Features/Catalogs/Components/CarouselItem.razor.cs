@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Nonton.Features.Addons.Dtos;
 using Nonton.Features.Catalogs.Models;
@@ -6,12 +6,12 @@ using Nonton.Shared;
 
 namespace Nonton.Features.Catalogs.Components
 {
-    public partial class ContentItem
+    public partial class CarouselItem
     {
         [Parameter]
         public Catalog Catalog { get; set; } = null!;
 
-        [Parameter] 
+        [Parameter]
         public ContentItemType ContentItemType { get; set; } = ContentItemType.Default;
 
         [Parameter]
@@ -26,13 +26,25 @@ namespace Nonton.Features.Catalogs.Components
         public IEnumerable<MetaDto>? Metas { get; set; }
 
         public LoadingContainerState LoadingContainerState { get; set; } = LoadingContainerState.Empty;
+
         private IJSObjectReference? _module;
 
         protected override async Task OnParametersSetAsync()
         {
+
             LoadingContainerState = LoadingContainerState.Loading;
             await LoadItems();
             LoadingContainerState = LoadingContainerState.Loaded;
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/carousel.js");
+
+            if (_module is not null && LoadingContainerState.Equals(LoadingContainerState.Loaded))
+            {
+                await _module.InvokeVoidAsync("initFlickity");
+            }
         }
 
         private async Task LoadItems()
@@ -49,6 +61,7 @@ namespace Nonton.Features.Catalogs.Components
                     var discoverItem = await CatalogApi.GetCatalogItem(Catalog.AddonBaseUri, Catalog.CatalogShortName, Catalog.CatalogId, Genre ?? "");
                     Metas = discoverItem.Metas;
                 }
+
             }
             catch (Exception e)
             {
@@ -56,25 +69,9 @@ namespace Nonton.Features.Catalogs.Components
             }
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/carousel.js");
-            if (_module is not null && LoadingContainerState.Equals(LoadingContainerState.Loaded) && !string.IsNullOrWhiteSpace(Catalog.CatalogName))
-            {
-                await _module.InvokeVoidAsync("initFlickityContent", $"content-{Catalog.CatalogShortName}-{Catalog.CatalogId}");
-            }
-        }
-
         public async Task ViewDetail(string id)
         {
             await Task.Run(() => NavigationManager.NavigateTo($"detail/{Catalog.CatalogShortName}/{id}"));
         }
-    }
-
-    public enum ContentItemType
-    {
-        Default,
-        Search,
-        Discover
     }
 }

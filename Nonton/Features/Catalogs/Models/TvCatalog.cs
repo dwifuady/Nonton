@@ -4,8 +4,8 @@ namespace Nonton.Features.Catalogs.Models;
 public class TvCatalog : Catalog
 {
     public override CatalogTypeEnum CatalogType => CatalogTypeEnum.Tv;
-    public override string CatalogTitle => AddonConstants.TypeTvTitle;
-    public override string CatalogShortName => AddonConstants.TypeTvShortName;
+    public override string CatalogTitle => AddonConstants.AddonTypeTvTitle;
+    public override string CatalogShortName => AddonConstants.AddonTypeTvShortName;
 
     public TvCatalog(string addonName, string addonBaseUri, string catalogId, string catalogName) : base(addonName, addonBaseUri, catalogId, catalogName)
     {

@@ -13,6 +13,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <style>
         .loading-progress {
             position: relative;
@@ -22,19 +23,19 @@
             margin: 20vh auto 1rem auto;
         }
 
-        .loading-progress circle {
-            fill: none;
-            stroke: #e0e0e0;
-            stroke-width: 0.6rem;
-            transform-origin: 50% 50%;
-            transform: rotate(-90deg);
-        }
+            .loading-progress circle {
+                fill: none;
+                stroke: #e0e0e0;
+                stroke-width: 0.6rem;
+                transform-origin: 50% 50%;
+                transform: rotate(-90deg);
+            }
 
-        .loading-progress circle:last-child {
-            stroke: #1b6ec2;
-            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
-            transition: stroke-dasharray 0.05s ease-in-out;
-        }
+                .loading-progress circle:last-child {
+                    stroke: #1b6ec2;
+                    stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+                    transition: stroke-dasharray 0.05s ease-in-out;
+                }
 
         .loading-progress-text {
             position: absolute;
@@ -43,14 +44,13 @@
             inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
         }
 
-        .loading-progress-text:after {
-            content: var(--blazor-load-percentage-text, "Loading");
-        }
-
+            .loading-progress-text:after {
+                content: var(--blazor-load-percentage-text, "Loading");
+            }
     </style>
 </head>
 
-<body class="bg-slate-100 dark:bg-slate-800 text-gray-800 dark:text-white">
+<body class="bg-gray-800 text-white">
     <div id="app">
         <svg class="loading-progress">
             <circle r="40%" cx="50%" cy="50%" />
@@ -59,12 +59,12 @@
         <div class="loading-progress-text"></div>
     </div>
 
-    <div id="blazor-error-ui" class="dark:bg-yellow-600 text-gray-800 dark:text-white p-4 absolute top-0 w-full flex flex-row justify-between" style="display: none;">
+    <div id="blazor-error-ui" class="bg-yellow-600 text-white p-4 absolute top-0 w-full flex flex-row justify-between" style="display: none;">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    
+
     <script src="_framework/blazor.webassembly.js" autostart="false"></script>
     <script type="module">
         import { BrotliDecode } from './decode.min.js';
@@ -91,6 +91,7 @@
     <script src="js/app.js"></script>
     <script src="_content/Toolbelt.Blazor.PWA.Updater.Service/script.min.js"></script>
     <script src="_content/Blazorise.Video/vendors/plyr.js?v=1.1.4.1"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 </body>
 
 </html>

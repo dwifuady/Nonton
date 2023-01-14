@@ -37,7 +37,7 @@ namespace Nonton.Features.Meta
 
             return metaDto.Type switch
             {
-                AddonConstants.TypeSeriesShortName =>
+                AddonConstants.AddonTypeSeriesShortName =>
                     new SeriesMeta(
                         metaDto.Id, 
                         metaDto.Name!, 
@@ -58,7 +58,7 @@ namespace Nonton.Features.Meta
                         metaDto.Runtime, 
                         metaDto.Videos.MapToGroupedSeasons(), 
                         metaDto.Videos.MapToEpisodes()),
-                AddonConstants.TypeMovieShortName =>
+                AddonConstants.AddonTypeMovieShortName =>
                     new MovieMeta(
                         metaDto.Id,
                         metaDto.Name!,

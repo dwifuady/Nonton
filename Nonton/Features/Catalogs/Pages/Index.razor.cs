@@ -7,10 +7,13 @@ public partial class Index
     [Inject] public ICatalogService CatalogService { get; set; } = null!;
 
     public IEnumerable<Catalog>? Catalogs { get; set; }
+    public Catalog? CarouselCatalog { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Catalogs = await CatalogService.GetDefaultCatalogAsync();
+        var catalogs = await CatalogService.GetDefaultCatalogAsync();
+        CarouselCatalog = catalogs.FirstOrDefault();
+        Catalogs = catalogs.Where(c => c != CarouselCatalog);
         StateHasChanged();
     }
 }

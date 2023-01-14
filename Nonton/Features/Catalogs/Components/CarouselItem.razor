@@ -1,0 +1,32 @@
+﻿<LoadingContainer State="LoadingContainerState">
+    <Loading>
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-col relative mx-auto">
+                <div class="w-96 flex-none rounded snap-center snap-always cursor-pointer animate-pulse">
+                    <div class="flex flex-col place-items-center gap-3">
+                        <div class="w-96 h-52 object-cover rounded-lg bg-slate-700"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Loading>
+    <Loaded>
+        @if (Metas is not null && Metas.Any())
+        {
+            <div class="flex flex-col relative main-carousel">
+                @foreach (var meta in Metas)
+                {
+                    <div class="w-96 flex-none rounded" @onclick="() => ViewDetail(meta.ImdbId!)">
+                        <div class="flex flex-col place-items-center mx-2 relative">
+                            <img data-flickity-lazyload="@meta.Background" class="h-52 w-96 object-cover rounded-lg" />
+                            <span class="absolute bottom-0 pb-3 pt-8 w-full text-center bg-gradient-to-b from-transparent to-black rounded-lg">@meta.Name @(!string.IsNullOrWhiteSpace(meta.Year) ? $"({meta.Year})" : "")</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </Loaded>
+    <Error>
+
+    </Error>
+</LoadingContainer>
