@@ -22,3 +22,16 @@ export function initFlickityContent(id) {
     flkty.on('dragStart', () => flkty.slider.style.pointerEvents = 'none');
     flkty.on('dragEnd', () => flkty.slider.style.pointerEvents = 'auto');
 }
+
+export function initFlickityEpisodes() {
+    var elem = document.querySelector('#episodes');
+    var flkty = new Flickity(elem, {
+        lazyLoad: 1,
+        pageDots: false,
+        groupCells: true,
+        contain: true
+    });
+
+    flkty.on('dragStart', () => flkty.slider.style.pointerEvents = 'none');
+    flkty.on('dragEnd', () => flkty.slider.style.pointerEvents = 'auto');
+}
