@@ -16,12 +16,12 @@
             <div class="flex flex-col relative main-carousel">
                 @foreach (var meta in Metas)
                 {
-                    <div class="w-96 flex-none rounded" @onclick="() => ViewDetail(meta.ImdbId!)">
+                    <a class="w-96 flex-none rounded" href="detail/@Catalog.CatalogShortName/@meta.Id">
                         <div class="flex flex-col place-items-center mx-2 relative">
                             <img data-flickity-lazyload="@meta.Background" class="h-52 w-96 object-cover rounded-lg" />
                             <span class="absolute bottom-0 pb-3 pt-8 w-full text-center bg-gradient-to-b from-transparent to-black rounded-lg">@meta.Name @(!string.IsNullOrWhiteSpace(meta.Year) ? $"({meta.Year})" : "")</span>
                         </div>
-                    </div>
+                    </a>
                 }
             </div>
         }
