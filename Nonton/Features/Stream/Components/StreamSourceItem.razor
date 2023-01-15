@@ -1,8 +1,8 @@
 ﻿@using Nonton.Features.Addons.Dtos
 <LoadingContainer State="LoadingStateStreamSource">
     <Loading>
-        <div class="p-2 dark:bg-slate-500 rounded-lg w-96 animate-pulse h-12"></div>
-        <div class="p-2 dark:bg-slate-500 rounded-lg w-96 animate-pulse h-12"></div>
+        <div class="p-2 bg-slate-500 rounded-lg w-96 animate-pulse h-12"></div>
+        <div class="p-2 bg-slate-500 rounded-lg w-96 animate-pulse h-12"></div>
     </Loading>
     <Loaded>
         @if (StreamResponse?.Streams != null && StreamResponse.Streams.Any())
@@ -11,21 +11,22 @@
             {
                 @if (!string.IsNullOrWhiteSpace(streamSource?.ExternalUrl))
                 {
-                    <a class="p-2 dark:bg-slate-500 rounded-lg w-96" href="@streamSource.ExternalUrl" rel="noopener noreferrer" target="_blank">
+                    <a class="p-2 bg-slate-500 rounded-lg w-96" href="@streamSource.ExternalUrl" rel="noopener noreferrer" target="_blank">
                         @streamSource.Name <br/> 
                         (@streamSource.Title)
                     </a>
                 }
                 else if (!string.IsNullOrWhiteSpace(streamSource?.Url))
                 {
-                    <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(streamSource)">
+                    <button class="p-2 bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(streamSource)">
                         @streamSource.Name <br />
                         (@(streamSource.Title ?? streamSource.Description))
                     </button>
                 }
                 else if (!string.IsNullOrWhiteSpace(streamSource?.InfoHash))
                 {
-                    <button class="p-2 dark:bg-slate-400 rounded-lg w-96" disabled>
+                    /*torrent stream is not supported*/
+                    <button class="p-2 bg-slate-400 rounded-lg w-96 text-gray-700 hidden" disabled>
                         @streamSource.Name <br />
                         (@streamSource.Title)
                     </button>
@@ -34,18 +35,18 @@
         }
         @if (_isDebugMode)
         {
-            <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(new StreamDto { Url = _demoUrl})">
+            <button class="p-2 bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(new StreamDto { Url = _demoUrl})">
                 Demo <br />
                 (Demo Video)
             </button>
-            <button class="p-2 dark:bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(new StreamDto { Url = _demoUrl2})">
+            <button class="p-2 bg-slate-500 rounded-lg w-96" @onclick="() => SelectSource(new StreamDto { Url = _demoUrl2})">
                 Demo 2<br />
                 (Demo Video 2)
             </button>
         }
     </Loaded>
     <Empty>
-        <span class="p-2 rounded-lg w-96 h-12">No source available</span>
+        
     </Empty>
 </LoadingContainer>
 
