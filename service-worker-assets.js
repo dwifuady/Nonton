@@ -9,7 +9,7 @@
       "url": "css\/app-deprecated.css"
     },
     {
-      "hash": "sha256-OkKdCP+d48u37H7\/SPvPsjYM1kQxH9lg6PIyGu2pm2g=",
+      "hash": "sha256-IrFtRK7tNHW4u4c3r6Uiy6ssmfjHquAsXHqr54ZgTR0=",
       "url": "css\/app.css"
     },
     {
@@ -29,7 +29,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-qpmnMJj2UVOJWVkH3tL+DwVibHjlc7tkOpPPnkRPEvs=",
+      "hash": "sha256-cHNQ02PG3Y44aCo3mr9p7ydBeXGziBUTeOyk9XATg6Y=",
       "url": "index.html"
     },
     {
@@ -43,6 +43,10 @@
     {
       "hash": "sha256-\/+IpU\/pcHkvBU6\/ixQ8bzotjEK5MbCMamCa6+VYmgMc=",
       "url": "manifest.json"
+    },
+    {
+      "hash": "sha256-jZI7\/sRg1GkUQDA+QYGfdvQU+rNR+RmuQubL0QLIQA8=",
+      "url": "no_image_available.jpg"
     },
     {
       "hash": "sha256-UwezpSZ5U6y5SoCmStNG9ekksy9a7X3WUO1Q0dwmEZ8=",
@@ -69,7 +73,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-UP1xRezPBHmwWm0q6a9BYFTtUKa+\/h3JX\/NLy6+5Roo=",
+      "hash": "sha256-F7h92s6Vz+PQriK7vXMFnEIwxAqEaLJUOtMSl3+BnZM=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -185,7 +189,7 @@
       "url": "_framework\/netstandard.dll"
     },
     {
-      "hash": "sha256-jDeRCsaGuE\/Gp0SZq06sSwFCVf8XtR+czpTgdJwFr2k=",
+      "hash": "sha256-doxRCYjy\/gxCrAzI7WJPV3VLZca7yZ5Eh6eqHCphq9Q=",
       "url": "_framework\/Nonton.dll"
     },
     {
@@ -565,5 +569,5 @@
       "url": "_content\/Toolbelt.Blazor.PWA.Updater\/Toolbelt.Blazor.PWA.Updater.bundle.scp.css"
     }
   ],
-  "version": "obR658GU"
+  "version": "SecFJWmO"
 };
