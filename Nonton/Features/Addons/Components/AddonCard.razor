@@ -17,7 +17,7 @@
         }
         <div class="flex flex-col w-full pl-6">
             <div class="flex justify-between">
-                <span class="text-lg font-medium">@Addon?.Manifest?.Name <sup>@(Addon!.IsDefaultAddon ? "(Default)" : "")</sup></span>
+                <span class="text-sm font-semibold">@Addon?.Manifest?.Name <sup>@(Addon!.IsDefaultAddon ? "(Default)" : "")</sup></span>
                 <div class="flex">
                     @if (Installable)
                     {
@@ -55,7 +55,7 @@
                             {
                                 <input type="checkbox" id="status-toggle-@Addon!.Manifest!.Id" class="sr-only peer" @onchange="ToggleAddonStatus">
                             }
-                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-500 dark:peer-focus:ring-teal-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-500"></div>
+                            <div class="w-8 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-500 dark:peer-focus:ring-teal-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-teal-500"></div>
                             <span class="hidden ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">@(_isEnabled ? "Enabled" : "Disabled")</span>
                         </label>
                     }
@@ -76,7 +76,7 @@
             </div>
 
             <div>
-                <p>
+                <p class="text-sm">
                     @if (Addon?.Manifest?.Description?.Length > 100)
                     {
                         @Addon?.Manifest?.Description.Substring(0, 100)

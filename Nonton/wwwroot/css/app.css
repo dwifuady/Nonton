@@ -764,6 +764,10 @@ video {
   height: 3rem;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -814,6 +818,10 @@ video {
 
 .w-28 {
   width: 7rem;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .max-w-lg {
@@ -1367,9 +1375,19 @@ video {
   height: 1.25rem;
 }
 
+.after\:h-4::after {
+  content: var(--tw-content);
+  height: 1rem;
+}
+
 .after\:w-5::after {
   content: var(--tw-content);
   width: 1.25rem;
+}
+
+.after\:w-4::after {
+  content: var(--tw-content);
+  width: 1rem;
 }
 
 .after\:rounded-full::after {
